@@ -1,0 +1,17 @@
+# Zeilenenden normalisieren: im Repo LF, im Arbeitsverzeichnis OS-typisch
+* text=auto
+
+# Binaerdateien nie anfassen
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.webp binary
+*.ico binary
+*.mp3 binary
+*.ogg binary
+*.wav binary
+*.ttf binary
+*.otf binary
+*.woff binary
+*.woff2 binary

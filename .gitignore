@@ -1,0 +1,51 @@
+# --- Betriebssystem ---
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+.DS_Store
+
+# --- Editoren / IDEs ---
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+.idea/
+*.swp
+*~
+
+# --- Claude Code (lokale, maschinenspezifische Einstellungen) ---
+.claude/settings.local.json
+
+# --- Logs / Temp ---
+*.log
+logs/
+tmp/
+temp/
+
+# --- Secrets: NIE committen ---
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# --- Node / Web ---
+node_modules/
+dist/
+build/
+.cache/
+.parcel-cache/
+coverage/
+
+# --- Python ---
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+
+# --- Build-Artefakte / Binaries ---
+*.exe
+*.dll
+*.so
+*.dylib
