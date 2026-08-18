@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SLIMORIA — Prototyp: Schleimbewegung</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<canvas id="view"></canvas>
+
+<div id="hud">
+  <div class="title">SLIMORIA <span>Prototyp — Schleimbewegung (3D)</span></div>
+  <div class="meter"><div id="hud-bar"></div></div>
+  <div class="stats">
+    <span><b id="hud-speed">0</b> m/s</span>
+    <span id="hud-state">Boden</span>
+    <span><b id="hud-fps">60</b> fps</span>
+  </div>
+  <ul class="keys">
+    <li><kbd>Linksklick</kbd> Ziel setzen (halten = folgen)</li>
+    <li><kbd>Rechts ziehen</kbd> Kamera drehen · <kbd>Rad</kbd> Zoom</li>
+    <li><kbd>Shift</kbd>+Ziehen am Schleim: zupfen</li>
+    <li><kbd>WASD</kbd> direkt · <kbd>Q</kbd><kbd>E</kbd> Kamera</li>
+    <li><kbd>Leer</kbd> Hüpfen · <kbd>K</kbd> Kanone</li>
+    <li><kbd>X</kbd> Massepunkte · <kbd>P</kbd> Pause</li>
+    <li><kbd>R</kbd> Reset · <kbd>F</kbd> Fraktion · <kbd>H</kbd> Panel</li>
+    <li><kbd>1</kbd>–<kbd>4</kbd> Presets</li>
+  </ul>
+</div>
+
+<div id="panel">
+  <div class="panel-head">
+    <strong>Spielgefühl</strong>
+    <button id="btn-panel" title="Panel ein-/ausblenden">✕</button>
+  </div>
+
+  <div class="presets">
+    <button data-preset="standard">Standard</button>
+    <button data-preset="traege">Träge Masse</button>
+    <button data-preset="flutschig">Flutschig</button>
+    <button data-preset="gallerte">Gallerte</button>
+  </div>
+
+  <div id="sliders"></div>
+
+  <div class="actions">
+    <button id="btn-reset">Reset</button>
+    <button id="btn-debug">Punkte</button>
+    <button id="btn-faction">Valoria</button>
+  </div>
+</div>
+
+<button id="panel-open" onclick="document.body.classList.remove('panel-hidden')">⚙</button>
+
+<script src="core.js"></script>
+<script src="softbody.js"></script>
+<script src="slime.js"></script>
+<script src="renderer.js"></script>
+<script src="main.js"></script>
+</body>
+</html>

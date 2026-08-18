@@ -1,0 +1,218 @@
+*, *::before, *::after { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  height: 100%;
+  overflow: hidden;
+  background: #080b0f;
+  color: #cfe3e0;
+  font: 13px/1.45 "Segoe UI", system-ui, sans-serif;
+  user-select: none;
+}
+
+#view {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  cursor: crosshair;
+}
+
+/* --- HUD links oben ------------------------------------------------------ */
+#hud {
+  position: fixed;
+  top: 14px;
+  left: 14px;
+  padding: 12px 14px;
+  width: 260px;
+  border-radius: 10px;
+  background: rgba(10, 16, 22, 0.72);
+  border: 1px solid rgba(120, 200, 180, 0.15);
+  backdrop-filter: blur(6px);
+  pointer-events: none;
+}
+
+#hud .title {
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: #8fe8c8;
+}
+#hud .title span {
+  display: block;
+  font-weight: 400;
+  font-size: 11px;
+  letter-spacing: 0.02em;
+  color: #7a8f92;
+}
+
+.meter {
+  height: 5px;
+  margin: 10px 0 6px;
+  border-radius: 3px;
+  background: rgba(255, 255, 255, 0.08);
+  overflow: hidden;
+}
+#hud-bar {
+  height: 100%;
+  width: 0;
+  border-radius: 3px;
+  background: linear-gradient(90deg, #3ea0d8, #8fe8c8);
+  transition: width 60ms linear;
+}
+
+.stats {
+  display: flex;
+  justify-content: space-between;
+  font-variant-numeric: tabular-nums;
+  color: #90a4a6;
+}
+.stats b { color: #dff4ee; }
+
+.keys {
+  margin: 10px 0 0;
+  padding: 10px 0 0;
+  list-style: none;
+  border-top: 1px solid rgba(255, 255, 255, 0.07);
+  font-size: 11.5px;
+  color: #8ba0a2;
+}
+.keys li { margin-bottom: 3px; }
+
+kbd {
+  display: inline-block;
+  min-width: 16px;
+  padding: 1px 5px;
+  margin-right: 4px;
+  border-radius: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background: rgba(255, 255, 255, 0.06);
+  color: #cfe3e0;
+  font: inherit;
+  font-size: 10.5px;
+}
+
+/* --- Tuning-Panel rechts ------------------------------------------------- */
+#panel {
+  position: fixed;
+  top: 14px;
+  right: 14px;
+  bottom: 14px;
+  width: 268px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 12px;
+  border-radius: 10px;
+  background: rgba(10, 16, 22, 0.82);
+  border: 1px solid rgba(120, 200, 180, 0.15);
+  backdrop-filter: blur(6px);
+  transition: transform 180ms ease, opacity 180ms ease;
+}
+body.panel-hidden #panel {
+  transform: translateX(calc(100% + 20px));
+  opacity: 0;
+  pointer-events: none;
+}
+
+.panel-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: #8fe8c8;
+  letter-spacing: 0.04em;
+}
+
+#sliders {
+  flex: 1;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+#sliders::-webkit-scrollbar { width: 6px; }
+#sliders::-webkit-scrollbar-thumb {
+  background: rgba(140, 220, 190, 0.25);
+  border-radius: 3px;
+}
+
+#sliders h3 {
+  margin: 14px 0 6px;
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #5f7f7a;
+}
+#sliders h3:first-child { margin-top: 2px; }
+
+.row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  margin-bottom: 7px;
+  font-size: 11.5px;
+  color: #a8bcbd;
+}
+.row .val {
+  font-variant-numeric: tabular-nums;
+  color: #8fe8c8;
+}
+.row input[type="range"] {
+  grid-column: 1 / -1;
+  width: 100%;
+  height: 16px;
+  margin: 2px 0 0;
+  accent-color: #3ea0d8;
+  background: transparent;
+  cursor: pointer;
+}
+
+.presets {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5px;
+}
+.actions {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 5px;
+}
+
+button {
+  padding: 6px 8px;
+  border-radius: 6px;
+  border: 1px solid rgba(140, 220, 190, 0.2);
+  background: rgba(255, 255, 255, 0.05);
+  color: #cfe3e0;
+  font: inherit;
+  font-size: 11.5px;
+  cursor: pointer;
+  transition: background 120ms ease, border-color 120ms ease;
+}
+button:hover { background: rgba(140, 220, 190, 0.15); }
+button.active {
+  background: rgba(62, 160, 216, 0.28);
+  border-color: #3ea0d8;
+  color: #eaf7ff;
+}
+.panel-head button {
+  padding: 2px 7px;
+  border: none;
+  background: none;
+  color: #6f8b8c;
+}
+
+#panel-open {
+  position: fixed;
+  top: 14px;
+  right: 14px;
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  font-size: 15px;
+  opacity: 0;
+  pointer-events: none;
+}
+body.panel-hidden #panel-open {
+  opacity: 1;
+  pointer-events: auto;
+}
