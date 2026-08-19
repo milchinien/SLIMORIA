@@ -555,16 +555,36 @@ const PARAMS = {
   flugStreck: 0.16,     // wie weit sich der Körper im freien Fall längs zieht
   flugTempo: 9,         // Fallgeschwindigkeit, ab der die Streckung voll ist
   flugFolge: 14,        // wie schnell die Flugform kommt und wieder geht
-  klatschHz: 3.6,       // Frequenz der Aufprallfeder
+  /* Frequenz und Anriss der Aufprallfeder sind gegen die GEMESSENE Zeitlage
+   * gestellt und nicht mehr nur gegen die Rechnung. Gemessen lag die tiefste
+   * Stauchung des Körpers 95 ms nach dem Kontakt, das Viertel einer 3.6-Hz-
+   * Feder aber schon bei 69 ms: die Vorgabe war im entscheidenden Bild bereits
+   * wieder auf null (`klatschGes` 0.04 bei einem Squash von 0.68). Der Körper
+   * war dort flach, weil die Bodenfeder ihn hielt — genau der Zustand, den das
+   * Urteil als "gequetscht statt ausgewichen" beschreibt. Bei 3.0 Hz liegt das
+   * Viertel bei 83 ms und trifft die Masse.
+   *
+   * Der Anriss war zu klein, um die Vorgabe überhaupt in ihren Arbeitsbereich
+   * zu bringen: aus 5.5 wurde ein Ausschlag von rund 0.25, die flachste
+   * erlaubte Höhe liegt aber 0.38 tiefer als die Ruheform. Die Untergrenze
+   * `klatschMin` war damit reine Theorie. */
+  klatschHz: 3.0,       // Frequenz der Aufprallfeder
   klatschDaempf: 0.16,  // Dämpfungsmaß der VORGABE — der Körper dämpft selbst nach
-  klatschAnriss: 5.5,   // Geschwindigkeitsanriss pro Einheit Aufprallwucht
+  klatschAnriss: 9.5,   // Geschwindigkeitsanriss pro Einheit Aufprallwucht
   /* `klatschMin` stand auf 0.78, während die Bodenfeder den Körper gemessen
    * auf 0.52 gedrückt hat. Die Vorgabe war also HÖHER als die Wirklichkeit —
    * der Körper wurde gequetscht, statt auszuweichen, und verlor dabei ein
    * Drittel seines Volumens. Das Dossier nennt für den harten Aufprall 62–68 %
    * der Ruhehöhe (§3); dort steht die Vorgabe jetzt. Die harte Untergrenze
    * "nie völlig flach" (§5) liegt laut Dossier bei 55 % — 0.62 bleibt darüber. */
-  klatschMin: 0.62,     // flachste erlaubte Höhe (GDD 01 §5: nie völlig flach)
+  /* Wie der Deckel nach oben ist auch die Untergrenze jetzt eine WEICHE
+   * Sättigung: der Wert wird angenähert, aber nie erreicht. Ein harter
+   * `Math.max` hätte bei dem nun ausreichend großen Anriss mehrere Bilder auf
+   * exakt derselben Höhe stehen lassen. Der Grenzwert steht deshalb tiefer als
+   * die Zielhöhe — gemessen landet der tiefste Aufprall damit im Dossierband
+   * 62–68 % (§3), und die harte Schranke "nie völlig flach" (55 %, §5) liegt
+   * mit 0.50 immer noch unter jedem erreichbaren Wert. */
+  klatschMin: 0.56,     // Grenzwert der Stauchung (weich, wird nie erreicht)
   /* Der Deckel nach oben ist seit dem Aufprallteller eine WEICHE Sättigung
    * (softbody.js, `saettige`), kein `Math.min` mehr. Der Wert ist deshalb
    * kein Anschlag, den die Rückfederung erreicht, sondern der Grenzwert, dem
@@ -572,11 +592,11 @@ const PARAMS = {
    * damit im Dossierband für den freien Flug (112–120 %, §4). Vorher stand
    * hier 1.46, die Rückfederung lief auf 131 % und stand dabei über vier
    * Bilder auf demselben Wert. */
-  klatschMax: 1.30,     // Grenzwert der Streckung (weich, wird nie erreicht)
+  klatschMax: 1.18,     // Grenzwert der Streckung (weich, wird nie erreicht)
   klatschKraft: 30,     // Kraft, mit der die Masse zusätzlich nach außen gewalzt wird
   klatschSchuerze: 0.12, // Schürze: wie weit der Rand beim Klatschen ausladet
-  klatschBreit: 1.45,   // wie stark die Grundfläche mitgeht (1 = exakt volumentreu)
-  klatschWulst: 0.60,   // wie weit der Bauch beim Klatschen zum Bodenrand rutscht
+  klatschBreit: 1.00,   // wie stark die Grundfläche mitgeht (1 = exakt volumentreu)
+  klatschWulst: 0.35,   // wie weit der Bauch beim Klatschen zum Bodenrand rutscht
   klatschDruck: 25,     // wie stark der Innendruck im Einschlag gegenhält
   /* --- Der Aufprallteller (siehe softbody.js, Punkt 10) --------------------
    * `klatschTeller` fährt den Superellipsen-Exponenten der unteren Flanke
@@ -588,12 +608,17 @@ const PARAMS = {
    * `klatschNachhall` ist die Rate, mit der die Erinnerung an die Walze
    * abklingt (1/s): sie hält Wulst und Teller so lange, wie die
    * breitgewalzte Masse tatsächlich noch am Boden liegt. */
-  klatschTeller: 4.2,   // Zuschlag auf den Flanken-Exponenten beim Aufprall
-  klatschDeckel: 2.3,   // Zuschlag auf den Flanken-Deckel
-  klatschRand: 0.55,    // Amplitude des Bodenwulsts
-  klatschRandOrt: 0.80, // Ort des Wulstkerns (0 = Äquator, 1 = Bodenpol)
-  klatschRandZone: 0.50,// wie weit der Wulst nach oben und unten reicht (in by)
-  klatschNachhall: 5.0, // wie schnell die Erinnerung an die Walze abklingt (1/s)
+  klatschTeller: 3.0,   // Zuschlag auf den Flanken-Exponenten beim Aufprall
+  klatschDeckel: 1.6,   // Zuschlag auf den Flanken-Deckel
+  klatschRand: 0.45,    // Amplitude des Bodenwulsts
+  klatschRandOrt: 0.88, // Ort des Wulstkerns (0 = Äquator, 1 = Bodenpol)
+  klatschRandZone: 0.40,// wie weit der Wulst nach oben und unten reicht (in by)
+  klatschNachhall: 9.0, // wie schnell die Erinnerung an die Walze abklingt (1/s)
+  klatschStauchVoll: 0.32, // gemessene Flachheit, bei der Teller und Wulst voll stehen
+  klatschSitz: 0.20,    // wie stark sich die Sollform beim Aufprall auf die Kontaktebene legt
+  klatschKehle: 0.22,   // Tiefe der Kehle zwischen Kuppe und Schuerze
+  klatschKehleOrt: 0.42,// Ort der Kehle (0 = Aequator, 1 = Bodenpol)
+  klatschKehleZone: 0.45,// wie weit die Kehle reicht (in by)
 
   // Welt
   gravity: 18,
@@ -766,6 +791,11 @@ const CONTROLS = [
   { key: 'klatschRandOrt', label: 'Aufprall: Ort des Wulsts', min: 0, max: 1, step: 0.02 },
   { key: 'klatschRandZone', label: 'Aufprall: Zone des Wulsts', min: 0.15, max: 1.2, step: 0.05 },
   { key: 'klatschNachhall', label: 'Aufprall: Nachhall der Walze (1/s)', min: 0.5, max: 20, step: 0.5 },
+  { key: 'klatschStauchVoll', label: 'Aufprall: Flachheit fuer vollen Wulst', min: 0.1, max: 0.6, step: 0.01 },
+  { key: 'klatschSitz', label: 'Aufprall: Sitz auf der Kontaktebene', min: 0, max: 0.32, step: 0.01 },
+  { key: 'klatschKehle', label: 'Aufprall: Kehle ueber der Schuerze', min: 0, max: 0.4, step: 0.01 },
+  { key: 'klatschKehleOrt', label: 'Aufprall: Ort der Kehle', min: 0, max: 1, step: 0.02 },
+  { key: 'klatschKehleZone', label: 'Aufprall: Zone der Kehle', min: 0.15, max: 1.2, step: 0.05 },
 ];
 
 /* Sichtbare Größe kommt ausschließlich vom Level (GDD 01 §29, §45–48).

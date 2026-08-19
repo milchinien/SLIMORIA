@@ -127,6 +127,29 @@
  *     Koerper liegt, bleibt nichts uebrig. Der Schleim klebt als Aufkleber
  *     auf der Wiese.
  *
+ * ---------------------------------------------------------------------------
+ * (E) Das ERGEBNIS dieses Moduls, an genau derselben Stelle gemessen wie (D),
+ *     `gauntlet/shots/g-schattenkante/sf-2/frame_000.png`:
+ *
+ *     Flaechenprobe Schatten  (250,640,120x40)  RGB(56,3 · 63,7 · 60,9)  L 61,9
+ *     Flaechenprobe Boden     (250,740,120x30)  RGB(121,2 · 112,1 · 98,5) L 113,0
+ *       Verhaeltnis   0,548               (D) 0,846 · Genshin (A) 0,443
+ *       kanalweise    R 0,464 · G 0,568 · B 0,618
+ *       auf Gruen     0,817 / 1,000 / 1,088   (D) 1,004 / 1,000 / 1,058
+ *
+ *     Senkrechter Schnitt durch die Kante, Spalte x = 300:
+ *       y 582..591  Boden      L 116,8 .. 118,0   (Plateau, Streuung 1,2)
+ *       y 592       L  85,3                        <- EIN Uebergangspixel
+ *       y 593..700  Schatten   L  63,1 ..  64,3   (Plateau, Streuung 1,2)
+ *       Flanke      1 px       (D) 6 px · Genshin (A) 1,7 px auf 1600
+ *
+ *     Die Farbdrehung faellt hier schwaecher aus als in (A), und das ist
+ *     richtig: `g-schattenkante` faehrt die Sonne auf 0,34 Hoehe, licht.js
+ *     liegt damit zwischen goldener Stunde und Vormittag, und dort ist der
+ *     Zenit dunkles Petrol statt Mittagsblau. Bei Mittagssonne rechnet
+ *     dieselbe Formel (0,721 / 1,007 / 1,272) — der Zielwert aus (A) ist
+ *     (0,787 / 1,000 / 1,258).
+ *
  * ===========================================================================
  * 2. Wie die Form entsteht — und warum nicht ueber die Schattenkarte
  * ===========================================================================
@@ -249,9 +272,11 @@
  * ===========================================================================
  *
  *   - Es zeichnet KEINE Kontaktzone. Der Saum, in dem die Masse den Boden
- *     beruehrt, gehoert `schleim/kontakt.js` (ordnung 55, also unmittelbar
- *     danach). Zwei Module, die denselben Ring abdunkeln, ergeben vier
- *     Tonstufen statt zwei.
+ *     beruehrt, gehoert `schleim/kontakt.js` (ordnung 55). Zwei Module, die
+ *     denselben Ring abdunkeln, ergeben vier Tonstufen statt zwei. Dass die
+ *     Zone unter dem Koerper trotzdem dunkler ausfaellt als der freie Wurf
+ *     (gemessen 0,35 gegen 0,55), ist die Summe beider Module — und genau
+ *     das Verhaeltnis, das (B) am Fuss der Laternensaeule zeigt.
  *   - Es zeichnet KEINEN Schatten fuer Kreaturen, Felsen, Ausstattung. Die
  *     haengen an `schatten.js`.
  *   - Es faerbt NICHT den Koerper. Das ist `gel.js` und `schleim/innen.js`.
@@ -263,11 +288,20 @@
  * ===========================================================================
  *
  * `schatten.js` zeichnet den Schleim weiterhin in seine Karte, und sein
- * Notbehelf auf der Bodenebene legt daraus 0,856 auf denselben Fleck. Wo
- * beide liegen, multipliziert sich das: 0,55 · 0,856 = 0,47 — mitten im
- * Zielband aus (A). Ausserhalb der eigenen, harten Silhouette bleibt vom
- * alten Wurf ein 15-%-Saum von wenigen Pixeln stehen; er ist schwaecher als
- * die eigene Kante und liest sich als deren Fuss, nicht als zweite Kante.
+ * Notbehelf 'bodenschatten' (ordnung 26) legt daraus 0,86 auf denselben
+ * Fleck — unmittelbar vor diesem Modul. Gemessen in `wabbeln`, Spalte 700:
+ *
+ *     freier Boden                 L 192,7
+ *     nur schatten.js (Saum)       L 166,1     Verhaeltnis 0,862
+ *     beide Lagen                  L  67,4     Verhaeltnis 0,349
+ *
+ * Wo beide liegen, multipliziert sich das. Ausserhalb der eigenen, harten
+ * Silhouette bleibt vom alten Wurf ein 14-%-Saum von wenigen Pixeln stehen.
+ * Er ist viermal schwaecher als die eigene Kante und liest sich als deren
+ * Fuss, nicht als zweite Kante — nachzusehen im Zeilenscan von
+ * `tools/grafikmass.mjs` auf `wabbeln` Zeile 620: die Sprungstelle bei
+ * x = 686 hat Flanke 1 px und Verhaeltnis 0,545, die schwache bei x = 370
+ * Flanke 1 px und 0,74.
  *
  * Sauber waere es trotzdem nicht. Deshalb steht am Ende der Datei ein
  * BRAUCHT_FREMDAENDERUNG fuer `schatten.js`: den Schleim aus dem
@@ -281,8 +315,20 @@
  *
  * Kein Math.random, kein Date, kein performance.now. Alles, was dieses Modul
  * rechnet, haengt an `ctx.slime.body`, `ctx.licht.richtung` und
- * `ctx.licht.himmel`. `ctx.time` wird nicht einmal gebraucht: der Schatten
- * hat keine Eigenbewegung.
+ * `ctx.licht.zenit`. `ctx.time` dient ausschliesslich als Bildmarke fuer den
+ * Netz-Upload (einmal je Bild) und geht in keine Farbe und keine Lage ein:
+ * der Schatten hat keine Eigenbewegung.
+ *
+ * ===========================================================================
+ * 8. Kosten
+ * ===========================================================================
+ *
+ * Ein zusaetzlicher `drawElements` auf das Schleimnetz (5120 Dreiecke), ein
+ * Vertex-Shader aus acht Zeilen, ein Fragment-Shader, der eine Konstante
+ * schreibt. Der Netz-Upload faellt nur an, wenn ihn in diesem Bild noch
+ * niemand gemacht hat. Die Flaeche ist klein: der Wurf deckt bei
+ * Standardkamera rund 2 % des Bildes, bei streifendem Licht rund 6 %.
+ * Kein Framebuffer, keine Textur, kein zweiter Durchgang.
  * ------------------------------------------------------------------------- */
 
 (function () {

@@ -53,6 +53,10 @@ function createSoftBody(mesh, x, y, z, radius) {
      * Geschwindigkeit; ohne sie könnte die Silhouette nur zum Ziel kriechen
      * und niemals darüber hinaus (GDD 01 §13). */
     scherLV: 0,
+    /* Wie flach der Körper GERADE IST, gemessen an seiner eigenen Ruhehöhe:
+     * 0 = Ruheform, 0.35 = harter Aufprall laut Dossier §3. Am Ende von
+     * updateRestShape abgelesen; sie treibt den Aufprallteller. */
+    stauchIst: 0,
     vxPrev: 0, vzPrev: 0,
     laengsZug: 0,               // wie weit der Körper über seine Sollform hinausgezogen ist
     /* Wie sehr der Körper gerade auf dem Boden steht (0…1, geglättet).
@@ -526,7 +530,7 @@ function updateRestShape(b, P, t, fx, fz, speedRatio, slump, nachzug, vollgas,
   const roh = 1 - kl;
   const klHoch = roh >= 1
     ? 1 + saettige(roh - 1, Math.max(P.klatschMax - 1, 1e-3))
-    : Math.max(P.klatschMin, roh);
+    : 1 - saettige(1 - roh, Math.max(1 - P.klatschMin, 1e-3));
   /* Die Übertreibung gilt nur für das FLACHWERDEN. Im Flug ist der Körper
    * gestreckt, und dort verlangt das Dossier ausdrücklich die sauberste
    * Ellipse des ganzen Materials (§4) — eine zusätzlich eingeschnürte
@@ -821,13 +825,76 @@ function updateRestShape(b, P, t, fx, fz, speedRatio, slump, nachzug, vollgas,
    * mit gerader Kante unter dem abhebenden Körper (Bilder 6–9 des alten
    * Kontaktbogens). Die Erinnerung steigt sofort und fällt langsam; sie
    * beschreibt nicht die Feder, sondern wo die Masse ist. */
-  b.plattNach = Math.max(platt, b.plattNach - dt * Math.max(P.klatschNachhall, 0.1));
+  /* Und getrieben werden sie nicht nur von der Aufprallfeder, sondern vor
+   * allem von der GEMESSENEN Flachheit `b.stauchIst` (am Ende dieser Funktion
+   * am eigenen Körper abgelesen).
+   *
+   * Das war der zweite Teil des Befunds und der überraschendere. Gemessen
+   * stand die Feder im Bild der tiefsten Stauchung schon fast wieder auf null
+   * (`klatschGes` 0.04 bei einem Squash von 0.68): der Körper war zu diesem
+   * Zeitpunkt flach, weil die BODENFEDER ihn hielt, nicht weil die Vorgabe es
+   * verlangte. Ein Wulst, der an der Vorgabe hängt, ist dann längst wieder
+   * weg, wenn die Masse tatsächlich zur Seite muss.
+   *
+   * Die gemessene Flachheit hat dieses Problem nicht — sie ist per
+   * Konstruktion mit dem Zustand synchron, den man sieht. Sie ist außerdem
+   * lane-sicher, weil sie gegen die AKTUELLE Ruhehöhe misst: fährt `death.js`
+   * `squat` herunter, sinkt die Ruhehöhe mit und die Pfütze gilt nicht als
+   * gestaucht. */
+  const stauch = begrenze(b.stauchIst / Math.max(P.klatschStauchVoll, 0.05), 0, 1);
+  b.plattNach = Math.max(Math.max(platt, stauch),
+                         b.plattNach - dt * Math.max(P.klatschNachhall, 0.1));
   const teller = begrenze(b.plattNach, 0, 1);
   const flankeN = P.flanke + P.klatschTeller * teller;
   const flankeDeckel = P.flankeMax + P.klatschDeckel * teller;
   const randAmp = P.klatschRand * teller;
   const randMitte = -begrenze(P.klatschRandOrt, 0, 1);
   const randZone = Math.max(0.15, P.klatschRandZone);
+  /* SITZ — und ohne ihn arbeiten Teller und Wulst ins Leere.
+   *
+   * Gemessen reichte die Sollform beim Einschlag 0.67 Radien unter den
+   * Schwerpunkt, der Schwerpunkt stand aber nur 0.21 über dem Boden: zwei
+   * Drittel der unteren Halbkugel lagen UNTER der Bodenebene. Alles davon
+   * drückt die Bodenfeder auf dieselbe Zeile, und damit landet jeder
+   * Formregler, der auf `by` zielt, irgendwo in derselben Aufstandsfläche —
+   * der Wulst bei by = -0.8 war von der Flanke bei by = -0.4 nicht mehr zu
+   * unterscheiden. Am Zeilenprofil sah man genau das: eine gerade Flanke von
+   * 0.55 bis 0.85 der Höhe auf konstant 0.95…1.00 Breite, kein Wulst.
+   *
+   * Der Sitz staucht deshalb die untere Halbhöhe der VORGABE, sobald der
+   * Körper flach ist: die Sollform legt sich auf die Kontaktebene, statt
+   * durch sie hindurchzureichen. Danach bildet sie die Höhe wieder ab, und
+   * der Wulst sitzt da, wo er hingehört.
+   *
+   * Als `1 - s·by²` geschrieben und nicht als Schalter bei by = 0: Wert und
+   * Steigung gehen am Äquator stetig ineinander über, sonst stünde dort eine
+   * Knickkante — und die Kontur soll gerade keine mehr haben. Der Faktor
+   * bleibt streng monoton, solange s < 1/3 ist. */
+  const sitz = begrenze(P.klatschSitz, 0, 0.32) * teller;
+  /* KEHLE — der zweite Halbteil des Wulsts, und der billigere von beiden.
+   *
+   * Das Urteil der ersten Runde beschreibt die Zielkontur wörtlich: "der
+   * Übergang von Körperkuppe in den ausgeworfenen Randwulst ist eine
+   * durchgehende S-KURVE". Eine S-Kurve hat einen Wendepunkt — von oben nach
+   * unten wächst die Breite erst mit abnehmender Steigung (die Kuppe) und
+   * dann wieder mit zunehmender (die Flare in die Schürze). Unsere Kontur war
+   * über die ganze Höhe rein konkav: eine Kuppel, kein Wulst.
+   *
+   * Den Wendepunkt allein über mehr Wulst zu holen, geht nicht — gemessen
+   * riss bei einer Amplitude über 0.7 das Volumen auf 0.65 ein, weil die
+   * Masse einer so scharfen Torusvorgabe nicht folgen kann, und die
+   * Gesamtbreite lief auf das 1.67-fache statt der 1.23…1.30, die das Dossier
+   * für den harten Aufprall nennt (§3).
+   *
+   * Die Kehle nimmt statt dessen Querschnitt aus der FLANKE über dem Wulst.
+   * Der Wendepunkt entsteht damit aus der Differenz zweier flacher Bögen
+   * statt aus einem steilen — das Volumen bleibt stehen, die größte Breite
+   * auch, und die Kuppe wird als eigener Körper über der Schürze lesbar.
+   * Bewusst flach gehalten: eine tiefe Einschnürung würde die
+   * Blob-Identität zur Frage eines einzigen Bildes machen (GDD 01 §5). */
+  const kehleAmp = begrenze(P.klatschKehle, 0, 0.4) * teller;
+  const kehleMitte = -begrenze(P.klatschKehleOrt, 0, 1);
+  const kehleZone = Math.max(0.15, P.klatschKehleZone);
 
   /* --- 6. Der Gelfuß: der Körper läuft nach unten rund AUS ----------------
    * Das ist die Fähigkeit, die dem Ruhezustand zuletzt gefehlt hat, und der
@@ -879,8 +946,18 @@ function updateRestShape(b, P, t, fx, fz, speedRatio, slump, nachzug, vollgas,
   /* Der Einzug weicht dem Aufprallteller — und zwar so lange, wie die
    * breitgewalzte Masse am Boden liegt (`teller` statt `platt`, siehe Punkt
    * 10). Beides gleichzeitig hieße, dieselbe Partie in derselben Zeile nach
-   * außen und nach innen zu ziehen. */
-  const fuss = P.fuss * b.bodenNah * (1 - teller)
+   * außen und nach innen zu ziehen.
+   *
+   * Und er weicht auch dem ZUG. Der Gelfuß ist eine Antwort auf Gewicht —
+   * das steht seit Runde 2 in seiner eigenen Herleitung —, ein Körper, der
+   * sich gerade vom Boden abhebt, trägt aber keines. Ohne diesen Anteil
+   * schnürte der Einzug die Masse genau in dem Moment ein, in dem die
+   * Aufstandsfläche noch klebte und der Körper schon stieg: auf dem
+   * Kontaktbogen stand ein Pilz — eine Kuppe auf einem Stiel über einer
+   * flachen Scheibe (Bilder 9 und 10). Mit dem Zugterm bleibt daraus ein
+   * durchgehend rundes Abziehen. */
+  const zug = begrenze((klHoch - 1) / Math.max(P.klatschMax - 1, 1e-3), 0, 1);
+  const fuss = P.fuss * b.bodenNah * (1 - teller) * (1 - zug)
              * (1 - begrenze(P.anrollFuss, 0, 1) * anroll)
              * (1 - begrenze(P.kehreFuss, 0, 1) * kehrStark);
   const fussZone = Math.max(0.08, P.fussZone);
@@ -946,6 +1023,7 @@ function updateRestShape(b, P, t, fx, fz, speedRatio, slump, nachzug, vollgas,
     const spread = flanke
                  * (1 + sag * bogen(by, bauchMitte, bauchBreite))
                  * (1 + randAmp * bogen(by, randMitte, randZone))
+                 * (1 - kehleAmp * bogen(by, kehleMitte, kehleZone))
                  * (1 - fuss * bogen(by, fussMitte, fussZone));
 
     const ang = Math.atan2(bz, bx);
@@ -1062,7 +1140,8 @@ function updateRestShape(b, P, t, fx, fz, speedRatio, slump, nachzug, vollgas,
      * Bodenkontakt fängt genau das ab — dieselbe Bauart wie `heckSenke`
      * eine Zeile darüber, die aus demselben Grund ebenfalls nicht
      * mittelwertfrei ist. */
-    b.rest[k + 1] = by * ry - keil * af + senke * af - heckSenke * heck * heck
+    const sitzF = by < 0 ? 1 - sitz * by * by : 1;   // siehe SITZ oben
+    b.rest[k + 1] = by * ry * sitzF - keil * af + senke * af - heckSenke * heck * heck
                   - kehrSenke * heck * heck;
     b.rest[k + 2] = fz * laengs + sz * quer;
   }
@@ -1076,15 +1155,27 @@ function updateRestShape(b, P, t, fx, fz, speedRatio, slump, nachzug, vollgas,
    * Fahrtachse davongelaufen ist. Der Wert treibt im nächsten Schritt die
    * Taille (siehe oben). Ein Bild Verzug bei 240 Hz ist nicht nur unschädlich,
    * sondern richtig: die Einschnürung soll dem Ziehen NACHlaufen (§66). */
-  let ist = 0, soll = 0;
+  let ist = 0, soll = 0, yLo = Infinity, yHi = -Infinity;
   for (let i = 0; i < b.n; i++) {
     const k = i * 3;
     const a = Math.abs((b.pos[k] - b.cx) * fx + (b.pos[k + 2] - b.cz) * fz);
     if (a > ist) ist = a;
     const s = Math.abs(b.rest[k] * fx + b.rest[k + 2] * fz);
     if (s > soll) soll = s;
+    const y = b.pos[k + 1];
+    if (y < yLo) yLo = y;
+    if (y > yHi) yHi = y;
   }
   b.laengsZug = begrenze(ist / Math.max(soll, 1e-5) - 1, 0, 1.6);
+
+  /* Die gemessene Flachheit, in derselben Währung wie `metrics().squash`:
+   * Silhouettenhöhe geteilt durch die Ruhehöhe 2R·squat. Im Stand ist sie
+   * per Auslegung 0, beim harten Aufprall nennt das Dossier 0.62–0.68 der
+   * Ruhehöhe, also 0.32–0.38 hier. Sie hinkt der Bewegung um ein Bild bei
+   * 240 Hz nach — und das ist richtig so: die Masse weicht aus, NACHDEM sie
+   * gedrückt wurde (GDD 01 §66). */
+  const ruheHoch = 2 * R * Math.max(P.squat, 0.05);
+  b.stauchIst = begrenze(1 - (yHi - yLo) / ruheHoch, 0, 1);
 }
 
 function stepSoftBody(b, dt, P, world, ctx) {

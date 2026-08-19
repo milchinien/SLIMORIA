@@ -65,47 +65,60 @@
  * und duenn, und dort kippen die flaechengewichteten Normalen aus `core.js`.
  *
  * ---------------------------------------------------------------------------
- * WAS NICHT FUNKTIONIERT HAT — und warum es hier trotzdem steht
+ * ZWEI SACKGASSEN — beide gebaut, gemessen und wieder ausgebaut. Sie stehen
+ * hier, damit sie nicht ein zweites Mal gebaut werden.
  *
- * Der naheliegende Griff ist eine Taubin-Glaettung ueber das GANZE Netz. Sie
- * ist gebaut, gemessen und wieder abgeschaltet worden:
+ * (1) TAUBIN UEBER DAS GANZE NETZ. Der naheliegende Griff.
  *
  *      vier Durchgaenge 0,50 / -0,53   p99 25,73 -> 24,20   max 114 -> 96
  *      Kosten (SwiftShader, p10 der Zeichenzeit)            +1,6 ms je Bild
  *
- * Eineinhalb Grad auf p99 fuer anderthalb Millisekunden. Der Grund ist die
- * Rechnung selbst: ein Spektralfilter daempft nach WELLENLAENGE IN KANTEN.
- * Bei einem Netz mit 21 : 1 gestreuten Kantenlaengen hat die sichtbare Falte
- * aber keine feste Wellenlaenge — sie ist ein einzelner, oertlicher Knick.
- * Ein Filter, der alles gleich behandelt, muss dafuer entweder viel zu schwach
- * oder viel zu teuer eingestellt werden.
+ *     Eineinhalb Grad auf p99 fuer anderthalb Millisekunden. Der Grund ist die
+ *     Rechnung selbst: ein Spektralfilter daempft nach WELLENLAENGE IN KANTEN.
+ *     Bei 21 : 1 gestreuten Kantenlaengen hat die sichtbare Falte aber keine
+ *     Wellenlaenge — sie ist ein einzelner, oertlicher Knick. Ein Filter, der
+ *     alles gleich behandelt, muss dafuer entweder viel zu schwach oder viel
+ *     zu teuer eingestellt werden. Der Regler `taubin` steht auf 0; er bleibt
+ *     erhalten, damit der Befund nachprüfbar ist statt nur behauptet.
  *
- * Der Regler `taubin` steht deshalb auf 0. Er bleibt erhalten, damit dieser
- * Befund nachprüfbar ist statt nur behauptet.
+ * (2) TAUBIN-PAAR AUF DER TEILMENGE, an Ort und Stelle gerechnet. Klang nach
+ *     dem Besten aus beidem und war das Schlechteste: gemessen an `aufprall`
+ *     p99 42,0 -> 44,2, also HOEHER als ohne Behandlung. Zwei Gruende:
+ *       - (1-lambda k)(1-mu k) gilt fuer VOLLE Durchgaenge. Auf einer
+ *         Teilmenge liest der aufblaehende Schritt einen Schwerpunkt, der
+ *         gerade eingelaufen ist, und schiesst darueber hinaus.
+ *       - An Ort und Stelle liest ein Punkt Nachbarn, die in derselben Runde
+ *         schon gewandert sind. Auf einem Grat laeuft das der Gratlinie
+ *         entlang und schiebt den Knick weiter, statt ihn abzutragen.
+ *     Gerechnet wird deshalb JACOBI und OHNE aufblaehenden Schritt.
  *
  * ---------------------------------------------------------------------------
- * WAS STATTDESSEN GEMACHT WIRD — Knickbegrenzung
+ * WAS GEMACHT WIRD — Knickbegrenzung
  *
  * Behandelt wird, was kaputt ist, und nur das.
  *
- * 1. Die Flaechennormalen aller Dreiecke einmal ausrechnen.
- * 2. Ueber die Kantenliste laufen: wo zwei benachbarte Dreiecke steiler als
- *    `knickGrad` gegeneinander stehen, sind ihre beiden Endpunkte markiert.
- *    Der Fall „Oberflaeche in sich selbst gefaltet" braucht keinen eigenen
- *    Test — ein umgestuelptes Dreieck liegt zwangslaeufig ueber 90 Grad und
- *    steht damit ohnehin schon in dieser Liste.
+ * 1. Flaechennormalen aller Dreiecke ausrechnen.
+ * 2. Ueber die Kanten laufen: wo zwei benachbarte Dreiecke steiler als
+ *    `knickGrad` gegeneinander stehen, sind beide Endpunkte markiert. Der
+ *    Fall „Oberflaeche in sich selbst gefaltet" braucht keinen eigenen Test —
+ *    ein umgestuelptes Dreieck liegt zwangslaeufig ueber 90 Grad und steht
+ *    damit ohnehin in dieser Liste.
  * 3. Markierung um einen Ring ausweiten. Ohne das sitzt die Reparatur in
  *    einem Krater, dessen Rand im Umriss genauso auffaellt wie die Falte.
- * 4. Auf der Markierung ein Taubin-PAAR: ein schrumpfender Schritt lambda,
- *    ein aufblaehender Schritt mu = -(lambda + band). Der zweite Schritt ist
- *    kein Zierat — ohne ihn zieht sich die behandelte Stelle ein und aus der
- *    Falte wird eine Delle.
- * 5. Wiederholen. Vor jeder Runde werden nur die Flaechennormalen der
- *    Dreiecke neu gerechnet, die einen bewegten Punkt haben — bei rund 300
- *    bewegten Punkten sind das 6 % des Netzes.
- * 6. Ist ueberhaupt nichts bewegt worden, werden auch die Normalen NICHT neu
- *    gerechnet: dann wird die Huelle unveraendert durchgereicht und das Modul
- *    kostet nur seinen Suchlauf.
+ * 4. Ein Laplace-Schritt (JACOBI, `lambda`) auf der Markierung: erst alles aus
+ *    dem unveraenderten Stand rechnen, dann zurueckschreiben.
+ * 5. Wiederholen, `runden` mal. Der SUCHLAUF ist der teure Teil, nicht das
+ *    Ziehen: er faehrt ueber alle Dreiecke des beruehrten Gebiets, das Ziehen
+ *    nur ueber dessen Punkte. Deshalb wird nur jede `pruefJede`-te Runde neu
+ *    gesucht — und in jedem Fall die letzte.
+ * 6. Ist nichts bewegt worden, werden auch die Normalen NICHT neu gerechnet:
+ *    dann wird die Huelle unveraendert durchgereicht.
+ *
+ * Ohne aufblaehenden Schritt schrumpft die behandelte Stelle ein wenig. Das
+ * ist unbedenklich, weil dieses Modul JEDES Bild von der unbearbeiteten Huelle
+ * ausgeht: es gibt keine Anhaeufung ueber die Zeit, also kein Einfallen des
+ * Koerpers. Gemessen ueber `aufprall`: Hoehe 1,75 -> 1,74 (-0,6 %), Breite
+ * 2,06 -> 2,03 (-1,5 %). Die Verformung bleibt also lesbar (GDD 01 §63).
  *
  * Die Normalen, falls sie neu gerechnet werden, bekommen MAX-GEWICHTE:
  * Beitrag eines Dreiecks an seiner Ecke a ist n / (|ab|^2 |ac|^2) statt der
@@ -113,6 +126,27 @@
  * einer Normale, die dem groessten Nachbardreieck folgt, und einer, die der
  * Oberflaeche folgt. `gel.js` potenziert die Normale im Fresnel-Term mit 3 —
  * jeder Fehler darin steht dreifach im Rand.
+ *
+ * ---------------------------------------------------------------------------
+ * WAS ES BRINGT UND WAS ES KOSTET (knickGrad 12, runden 12, lambda 0,90,
+ * pruefJede 3 — Mittel ueber alle Bilder des Szenarios, Knickwinkel in Grad
+ * ueber ALLE 7680 Kanten vorher und nachher gemessen)
+ *
+ *                     p95            p99            >20 Grad      >60 Grad
+ *   aufprall     11,0 -> 9,7    41,0 -> 20,0    132 -> 77      36 -> 8
+ *   wabbeln      12,7 -> 10,8  118,2 -> 31,9    195 -> 129    108 -> 37
+ *
+ * Kosten, SwiftShader, p10 der Zeichenzeit ueber 80 Laeufe, `aufprall`:
+ *
+ *   Modul aus                       1,50 ms
+ *   runden 0 (nur der Suchlauf)     1,70 ms     +0,20
+ *   runden 6                        2,70 ms     +1,20
+ *   runden 12  <- Vorgabe           3,00 ms     +1,50
+ *   runden 20                       4,00 ms     +2,50
+ *
+ * Anderthalb Millisekunden gegen 16,7 ms Budget bei 60 Hz, und der Regler
+ * `runden` ist der Knopf, an dem man dreht, wenn es woanders eng wird:
+ * bei 6 Runden bleibt gut die Haelfte der Wirkung fuer 1,2 ms.
  *
  * ---------------------------------------------------------------------------
  * WARUM DIE PUNKTE NICHT ZURUECKGESCHRIEBEN WERDEN
@@ -150,12 +184,17 @@
  *   messen      true -> Knickstatistik vorher/nachher rechnen. Kostet, ist
  *               also nur fuer Werkzeuge gedacht.
  *   quelle      die unbearbeitete Huelle
- *   scharf      Kanten ueber knickGrad, vor der Behandlung
- *   scharfRest  ... danach
+ *   scharf      Kanten ueber knickGrad im ganzen Netz, vor der Behandlung
+ *   scharfRest  dieselbe Zahl beim letzten Suchlauf — der faehrt aber nur noch
+ *               ueber das BERUEHRTE GEBIET, zaehlt also auch neu entstandene
+ *               Kanten dort mit. Wer die ehrliche Vorher/Nachher-Zahl ueber
+ *               alle 7680 Kanten will, setzt `messen` und liest `mass`.
  *   falten      Kanten ueber 90 Grad (Oberflaeche auf sich selbst), vorher
- *   faltenRest  ... danach
+ *   faltenRest  ... beim letzten Suchlauf, mit derselben Einschraenkung
  *   punkte      wie viele Punkte bewegt wurden
- *   runden      wie viele Runden gebraucht wurden
+ *   runden      wie viele Runden gelaufen sind
+ *   mass        nur bei `messen`: vollstaendige Knickstatistik vorher/nachher
+ *               samt Ausdehnung, zum Nachweis der erhaltenen Verformung
  * ========================================================================= */
 
 (function () {
@@ -167,17 +206,23 @@
   }
 
   /* --- Stellschrauben, Vorgabewerte -------------------------------------
-   * knickGrad 18: der Koerper hat p50 1,9 und p90 5,0 Grad. 18 Grad ist rund
-   * das Vierfache der Kruemmung, die eine Kugel dieser Feinheit ueberhaupt
-   * hat — darunter liegt keine Verformung, sondern nur noch ein Fehler.
-   * Kleiner gewaehlt faengt die Grenze echte Verformung ein (der Rocksaum
-   * eines gestauchten Koerpers ist legitim eng), groesser laesst sichtbare
-   * Knicke stehen. */
+   * knickGrad 12: das Netz hat p50 1,9 und p90 5,0 Grad. Zwoelf Grad ist rund
+   * das Doppelte dessen, was eine Kugel dieser Feinheit ueberhaupt an
+   * Kruemmung je Kante hat (0,081 m Kante bei rund 1 m Halbmesser -> 4,6 Grad).
+   * Darueber liegt keine Verformung mehr, sondern ein Fehler.
+   * Bei 10 Grad wird es minimal glatter (p99 20,0 -> 19,7), aber die Zahl der
+   * angefassten Punkte steigt von 517 auf 707 und damit die Kosten; bei 18
+   * bleibt zuviel stehen (p99 nur bis 26,6).
+   *
+   * lambda 0,90: gemessen deutlich wirksamer als 0,50 oder 0,70 bei gleicher
+   * Rundenzahl (aufprall, p99: 0,70 -> 23,1 gegen 0,90 -> 20,0). Ueber 1,0
+   * darf es nicht gehen — dann springt der Punkt ueber den Schwerpunkt hinaus
+   * und die Runde schwingt. */
   const P = {
-    knickGrad: 10,
-    runden: 20,
-    lambda: 0.50,
-    band: 0.03,
+    knickGrad: 12,
+    runden: 12,
+    lambda: 0.90,
+    pruefJede: 3,     // nur jede n-te Runde neu suchen (der Suchlauf ist der teure Teil)
     taubin: 0,        // globale Taubin-Durchgaenge — gemessen wirkungslos, s.o.
   };
 
@@ -191,7 +236,6 @@
     a: null, b: null,            // Punktpuffer (b nur fuer globales Taubin)
     fn: null,                    // Flaechennormalen
     nrm: null,                   // Punktnormalen
-    marke: null, marke2: null,
     schmutz: null,               // Dreiecke, deren Normale neu muss
     huelle: null,
   };
@@ -344,45 +388,6 @@
     }
   }
 
-  /* Laplace-Schritt auf den markierten Punkten, JACOBI: gelesen wird aus dem
-   * Stand vom Rundenbeginn (`alt`), geschrieben nach `pos`.
-   *
-   * Warum nicht an Ort und Stelle, und warum ohne den aufblaehenden
-   * Taubin-Schritt — beides ist gebaut und wieder verworfen worden:
-   *
-   *   an Ort und Stelle   Ein Punkt liest Nachbarn, die in derselben Runde
-   *                       schon bewegt wurden. Auf einem Grat laeuft das der
-   *                       Gratlinie entlang und schiebt den Knick weiter,
-   *                       statt ihn abzutragen.
-   *   Taubin-Paar         (1-lambda k)(1-mu k) gilt fuer VOLLE Durchgaenge.
-   *   lambda / mu         Auf einer Teilmenge stimmt die Rechnung nicht mehr:
-   *                       der aufblaehende Schritt liest einen Schwerpunkt,
-   *                       der gerade eingelaufen ist, und schiesst darueber
-   *                       hinaus. Gemessen an `aufprall`: p99 42,0 -> 44,2
-   *                       statt herunter. Er ist deshalb draussen.
-   *
-   * Ohne aufblaehenden Schritt schrumpft die behandelte Stelle ein wenig —
-   * unbedenklich, weil dieses Modul jedes Bild von der unbearbeiteten Huelle
-   * ausgeht. Es gibt keine Anhaeufung ueber die Zeit, also auch kein
-   * Einfallen des Koerpers. Das ist der Grund, warum hier ueberhaupt ohne
-   * Volumenkorrektur gearbeitet werden darf. */
-  function ziehen(pos, alt, marke, kraft, off, nb, n) {
-    for (let i = 0; i < n; i++) {
-      if (!marke[i]) continue;
-      const s = off[i], e = off[i + 1], anz = e - s;
-      if (anz === 0) continue;
-      let sx = 0, sy = 0, sz = 0;
-      for (let j = s; j < e; j++) {
-        const k = nb[j] * 3;
-        sx += alt[k]; sy += alt[k + 1]; sz += alt[k + 2];
-      }
-      const k = i * 3, inv = 1 / anz;
-      pos[k] = alt[k] + kraft * (sx * inv - alt[k]);
-      pos[k + 1] = alt[k + 1] + kraft * (sy * inv - alt[k + 1]);
-      pos[k + 2] = alt[k + 2] + kraft * (sz * inv - alt[k + 2]);
-    }
-  }
-
   /* Voller Laplace-Durchgang (nur fuer den abgeschalteten Taubin-Regler). */
   function laplace(ziel, quelle, lam, off, nb, n) {
     for (let i = 0; i < n; i++) {
@@ -447,7 +452,7 @@
       { key: 'knickGrad', min: 4, max: 60, step: 1, wert: P.knickGrad },
       { key: 'runden', min: 0, max: 40, step: 1, wert: P.runden },
       { key: 'lambda', min: 0.0, max: 0.90, step: 0.05, wert: P.lambda },
-      { key: 'band', min: 0.005, max: 0.20, step: 0.005, wert: P.band },
+      { key: 'pruefJede', min: 1, max: 8, step: 1, wert: P.pruefJede },
       { key: 'taubin', min: 0, max: 6, step: 1, wert: P.taubin },
     ],
 
@@ -477,7 +482,7 @@
       const grenze = Math.cos(Math.max(1, zahl('knickGrad')) * Math.PI / 180);
       const runden = Math.max(0, Math.round(zahl('runden')));
       const lambda = Math.max(0, Math.min(0.9, zahl('lambda')));
-      const mu = 0;
+      const pruefJede = Math.max(1, Math.round(zahl('pruefJede')));
       const taubin = Math.max(0, Math.round(zahl('taubin')));
 
       const idx = quelle.indices, n = S.n;
@@ -494,68 +499,84 @@
 
       let bewegt = false, gelaufen = 0;
       let scharf = 0, falten = 0, restScharf = 0, restFalten = 0, punkte = 0;
-      let anzM = 0, anzF = 0;
+      let anzM = 0, anzF = 0, anzD = 0;
+      let pruefen = true;
 
       for (let r = 0; r <= runden; r++) {
-        S.runde++;
-        const stempel = S.runde;
+        /* --- Suchen ---------------------------------------------------- */
+        if (pruefen) {
+          S.runde++;
+          const stempel = S.runde;
 
-        /* Flaechennormalen: Runde 0 alle, danach nur die schmutzigen. */
-        if (r === 0) flaechenNormalen(a, idx, fn, null, null, S.dreiecke);
-        else flaechenNormalen(a, idx, fn, listeF, anzF, S.dreiecke);
+          /* Flaechennormalen: Runde 0 alle, danach nur die beruehrten. */
+          if (r === 0) flaechenNormalen(a, idx, fn, null, null, S.dreiecke);
+          else flaechenNormalen(a, idx, fn, listeF, anzF, S.dreiecke);
 
-        /* Kanten pruefen: Runde 0 alle, danach nur die der schmutzigen
-         * Dreiecke. Ein Dreieck kippt auch, wenn nur seine dritte Ecke
-         * gewandert ist — deshalb ueber die Dreiecke, nicht ueber die
-         * Punkte. */
-        anzM = 0;
-        let treffer = 0, ueber90 = 0;
-        const pruefe = (e) => {
-          const g2 = kf[e * 2 + 1];
-          if (g2 < 0) return;
-          const i = kf[e * 2], j = g2;
-          const d = fn[i] * fn[j] + fn[i + 1] * fn[j + 1] + fn[i + 2] * fn[j + 2];
-          if (d >= grenze) return;
-          treffer++;
-          if (d < 0) ueber90++;
-          const u = kv[e * 2], v = kv[e * 2 + 1];
-          if (S.mStempel[u] !== stempel) { S.mStempel[u] = stempel; listeM[anzM++] = u; }
-          if (S.mStempel[v] !== stempel) { S.mStempel[v] = stempel; listeM[anzM++] = v; }
-        };
-        if (r === 0) {
-          for (let e = 0; e < S.kanten; e++) pruefe(e);
-        } else {
-          for (let k = 0; k < anzF; k++) {
-            const t = listeF[k];
-            for (let s = 0; s < 3; s++) {
-              const e = fe[t * 3 + s];
-              if (S.eStempel[e] === stempel) continue;
-              S.eStempel[e] = stempel;
-              pruefe(e);
+          /* Kanten pruefen: Runde 0 alle, danach nur die der beruehrten
+           * Dreiecke. Ueber die DREIECKE, nicht ueber die Punkte — ein
+           * Dreieck kippt auch, wenn nur seine dritte Ecke gewandert ist. */
+          anzM = 0;
+          let treffer = 0, ueber90 = 0;
+          const pruefe = (e) => {
+            const g2 = kf[e * 2 + 1];
+            if (g2 < 0) return;
+            const i = kf[e * 2], j = g2;
+            const d = fn[i] * fn[j] + fn[i + 1] * fn[j + 1] + fn[i + 2] * fn[j + 2];
+            if (d >= grenze) return;
+            treffer++;
+            if (d < 0) ueber90++;
+            const u = kv[e * 2], v = kv[e * 2 + 1];
+            if (S.mStempel[u] !== stempel) { S.mStempel[u] = stempel; listeM[anzM++] = u; }
+            if (S.mStempel[v] !== stempel) { S.mStempel[v] = stempel; listeM[anzM++] = v; }
+          };
+          if (r === 0) {
+            for (let e = 0; e < S.kanten; e++) pruefe(e);
+          } else {
+            for (let k = 0; k < anzF; k++) {
+              const t = listeF[k];
+              for (let s = 0; s < 3; s++) {
+                const e = fe[t * 3 + s];
+                if (S.eStempel[e] === stempel) continue;
+                S.eStempel[e] = stempel;
+                pruefe(e);
+              }
             }
           }
-        }
 
-        if (r === 0) { scharf = treffer; falten = ueber90; }
-        restScharf = treffer; restFalten = ueber90;
-        gelaufen = r;
-        if (treffer === 0 || r === runden) break;
+          if (r === 0) { scharf = treffer; falten = ueber90; }
+          restScharf = treffer; restFalten = ueber90;
+          gelaufen = r;
+          if (treffer === 0 || r === runden) break;
 
-        /* Einen Ring ausweiten, damit die Reparatur nicht in einem Krater
-         * mit scharfem Rand endet. */
-        let anzD = 0;
-        for (let k = 0; k < anzM; k++) {
-          const i = listeM[k];
-          if (S.dStempel[i] !== stempel) { S.dStempel[i] = stempel; listeD[anzD++] = i; }
-          for (let j = off[i], e = off[i + 1]; j < e; j++) {
-            const u = nb[j];
-            if (S.dStempel[u] !== stempel) { S.dStempel[u] = stempel; listeD[anzD++] = u; }
+          /* Einen Ring ausweiten, damit die Reparatur nicht in einem Krater
+           * mit scharfem Rand endet. */
+          anzD = 0;
+          for (let k = 0; k < anzM; k++) {
+            const i = listeM[k];
+            if (S.dStempel[i] !== stempel) { S.dStempel[i] = stempel; listeD[anzD++] = i; }
+            for (let j = off[i], e = off[i + 1]; j < e; j++) {
+              const u = nb[j];
+              if (S.dStempel[u] !== stempel) { S.dStempel[u] = stempel; listeD[anzD++] = u; }
+            }
           }
+
+          /* Die Dreiecke, die von hier an schmutzig sind. */
+          anzF = 0;
+          for (let k = 0; k < anzD; k++) {
+            const i = listeD[k];
+            for (let j = fOff[i], e = fOff[i + 1]; j < e; j++) {
+              const t = fNb[j] / 3;
+              if (S.fStempel[t] === stempel) continue;
+              S.fStempel[t] = stempel;
+              listeF[anzF++] = t;
+            }
+          }
+          punkte = anzD;
         }
 
-        /* Jacobi: erst alles aus dem unveraenderten `a` rechnen, dann
-         * zurueckschreiben. Kein Ganzfeld-Kopieren, kein Nachbar, der in
-         * derselben Runde schon gewandert ist. */
+        /* --- Ziehen: Jacobi, erst rechnen, dann zurueckschreiben --------
+         * Kein Ganzfeld-Kopieren und kein Nachbar, der in derselben Runde
+         * schon gewandert ist. */
         for (let k = 0; k < anzD; k++) {
           const i = listeD[k], s = off[i], e = off[i + 1], anz = e - s;
           const p = i * 3, q = k * 3;
@@ -575,19 +596,14 @@
           a[p] = neu[q]; a[p + 1] = neu[q + 1]; a[p + 2] = neu[q + 2];
         }
         bewegt = true;
-        punkte = anzD;
+        gelaufen = r + 1;
 
-        /* Schmutzige Dreiecke fuer die naechste Runde einsammeln. */
-        anzF = 0;
-        for (let k = 0; k < anzD; k++) {
-          const i = listeD[k];
-          for (let j = fOff[i], e = fOff[i + 1]; j < e; j++) {
-            const t = fNb[j] / 3;
-            if (S.fStempel[t] === stempel) continue;
-            S.fStempel[t] = stempel;
-            listeF[anzF++] = t;
-          }
-        }
+        /* Der Suchlauf ist der teure Teil, nicht das Ziehen: er faehrt ueber
+         * alle Dreiecke des beruehrten Gebiets, das Ziehen nur ueber dessen
+         * Punkte. Gemessen kostet ein Suchlauf rund das Fuenffache eines
+         * Zuges. Deshalb wird nicht jede Runde neu gesucht — nur jede
+         * `pruefJede`-te und in jedem Fall die letzte. */
+        pruefen = ((r + 1) % pruefJede === 0) || (r + 1 === runden);
       }
 
       /* --- Globales Taubin: abgeschaltet, siehe Kopf --------------------- */
@@ -620,7 +636,7 @@
           nachher: knickMessen(bewegt ? a : quelle.positions, idx),
           ausdehnungVorher: ausdehnung(quelle.positions),
           ausdehnungNachher: ausdehnung(bewegt ? a : quelle.positions),
-          knickGrad: zahl('knickGrad'), runden: runden, lambda: lambda, mu: +mu.toFixed(3),
+          knickGrad: zahl('knickGrad'), runden: runden, lambda: lambda, pruefJede: pruefJede,
         };
       }
     },
