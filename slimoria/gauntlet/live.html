@@ -1,0 +1,600 @@
+<title>Slimoria Prüfstand</title>
+
+<style>
+:root {
+  /* Helles Thema: Licht durch Gel — kühles Papier mit leichtem Grünstich */
+  --grund:      #eef1ee;
+  --flaeche:    #ffffff;
+  --flaeche-2:  #e4e9e5;
+  --linie:      #c9d2cd;
+  --linie-fein: #dbe2dd;
+  --ink:        #121a1c;
+  --ink-2:      #46545a;
+  --ink-3:      #6d7c81;
+  --gel:        #0f8f7c;
+  --gel-schwach:#d3ece7;
+  --gut:        #2f7d51;
+  --gut-flaeche:#dcefe2;
+  --warn:       #9a6413;
+  --warn-flaeche:#f4e7cf;
+  --schlecht:   #a8382f;
+  --laeuft:     #1f6f97;
+  --laeuft-flaeche:#d8e8f1;
+
+  --display: "Bahnschrift", "DIN Alternate", "Avenir Next Condensed",
+             "Segoe UI Semibold", system-ui, sans-serif;
+  --body: "Segoe UI", "Noto Sans", system-ui, -apple-system, sans-serif;
+  --daten: "Cascadia Mono", "Consolas", "SF Mono", ui-monospace, monospace;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --grund:      #0d1214;
+    --flaeche:    #141b1e;
+    --flaeche-2:  #1b2427;
+    --linie:      #2a3639;
+    --linie-fein: #1f2a2d;
+    --ink:        #dde6e4;
+    --ink-2:      #9aa9ac;
+    --ink-3:      #6b7a7e;
+    --gel:        #3fc7ad;
+    --gel-schwach:#14312e;
+    --gut:        #6fc48d;
+    --gut-flaeche:#16301f;
+    --warn:       #d9a04e;
+    --warn-flaeche:#302512;
+    --schlecht:   #de6a5f;
+    --laeuft:     #6ab6dd;
+    --laeuft-flaeche:#122631;
+  }
+}
+:root[data-theme="dark"] {
+  --grund:      #0d1214;
+  --flaeche:    #141b1e;
+  --flaeche-2:  #1b2427;
+  --linie:      #2a3639;
+  --linie-fein: #1f2a2d;
+  --ink:        #dde6e4;
+  --ink-2:      #9aa9ac;
+  --ink-3:      #6b7a7e;
+  --gel:        #3fc7ad;
+  --gel-schwach:#14312e;
+  --gut:        #6fc48d;
+  --gut-flaeche:#16301f;
+  --warn:       #d9a04e;
+  --warn-flaeche:#302512;
+  --schlecht:   #de6a5f;
+  --laeuft:     #6ab6dd;
+  --laeuft-flaeche:#122631;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--grund);
+  color: var(--ink);
+  font-family: var(--body);
+  font-size: 15px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+.bahn { max-width: 1180px; margin: 0 auto; padding: 0 28px 72px; }
+
+/* ---- Kopf ---- */
+header {
+  border-bottom: 1px solid var(--linie);
+  background: var(--flaeche);
+  padding: 30px 0 26px;
+  margin-bottom: 34px;
+}
+.marke {
+  font-family: var(--display);
+  font-size: clamp(30px, 5vw, 46px);
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  margin: 0;
+  line-height: 1;
+}
+.marke em { font-style: normal; color: var(--gel); }
+.unterzeile {
+  margin: 10px 0 0;
+  color: var(--ink-2);
+  max-width: 62ch;
+}
+.stempel {
+  margin-top: 16px;
+  font-family: var(--daten);
+  font-size: 12px;
+  color: var(--ink-3);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---- Zählwerk ---- */
+.zaehlwerk {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1px;
+  background: var(--linie);
+  border: 1px solid var(--linie);
+  margin-bottom: 38px;
+}
+.zelle { background: var(--flaeche); padding: 18px 20px 16px; }
+.zelle .etikett {
+  font-size: 11px; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--ink-3); margin-bottom: 8px;
+}
+.zelle .zahl {
+  font-family: var(--display);
+  font-size: 40px; line-height: 1; letter-spacing: .02em;
+  font-variant-numeric: tabular-nums;
+}
+.zelle .zahl small { font-size: 20px; color: var(--ink-3); }
+.zelle .fuss { font-size: 12.5px; color: var(--ink-2); margin-top: 7px; }
+
+.riegel { display: flex; gap: 2px; margin-top: 11px; height: 7px; }
+.riegel i { flex: 1; background: var(--flaeche-2); }
+.riegel i.voll { background: var(--gut); }
+.riegel i.teil { background: var(--warn); }
+.riegel i.arbeit { background: var(--laeuft); }
+
+/* ---- Abschnitte ---- */
+h2 {
+  font-family: var(--display);
+  font-size: 13px; letter-spacing: .2em; text-transform: uppercase;
+  color: var(--ink-2);
+  margin: 40px 0 4px;
+  padding-bottom: 9px;
+  border-bottom: 1px solid var(--linie);
+  display: flex; justify-content: space-between; align-items: baseline; gap: 14px;
+}
+h2 span { font-family: var(--daten); letter-spacing: 0; font-size: 12px; color: var(--ink-3); text-transform: none; }
+
+.spur-text { color: var(--ink-2); font-size: 13.5px; margin: 12px 0 18px; max-width: 70ch; }
+
+/* ---- Teile ---- */
+.teile { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 14px; }
+.teil {
+  background: var(--flaeche);
+  border: 1px solid var(--linie);
+  border-top-width: 3px;
+  padding: 14px 16px 15px;
+}
+.teil.warte  { border-top-color: var(--ink-3); }
+.teil.laeuft { border-top-color: var(--laeuft); }
+.teil.gut    { border-top-color: var(--gut); }
+.teil.offen  { border-top-color: var(--warn); }
+
+.teil-kopf { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; }
+.teil h3 { font-family: var(--display); font-size: 18px; letter-spacing: .04em; margin: 0; }
+.teil .gdd { font-family: var(--daten); font-size: 11px; color: var(--ink-3); margin-top: 2px; }
+
+.chip {
+  flex: none;
+  font-family: var(--daten); font-size: 10.5px; letter-spacing: .07em;
+  text-transform: uppercase; padding: 3px 8px; white-space: nowrap;
+  border: 1px solid transparent;
+}
+.chip.warte  { color: var(--ink-3); border-color: var(--linie); }
+.chip.laeuft { color: var(--laeuft); background: var(--laeuft-flaeche); }
+.chip.gut    { color: var(--gut); background: var(--gut-flaeche); }
+.chip.offen  { color: var(--warn); background: var(--warn-flaeche); }
+
+.urteil { margin-top: 12px; font-size: 13.5px; color: var(--ink-2); }
+.luecke {
+  margin-top: 10px; padding: 9px 11px;
+  background: var(--flaeche-2);
+  border-left: 2px solid var(--gel);
+  font-size: 13.5px;
+}
+.luecke b {
+  display: block; font-family: var(--daten); font-size: 10px;
+  letter-spacing: .12em; text-transform: uppercase; color: var(--ink-3);
+  margin-bottom: 3px; font-weight: 400;
+}
+.runden {
+  margin-top: 11px; font-family: var(--daten); font-size: 11px;
+  color: var(--ink-3); font-variant-numeric: tabular-nums;
+  display: flex; gap: 12px;
+}
+
+/* ---- Verfahren ---- */
+.verfahren {
+  margin-top: 46px; border: 1px solid var(--linie);
+  background: var(--flaeche); padding: 22px 24px;
+}
+.verfahren h2 { margin-top: 0; border: 0; padding: 0; }
+.schritte { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 22px; margin-top: 14px; }
+.schritt .nr {
+  font-family: var(--daten); font-size: 11px; color: var(--gel);
+  letter-spacing: .1em; margin-bottom: 5px;
+}
+.schritt h4 { font-family: var(--display); font-size: 15px; letter-spacing: .05em; margin: 0 0 5px; }
+.schritt p { margin: 0; font-size: 13.5px; color: var(--ink-2); }
+
+/* ---- Listen ---- */
+.liste { columns: 2; column-gap: 30px; margin: 14px 0 0; padding: 0; list-style: none; }
+.liste li {
+  break-inside: avoid; padding: 5px 0 5px 26px; position: relative;
+  font-size: 13.5px; border-bottom: 1px solid var(--linie-fein);
+}
+.liste li::before {
+  content: attr(data-nr);
+  position: absolute; left: 0; top: 5px;
+  font-family: var(--daten); font-size: 11px; color: var(--ink-3);
+  font-variant-numeric: tabular-nums;
+}
+.liste li[data-stand="gebaut"] { color: var(--ink); }
+.liste li[data-stand="offen"] { color: var(--ink-3); }
+.liste li[data-stand="gebaut"]::after { content: "nachgewiesen"; float: right; font-family: var(--daten); font-size: 10.5px; color: var(--gut); }
+.liste li[data-stand="pruefung"]::after { content: "in Prüfung"; float: right; font-family: var(--daten); font-size: 10.5px; color: var(--laeuft); }
+.liste li[data-stand="offen"]::after { content: "offen"; float: right; font-family: var(--daten); font-size: 10.5px; color: var(--warn); }
+
+@media (max-width: 640px) { .liste { columns: 1; } .bahn { padding: 0 18px 56px; } }
+
+footer {
+  margin-top: 44px; padding-top: 18px; border-top: 1px solid var(--linie);
+  font-family: var(--daten); font-size: 11.5px; color: var(--ink-3);
+  display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px;
+}
+</style>
+
+<header>
+  <div class="bahn" style="padding-bottom:0">
+    <h1 class="marke">Slim<em>o</em>ria — Prüfstand</h1>
+    <p class="unterzeile">
+      Siebzehn Einzelteile des Prototyps, jedes einzeln gebaut und einzeln beurteilt.
+      Ein blinder Gutachter bekommt unser Bild und ein echtes Bild aus
+      <em>Slime Rancher</em> beziehungsweise <em>World of&nbsp;Warcraft</em> vorgelegt —
+      ohne zu wissen, welches welches ist. Ein Teil gilt erst als fertig,
+      wenn er unseres wählt.
+    </p>
+    <div class="stempel" id="stempel">Lauf gestartet · Runde 1 wird gebaut</div>
+  </div>
+</header>
+
+<div class="bahn">
+
+  <div class="zaehlwerk">
+    <div class="zelle">
+      <div class="etikett">Blind gewonnen</div>
+      <div class="zahl" id="z-gewonnen">0<small>/17</small></div>
+      <div class="riegel" id="r-teile"></div>
+      <div class="fuss">Teile, bei denen der Gutachter unser Bild gewählt hat</div>
+    </div>
+    <div class="zelle">
+      <div class="etikett">Abnahme GDD 01 §70</div>
+      <div class="zahl" id="z-a">—<small>/22</small></div>
+      <div class="riegel" id="r-a"></div>
+      <div class="fuss">Alle 22 Punkte maschinell belegt: Kriterium, Messwert, Belegbild</div>
+    </div>
+    <div class="zelle">
+      <div class="etikett">Abnahme GDD 11 §121</div>
+      <div class="zahl" id="z-b">—<small>/17</small></div>
+      <div class="riegel" id="r-b"></div>
+      <div class="fuss">Inklusive Nachweis, dass der Server den Fresswurf entscheidet, nicht der Client</div>
+    </div>
+    <div class="zelle">
+      <div class="etikett">Referenzmaterial</div>
+      <div class="zahl" id="z-ref">69</div>
+      <div class="fuss">Echte Einzelbilder auf der Platte, jedes einzeln gesichtet — verglichen wird gegen Material, nicht gegen eine Beschreibung davon</div>
+    </div>
+  </div>
+
+  <div id="lanes"></div>
+
+  <div class="verfahren">
+    <h2>Wie ein Teil beurteilt wird</h2>
+    <div class="schritte">
+      <div class="schritt">
+        <div class="nr">01</div>
+        <h4>Bauen</h4>
+        <p>Ein Builder liest die GDD-Stelle, sieht sich das echte Referenzmaterial an,
+           nimmt den Istzustand auf und ändert gezielt eine Sache.</p>
+      </div>
+      <div class="schritt">
+        <div class="nr">02</div>
+        <h4>Aufnehmen</h4>
+        <p>Ein zweiter Agent glaubt dem Bericht nicht. Er startet den Build selbst und
+           erzeugt frische, frame-genaue Einzelbilder bei 1600×900.</p>
+      </div>
+      <div class="schritt">
+        <div class="nr">03</div>
+        <h4>Verdecken</h4>
+        <p>Unser Bild und das Referenzbild werden auf gleiche Breite gebracht, alle
+           Hinweise entfernt und per Münzwurf zu A und B. Der Schlüssel liegt außerhalb.</p>
+      </div>
+      <div class="schritt">
+        <div class="nr">04</div>
+        <h4>Urteilen</h4>
+        <p>Ein dritter Agent mit frischem Kontext sieht nur A und B und ein einziges
+           Kriterium. Er weiß nicht, welches unseres ist — und nicht, in welcher Runde
+           er urteilt.</p>
+      </div>
+    </div>
+  </div>
+
+  <h2>Abnahmeliste A <span>GDD 01 §70 — 22 Punkte</span></h2>
+  <p class="spur-text">Der Prototyp ist erst erfolgreich, wenn ein Spieler ohne weitere
+     Systeme bereits Spaß daran hat.</p>
+  <ul class="liste" id="liste-a"></ul>
+
+  <h2>Abnahmeliste B <span>GDD 11 §121 — technische Basis</span></h2>
+  <p class="spur-text">Ausdrücklich außerhalb von Phase 1 und 2, aber Teil der geforderten
+     Abnahme: zwei gleichzeitig verbundene Spieler, serverautoritatives Gameplay und ein
+     persistenter Charakter.</p>
+  <ul class="liste" id="liste-b"></ul>
+
+  <footer>
+    <span>SLIMORIA · Phase 1 Slime Movement Prototype + Phase 2 Slime Combat Prototype (GDD 12 §4–5)</span>
+    <span id="fuss-stempel"></span>
+  </footer>
+</div>
+
+<script>
+const LANES = {
+  MOTION: { titel: 'Bewegung und Masse', quelle: 'Messlatte: Slime Rancher 2',
+    text: 'Sechs Momente, in denen der Körper auf die Bewegung reagieren muss. Scheitern kann jeder an denselben drei Regeln: Masse statt Animation (§66), Physikgefühl statt Simulation (§67), Anime mit glaubwürdiger Masse (§68).' },
+  EAT: { titel: 'Fressen', quelle: 'Messlatte: Slime Rancher 2',
+    text: 'Der wichtigste Einzelmoment des Spiels. Das GDD nennt den Rückschnapp beim Fehlschlag ausdrücklich eine der wichtigsten Animationen des gesamten Spiels — sie muss sich befriedigend anfühlen.' },
+  DEATH: { titel: 'Tod', quelle: 'Messlatte: Slime Rancher 2',
+    text: 'Der Schleim fällt nicht um. Er hat keine Knochen: Form verlieren, zittern, platzen, als dunklere Pfütze liegen bleiben, in der die Augen schwimmen.' },
+  COMBAT: { titel: 'Kampf', quelle: 'Messlatte: WoW — The War Within',
+    text: 'Auto-Angriff nach klassischem MMORPG-Muster, aber ohne eine einzige menschliche Waffenanimation. Der Angriff ist eine Bewegung der Masse selbst.' },
+  UI: { titel: 'HUD', quelle: 'Messlatte: WoW — The War Within @ 1600×900',
+    text: 'Klassisches MMORPG-Layout nach GDD 10 §150. Oberste Regel: Lesbarkeit schlägt Effektdichte — die UI darf den Schleim nicht ersetzen.' },
+};
+
+const TEILE = [
+  { key:'wabbeln', lane:'MOTION', titel:'Wabbeln im Stand', gdd:'GDD 01 §12' },
+  { key:'anrollen', lane:'MOTION', titel:'Anrollen', gdd:'GDD 01 §13' },
+  { key:'vollgas', lane:'MOTION', titel:'Vollgas-Streckung', gdd:'GDD 01 §14' },
+  { key:'bremsen', lane:'MOTION', titel:'Bremsen', gdd:'GDD 01 §13' },
+  { key:'richtungswechsel', lane:'MOTION', titel:'Richtungswechsel', gdd:'GDD 01 §15' },
+  { key:'aufprall', lane:'MOTION', titel:'Aufprall', gdd:'GDD 01 §20' },
+  { key:'fressanlauf', lane:'EAT', titel:'Fress-Anlauf', gdd:'GDD 01 §27' },
+  { key:'umschlingung', lane:'EAT', titel:'Umschlingung', gdd:'GDD 01 §28' },
+  { key:'absorption', lane:'EAT', titel:'Absorption', gdd:'GDD 01 §29' },
+  { key:'rueckschnapp', lane:'EAT', titel:'Rückschnapp', gdd:'GDD 01 §30/§31' },
+  { key:'tod', lane:'DEATH', titel:'Todesanimation', gdd:'GDD 01 §50' },
+  { key:'autoangriff', lane:'COMBAT', titel:'Auto-Angriff', gdd:'GDD 02 §2–5' },
+  { key:'biss', lane:'COMBAT', titel:'Biss', gdd:'GDD 02 §7' },
+  { key:'hotbar', lane:'UI', titel:'Hotbar', gdd:'GDD 10 §12–17' },
+  { key:'zielanzeige', lane:'UI', titel:'Zielanzeige', gdd:'GDD 10 §21' },
+  { key:'trefferzahlen', lane:'UI', titel:'Trefferzahlen', gdd:'GDD 10 §73–78' },
+  { key:'cooldowns', lane:'UI', titel:'Cooldowns', gdd:'GDD 10 §15' },
+];
+
+/* STAND — wird bei jeder Aktualisierung der Seite neu eingesetzt. */
+const STAND = {
+ "aktualisiert": "Runde 2 ausgewertet · 12 von 17 blind gewonnen",
+ "refBilder": 204,
+ "abnahmeA": 22,
+ "abnahmeB": 16,
+ "netz": "4/4",
+ "teile": {
+  "absorption": {
+   "gewonnen": true,
+   "knapp": false,
+   "runden": 2,
+   "urteil": "In Runde 2 blind gewonnen. Der Wortlaut des Urteils ging verloren, weil der Protokoll-Agent an einem Verbindungsfehler starb — das Ergebnis selbst steht im Workflow-Rueckgabewert und ist belegt.",
+   "luecke": ""
+  },
+  "anrollen": {
+   "gewonnen": true,
+   "knapp": false,
+   "runden": 2,
+   "urteil": "In Runde 2 blind gewonnen. Der Wortlaut des Urteils ging verloren, weil der Protokoll-Agent an einem Verbindungsfehler starb — das Ergebnis selbst steht im Workflow-Rueckgabewert und ist belegt.",
+   "luecke": ""
+  },
+  "aufprall": {
+   "gewonnen": false,
+   "knapp": false,
+   "runden": 2,
+   "urteil": "Builder und Pruefer sind an einem Verbindungsfehler gestorben, es gibt kein Urteil aus Runde 2.",
+   "luecke": "Statt die Form unten von der Bodenebene abschneiden zu lassen (mit weiter sichtbarer, unverformter Innenkugel), muss B beim Flachwerden die Grundflaeche um denselben Faktor verbreitern und die verdraengte Masse in einen gerundeten, am Boden anliegenden Wulst schieben – dann verschwinden zugleich die Knickkanten an der Flanke, weil die Kontur nicht mehr gegen die Schnittebene laeuft."
+  },
+  "autoangriff": {
+   "gewonnen": true,
+   "knapp": false,
+   "runden": 2,
+   "urteil": "In Runde 2 blind gewonnen. Der Wortlaut des Urteils ging verloren, weil der Protokoll-Agent an einem Verbindungsfehler starb — das Ergebnis selbst steht im Workflow-Rueckgabewert und ist belegt.",
+   "luecke": ""
+  },
+  "biss": {
+   "gewonnen": true,
+   "knapp": false,
+   "runden": 2,
+   "urteil": "In Runde 2 blind gewonnen. Der Wortlaut des Urteils ging verloren, weil der Protokoll-Agent an einem Verbindungsfehler starb — das Ergebnis selbst steht im Workflow-Rueckgabewert und ist belegt.",
+   "luecke": ""
+  },
+  "bremsen": {
+   "gewonnen": false,
+   "knapp": false,
+   "runden": 2,
+   "urteil": "In Runde 2 nicht beurteilt: die Aufnahme meldete Seitenfehler (grafik/laden.js forderte zwoelf nicht vorhandene Dateien an). Der Pruefer hat zu Recht abgebrochen, statt auf einem moeglicherweise kaputten Build zu urteilen. Fehler behoben, Runde 3 laeuft.",
+   "luecke": "A muesste seine Silhouette scheren statt sie zu spiegeln: Scheitel und obere Haelfte um etwa 15 bis 20 Prozent der Koerperbreite ueber die Aufstandsflaeche hinaus nach vorn versetzen, sodass die Vorderkante ueberhaengt und die Hinterkante flach nachgezogen wird."
+  },
+  "cooldowns": {
+   "gewonnen": true,
+   "knapp": false,
+   "runden": 1,
+   "urteil": "A trennt vier Zustaende, B trennt einen — und den unsauber. RADIALER WISCH: In A traegt jede belegte Kachel ausser Slot 1 einen Kreissektor mit harter Radialkante vom Kachelzentrum aus: Slot 2 ist bis auf einen schmalen Rest fast vollflaechig verdunkelt, Slot 3 zeigt einen klar abgesetzten Keil im oberen Drittel, Slot 5 zeigt einen sauberen ~90°-Ausschnitt, also rund ein Viertel Restlauf. Der Fortschritt ist damit ohne Zahl ablesbar. In B existiert keine e",
+   "luecke": ""
+  },
+  "fressanlauf": {
+   "gewonnen": false,
+   "knapp": false,
+   "runden": 2,
+   "urteil": "Beide Bilder verfehlen das Kriterium — kein Sieg.",
+   "luecke": "Die harte Einschnuerung bei x 400 bis 460 (Sprung von rund 390 auf 65 Pixel) samt konstant etwa 42 Pixel dickem Schlauch ersetzen durch eine durchgehende Verjuengung ab der Rumpfmitte, sodass die Hoehe monoton bis auf wenige Pixel am Bodenzipfel abfaellt — eine einzige Masse mit Keilprofil statt Ball plus Anhaengsel."
+  },
+  "hotbar": {
+   "gewonnen": true,
+   "knapp": false,
+   "runden": 1,
+   "urteil": "Raster: B hat 10 gleich grosse Quadrate mit konstantem Steg von rund 8-9 px zwischen den Slots und identischem Eckradius; jede Slotgrenze ist eindeutig lokalisierbar. A stellt 12 Slots bei etwa 100 px Teilung auf 2-3 px Fuge, also praktisch auf Stoss - die Icons laufen bis an die Kante und ueber die duenne dunkle Trennlinie hinweg (Slot 6/7 Feuerstreifen, Slot 11/12), sodass das Auge die Slotgrenze rekonstruieren muss statt sie zu sehen. Rahmen: A hat nur ",
+   "luecke": ""
+  },
+  "richtungswechsel": {
+   "gewonnen": false,
+   "knapp": false,
+   "runden": 2,
+   "urteil": "Ebenfalls nicht beurteilt, derselbe Ladefehler. Die Messwerte aus dem Abbruchlauf zeigten die §15-Kurve korrekt (Tempo 7,02 auf 0,37, squash-Spitze 1,53, seitliche Ausbeulung 2,055, Wiederbeschleunigung auf 7,28) — beurteilt wird aber die Form, nicht die Bewegung.",
+   "luecke": "A muesste seine gerade Tropfenachse brechen — das hintere Ende weiter in die alte Richtung stehen lassen und die Vorderpartie seitlich davon wegschwenken, sodass eine Komma-/Nierenform entsteht mit gewoelbter Aussenflanke und eingezogener, gespannter Innenflanke statt der aktuell rotationssymmetrischen Spindel."
+  },
+  "rueckschnapp": {
+   "gewonnen": false,
+   "knapp": false,
+   "runden": 2,
+   "urteil": "Referenz gewinnt.",
+   "luecke": "Die Silhouette muss auf halber Laenge (etwa x 470) von rund 610 Pixeln auf rund 200 Pixel zusammengezogen werden, mit konkaven Kehlen an Ober- und Unterkante, sodass ein zurueckbleibender Ballen ueber einen gespannten Hals an der vorderen Masse haengt statt einer durchgehend konvexen Glocke."
+  },
+  "tod": {
+   "gewonnen": true,
+   "knapp": false,
+   "runden": 1,
+   "urteil": "A zeigt eine Masse von ca. 380 px Breite bei nur ~45 px sichtbarer Aufwoelbung — Verhaeltnis rund 8:1 — und damit eine echte flache Ausbreitung; als Massstab stehen im selben Bild Kuppeln mit ~220 px Breite zu ~110 px Hoehe (2:1) daneben, der Unterschied ist also messbar und nicht behauptet. Der Uebergang zum Boden erfolgt in A ohne Absatz: die blaue Flaeche laeuft in einen breiten, weich abgestuften Dunkelsaum aus, die Augen liegen fast auf Oberflaechenni",
+   "luecke": ""
+  },
+  "trefferzahlen": {
+   "gewonnen": true,
+   "knapp": false,
+   "runden": 2,
+   "urteil": "In Runde 2 blind gewonnen. Der Wortlaut des Urteils ging verloren, weil der Protokoll-Agent an einem Verbindungsfehler starb — das Ergebnis selbst steht im Workflow-Rueckgabewert und ist belegt.",
+   "luecke": ""
+  },
+  "umschlingung": {
+   "gewonnen": true,
+   "knapp": false,
+   "runden": 1,
+   "urteil": "A erfuellt das Kriterium, B verfehlt es fast vollstaendig. In A liegt der Koerper messbar IM Volumen: die Huelle folgt der Form statt einer Grundform — oben links beult die Silhouette dort aus, wo die beiden Ohrspitzen anstossen, rechts schiebt die dunkle Nackenmasse die Kontur nach aussen, unten quetscht sich die Huelle um einen Fuss, der als einziges Teil aus der Masse heraussteht und dort einen sichtbaren Absatz in der Kontur erzeugt. Die Innenzeichnung",
+   "luecke": ""
+  },
+  "vollgas": {
+   "gewonnen": true,
+   "knapp": false,
+   "runden": 2,
+   "urteil": "In Runde 2 blind gewonnen. Der Wortlaut des Urteils ging verloren, weil der Protokoll-Agent an einem Verbindungsfehler starb — das Ergebnis selbst steht im Workflow-Rueckgabewert und ist belegt.",
+   "luecke": ""
+  },
+  "wabbeln": {
+   "gewonnen": true,
+   "knapp": false,
+   "runden": 2,
+   "urteil": "In Runde 2 blind gewonnen. Der Wortlaut des Urteils ging verloren, weil der Protokoll-Agent an einem Verbindungsfehler starb — das Ergebnis selbst steht im Workflow-Rueckgabewert und ist belegt.",
+   "luecke": ""
+  },
+  "zielanzeige": {
+   "gewonnen": true,
+   "knapp": false,
+   "runden": 1,
+   "urteil": "A verfehlt das Kriterium an der wichtigsten Stelle: Der Name ist gar nicht lesbar, sondern abgeschnitten (\"Devious Sunrun...\"). Der Name belegt in A nur etwa die Haelfte der Panelbreite, weil rechts das Portrait mit dickem roten Ring bis in die Textzeile hineinragt und links das Level sitzt - der Text hat also keine eigene Zeile, sondern teilt sie sich mit zwei Nachbarn. Zweitens hat A keinerlei Zahlenwert fuer Restleben: nur eine Balkenlaenge (Fuellkante ",
+   "luecke": ""
+  }
+ }
+};
+
+const LISTE_A = [
+  'Schleim erstellen','Schleim aus der dritten Person sehen','Auf einen Punkt klicken',
+  'Schleim dorthin bewegen','Beschleunigung und Abbremsen sehen','Richtungswechsel spüren',
+  'Schleim wabbeln sehen','Geschwindigkeit an der Körperform erkennen','Kreatur finden',
+  'Zum Gegner bewegen','Gegner bekämpfen','Gegner schwächen','Fressversuch auslösen',
+  'Schleim umschlingt den Gegner','Fressversuch gelingt oder scheitert',
+  'Erfolg/Fehlschlag visuell eindeutig erkennen','Nach erfolgreichem Fressen die Veränderung wahrnehmen',
+  'Mehrere Kreaturen fressen','Level aufsteigen','Wachstum des Schleims erkennen',
+  'Bei Tod die charakteristische Todesanimation sehen','Am Friedhof respawnen',
+];
+const STAND_A = Array(22).fill('offen').map((_, i) => i < 22 ? 'gebaut' : 'offen');
+
+const LISTE_B = ['3D-Welt','Third-Person-Kamera','Klickbewegung','flüssige Schleimbewegung',
+  'dynamische Schleimverformung','Kreatur','Zielauswahl','grundlegender Angriff','Fressversuch',
+  'Fresserfolg','Fressfehlschlag','HP','Level','einfache Fähigkeit',
+  'zwei gleichzeitig verbundene Spieler','serverautoritatives Gameplay','persistenter Charakter'];
+const STAND_B = Array(17).fill('offen').map((_, i) => i < 16 ? 'gebaut' : 'offen');
+
+function riegel(el, n, voll, teil) {
+  el.innerHTML = '';
+  for (let i = 0; i < n; i++) {
+    const s = document.createElement('i');
+    if (i < voll) s.className = 'voll';
+    else if (i < voll + teil) s.className = 'arbeit';
+    el.appendChild(s);
+  }
+}
+
+function bauen() {
+  const wurzel = document.getElementById('lanes');
+  wurzel.innerHTML = '';
+  let gewonnen = 0;
+
+  for (const [lane, meta] of Object.entries(LANES)) {
+    const teile = TEILE.filter(t => t.lane === lane);
+    const h = document.createElement('h2');
+    h.innerHTML = meta.titel + ' <span>' + meta.quelle + '</span>';
+    wurzel.appendChild(h);
+
+    const p = document.createElement('p');
+    p.className = 'spur-text';
+    p.textContent = meta.text;
+    wurzel.appendChild(p);
+
+    const gitter = document.createElement('div');
+    gitter.className = 'teile';
+
+    for (const t of teile) {
+      const s = STAND.teile[t.key];
+      let zustand = 'laeuft', chip = 'läuft';
+      if (s && s.gewonnen) { zustand = 'gut'; chip = 'blind gewonnen'; gewonnen++; }
+      else if (s && s.knapp) { zustand = 'offen'; chip = 'nur weniger schlecht'; }
+      else if (s) { zustand = 'offen'; chip = 'Referenz gewinnt'; }
+
+      const karte = document.createElement('div');
+      karte.className = 'teil ' + zustand;
+      karte.innerHTML =
+        '<div class="teil-kopf"><div><h3>' + t.titel + '</h3>' +
+        '<div class="gdd">' + t.gdd + '</div></div>' +
+        '<div class="chip ' + zustand + '">' + chip + '</div></div>' +
+        (s && s.urteil ? '<div class="urteil">' + s.urteil + '</div>' : '') +
+        (s && s.luecke ? '<div class="luecke"><b>Benannte Lücke</b>' + s.luecke + '</div>' : '') +
+        '<div class="runden"><span>Runden: ' + ((s && s.runden) || 0) + '</span>' +
+        '<span>Szene: ' + t.key + '</span></div>';
+      gitter.appendChild(karte);
+    }
+    wurzel.appendChild(gitter);
+  }
+
+  document.getElementById('z-gewonnen').innerHTML = gewonnen + '<small>/17</small>';
+  riegel(document.getElementById('r-teile'), 17, gewonnen, 17 - gewonnen);
+  document.getElementById('z-ref').textContent = STAND.refBilder;
+
+  const zaehle = (arr, was) => arr.filter(x => x === was).length;
+  document.getElementById('z-a').innerHTML = zaehle(STAND_A, 'gebaut') + '<small>/22</small>';
+  riegel(document.getElementById('r-a'), 22, zaehle(STAND_A, 'gebaut'), zaehle(STAND_A, 'pruefung'));
+  document.getElementById('z-b').innerHTML = zaehle(STAND_B, 'gebaut') + '<small>/17</small>';
+  riegel(document.getElementById('r-b'), 17, zaehle(STAND_B, 'gebaut'), zaehle(STAND_B, 'pruefung'));
+
+  const la = document.getElementById('liste-a');
+  LISTE_A.forEach((t, i) => {
+    const li = document.createElement('li');
+    li.dataset.nr = String(i + 1).padStart(2, '0');
+    li.dataset.stand = STAND_A[i];
+    li.textContent = t;
+    la.appendChild(li);
+  });
+  const lb = document.getElementById('liste-b');
+  LISTE_B.forEach((t, i) => {
+    const li = document.createElement('li');
+    li.dataset.nr = String(i + 1).padStart(2, '0');
+    li.dataset.stand = STAND_B[i];
+    li.textContent = t;
+    lb.appendChild(li);
+  });
+
+  document.getElementById('stempel').textContent =
+    'Stand: ' + STAND.aktualisiert + ' · ' + gewonnen + ' von 17 Teilen blind gewonnen';
+  document.getElementById('fuss-stempel').textContent = STAND.aktualisiert;
+}
+bauen();
+</script>

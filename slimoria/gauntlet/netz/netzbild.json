@@ -1,0 +1,150 @@
+{
+ "werkzeug": "tools/netzbild.mjs",
+ "zeitpunkt": "2026-08-19 05:08:33",
+ "startwert": 4242,
+ "spielPort": 54603,
+ "aufloesung": "1600x900",
+ "charaktere": {
+  "client1": {
+   "name": "NetzBlau",
+   "faction": "eldoran"
+  },
+  "client2": {
+   "name": "NetzRot",
+   "faction": "ravok"
+  },
+  "dauer": "NetzDauer"
+ },
+ "belege": [
+  {
+   "name": "bewegung",
+   "bild": "gauntlet\\netz\\bewegung.png",
+   "seite": "gauntlet\\netz\\seite\\bewegung.html",
+   "bestanden": true
+  },
+  {
+   "name": "fressen",
+   "bild": "gauntlet\\netz\\fressen.png",
+   "seite": "gauntlet\\netz\\seite\\fressen.html",
+   "bestanden": true
+  },
+  {
+   "name": "persistenz",
+   "bild": "gauntlet\\netz\\persistenz.png",
+   "seite": "gauntlet\\netz\\seite\\persistenz.html",
+   "bestanden": true
+  }
+ ],
+ "pruefungen": [
+  {
+   "beleg": "bewegung",
+   "titel": "Client 2 zeigt die Bewegung von Client 1",
+   "bestanden": true,
+   "angekommen": true,
+   "wegBeiClient1": 16.77,
+   "wegBeiClient2": 16.77,
+   "abweichungWelt": 0,
+   "wegImBildVonClient2": 643,
+   "positionen": {
+    "vorher": {
+     "name": "NetzBlau",
+     "faction": "eldoran",
+     "level": 10,
+     "x": -0.01,
+     "z": 0,
+     "bild": {
+      "x": 583.4,
+      "y": 391.9
+     }
+    },
+    "nachher": {
+     "name": "NetzBlau",
+     "faction": "eldoran",
+     "level": 10,
+     "x": -11.86,
+     "z": 11.86,
+     "bild": {
+      "x": 1226.1,
+      "y": 391.7
+     }
+    }
+   }
+  },
+  {
+   "beleg": "fressen",
+   "titel": "Client 1 spielt Umschlingung und Erfolg",
+   "bestanden": true,
+   "umschlingungErreicht": true,
+   "serverurteil": {
+    "art": "fressErgebnis",
+    "spieler": 7,
+    "ziel": 9,
+    "kreaturArt": "wolf",
+    "level": 1,
+    "chance": 1,
+    "augen": 0.357251,
+    "wurfNr": 0,
+    "erfolg": true
+   },
+   "unterphaseImBild": "umschlingen"
+  },
+  {
+   "beleg": "fressen",
+   "titel": "Client 2 sieht denselben Vorgang",
+   "bestanden": true,
+   "zielBeiClient2": {
+    "vorher": true,
+    "waehrend": true,
+    "nachher": false
+   },
+   "hinweis": "Der Gegner steht bei Client 2 noch, waehrend Client 1 umschlingt."
+  },
+  {
+   "beleg": "persistenz",
+   "titel": "Level und XP stehen nach dem Neustart wieder im HUD",
+   "bestanden": true,
+   "vorNeustart": {
+    "level": 2,
+    "xp": 55,
+    "hud": "55 / 212 XP"
+   },
+   "frischOhneServer": {
+    "level": 1,
+    "xp": 0,
+    "hud": "0 / 85 XP"
+   },
+   "nachNeustart": {
+    "level": 2,
+    "xp": 55,
+    "hud": "55 / 212 XP"
+   },
+   "aufPlatte": {
+    "name": "NetzDauer",
+    "faction": "eldoran",
+    "level": 2,
+    "xp": 55,
+    "hp": 102,
+    "gold": 19,
+    "bestiarium": {
+     "wolf": {
+      "besiegt": 1,
+      "gefressen": 0
+     }
+    },
+    "wuerfe": 0,
+    "x": -0.972,
+    "z": 0.068
+   },
+   "prozesse": {
+    "vorher": 21792,
+    "nachher": 14460
+   }
+  }
+ ],
+ "luecken": [
+  "**Fressanimation beim Zuschauer.** In `fressen.png` zeigt die mittlere Spalte von Client 2 den fremden Schleim als ruhenden Koerper — kein Anlauf, kein Umschlingen, kein Rueckschnapp. Der Gegner steht dort waehrend des Versuchs immerhin noch, der Vorgang hat also eine Dauer; was fehlt, ist die Phase des fremden Spielers im Zustand."
+ ],
+ "seitenfehler": [],
+ "alleBelegt": true,
+ "dauerSekunden": 109.5
+}

@@ -1,0 +1,16 @@
+{
+ "key": "umschlingung",
+ "lane": "EAT",
+ "titel": "Umschlingung",
+ "szenario": "umschlingung",
+ "gdd": "GDD 01 §28 (Blase/Kugel UM den Gegner; der Gegner befindet sich SICHTBAR innerhalb der Schleimmasse; die Masse bewegt sich kurz um ihn herum)",
+ "gewonnen": true,
+ "urteil": "A erfuellt das Kriterium, B verfehlt es fast vollstaendig. In A liegt der Koerper messbar IM Volumen: die Huelle folgt der Form statt einer Grundform — oben links beult die Silhouette dort aus, wo die beiden Ohrspitzen anstossen, rechts schiebt die dunkle Nackenmasse die Kontur nach aussen, unten quetscht sich die Huelle um einen Fuss, der als einziges Teil aus der Masse heraussteht und dort einen sichtbaren Absatz in der Kontur erzeugt. Die Innenzeichnung hat eine Tiefenstaffelung: die kameranahen Teile (dunkle Masse rechts, Helmkugel) halten Kontrast und Saettigung, die weiter hinten liegenden Ohren und Hinterbeine verlieren Kontrast und ziehen zur Gelfarbe hin — genau die Absorption ueber Materialdicke, die Umschliessung belegt. Dazu ein Rand, dessen Helligkeit und Breite variiert (dick und hell an der unteren linken Wange, duenn oben), also eine Schale mit Dicke statt einer Outline. B zeigt nichts davon. Der Slimekoerper ist blickdicht: von der Felswand direkt dahinter ist an keiner Stelle der Silhouette etwas zu sehen, kein Aufhellen, kein Durchscheinen — das ist ein Solid, kein Gel. Die vermeintlich verschluckte Tomate sitzt in voller, ungebrochener Saettigung auf der Flaeche, ohne jeden Blaustich, ohne Kontrastverlust, mit hart geschnittener Unterkante gegen das Blau; das gruene Blatt daneben ist ebenfalls unveraendert gruen. Herz, Sterne und Funken sind flache Decals mit harten Kanten. Das einzige wirklich durchscheinende Element in B ist der Saugstrahl VOR dem Slime — also davor, nicht umschliessend. A ist dabei selbst nicht sauber: die Bodenkacheln hinter der Blase werden nirgends versetzt oder verzerrt, die Innenkonturen brechen an der Schalengrenze nicht (ein Hinterbein laeuft durch den dicken linken Rand voellig geradlinig weiter), und der Boden unter dem Volumen zeigt keine Lichtbuendelung — Brechung fehlt in A also ebenfalls. Aber A liefert Einschluss und Innenverdunklung, B liefert beides nicht.",
+ "luecke": "",
+ "beideSchwach": false,
+ "blindOrdner": "gauntlet/blind/umschlingung/89e0ae8c",
+ "unserBild": "D:/Projects/Claude/Desktop/Games/SLIMORIA/slimoria/gauntlet/shots/umschlingung/pruefung/frame_004.png",
+ "referenzBild": "D:/Projects/Claude/Desktop/Games/SLIMORIA/slimoria/ref/slime-rancher/sr1-slime-eating-face-closeup.jpg",
+ "runde": 1,
+ "historie": []
+}

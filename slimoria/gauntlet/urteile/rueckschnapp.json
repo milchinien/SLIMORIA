@@ -1,0 +1,23 @@
+{
+ "key": "rueckschnapp",
+ "lane": "EAT",
+ "titel": "Rueckschnapp beim Fehlschlag",
+ "szenario": "rueckschnapp",
+ "gdd": "GDD 01 §30/§31 — laut GDD eine der wichtigsten Animationen des ganzen Spiels: der Schleim verhaelt sich, als haette er sich zu stark gedehnt; Gegner widersteht; Schleim wird elastisch zurueckgezogen; Koerper schnellt zurueck; Blob wabbert nach",
+ "gewonnen": false,
+ "urteil": "Referenz gewinnt.",
+ "luecke": "Die Silhouette muss auf halber Laenge (etwa x 470) von rund 610 Pixeln auf rund 200 Pixel zusammengezogen werden, mit konkaven Kehlen an Ober- und Unterkante, sodass ein zurueckbleibender Ballen ueber einen gespannten Hals an der vorderen Masse haengt statt einer durchgehend konvexen Glocke.",
+ "beideSchwach": false,
+ "blindOrdner": "gauntlet/blind/rueckschnapp/aa18bac3",
+ "unserBild": "gauntlet/shots/rueckschnapp/pruefung/frame_012.png",
+ "referenzBild": "ref/blob-jelly/cuphead-goopy-lunge-mass-trailing-behind.png",
+ "runde": 2,
+ "historie": [
+  {
+   "runde": 1,
+   "gewonnen": false,
+   "urteil": "B zeigt eine real messbare Einschnuerung: bei x≈420 faellt die Kontur von voller Koerperbreite (Rundmasse ≈400 px Durchmesser) auf ≈90 px ab, mit konkaven Kehlen an Ober- UND Unterkante innerhalb von etwa 60 px Lauflaenge — ein Verhaeltnis von rund 4,5:1. Dazu ein ausgezogener Strang von ≈330 px, der die Gesamtlaenge auf etwa 2,2x die Koerperbreite bringt. A besitzt von beidem nichts: die Silhouette ist von x≈350 bis x≈1000 ein einziger durchgehend konvexer Bogen ohne einen konkaven Abschnitt, das Seitenverhaeltnis liegt bei nur ≈1,95:1 (740 x 380 px), und die dickste Stelle sitzt hinten waehrend sich die Form nach vorn verjuengt — das ist die Signatur von Stauchung, nicht von Dehnung. As Unterkante verlaeuft zwischen x≈420 und x≈980 nahezu gerade mit leichtem Bogen, was aufliegendes Eigengewicht liest, kein Zug; es fehlt jeder Ankerpunkt und jeder ausgeduennte Abschnitt, sodass die Rueckschnellrichtung nicht benennbar ist. Die inneren Glanzverlaeufe in A sind breite weiche Laengsgradienten, die sich nirgends buendeln — keine ablesbare Spannungskonzentration. Auch B verfehlt das Kriterium teilweise: der Strang haelt ueber ≈280 px konstante Breite (≈55 px) statt sich zur Dehnungsmitte hin progressiv zu verjuengen, die Hauptmasse bleibt ein nahezu unverformter Kreis statt entlang der Zugachse eifoermig gestreckt, der Strang bogt nach unten durch (Tiefpunkt bei x≈150) — eine durchhaengende Kurve ist das Gegenteil von Zug — und am freien Ende fehlt der Massenwulst, den ein zurueckschnellender Strang ausbildet. B verfehlt teilweise, A vollstaendig.",
+   "luecke": "A fehlt jede Taille: die Silhouette muesste bei etwa halber Laenge auf ein Drittel der Koerperhoehe eingeschnuert werden, mit konkaven Kehlen an Ober- und Unterkante, sodass zwei Massen durch einen gespannten Hals verbunden erscheinen statt eines durchgehend konvexen Klumpens."
+  }
+ ]
+}

@@ -1,0 +1,23 @@
+{
+ "key": "fressanlauf",
+ "lane": "EAT",
+ "titel": "Fress-Anlauf",
+ "szenario": "fressanlauf",
+ "gdd": "GDD 01 §27 (Koerper richtet sich auf das Ziel aus, verformt sich deutlich, SCHNELLT auf den Gegner zu, Masse wird nach vorn gezogen)",
+ "gewonnen": false,
+ "urteil": "Beide Bilder verfehlen das Kriterium — kein Sieg.",
+ "luecke": "Die harte Einschnuerung bei x 400 bis 460 (Sprung von rund 390 auf 65 Pixel) samt konstant etwa 42 Pixel dickem Schlauch ersetzen durch eine durchgehende Verjuengung ab der Rumpfmitte, sodass die Hoehe monoton bis auf wenige Pixel am Bodenzipfel abfaellt — eine einzige Masse mit Keilprofil statt Ball plus Anhaengsel.",
+ "beideSchwach": true,
+ "blindOrdner": "gauntlet/blind/fressanlauf/7878fa56",
+ "unserBild": "gauntlet/shots/fressanlauf/pruefung/frame_008.png",
+ "referenzBild": "ref/blob-jelly/cuphead-goopy-lunge-mass-trailing-behind.png",
+ "runde": 2,
+ "historie": [
+  {
+   "runde": 1,
+   "gewonnen": false,
+   "urteil": "A erfuellt das Kriterium ueber den Massenverlauf: die Silhouette faellt von einer Frontkugel mit ca. 380 px Durchmesser auf einen nachgezogenen Strang von ca. 40 px Breite ab, also ein Verjuengungsverhaeltnis von rund 9:1 ueber eine Gesamtlaenge von ca. 1120 px bei ca. 450 px Hoehe. Damit ist die Richtung eindeutig lesbar: vorn Volumen, hinten Rest. Der Strang biegt nach hinten unten weg und beruehrt den Boden weit hinter dem Koerper, waehrend die Hauptmasse vom Boden abgeloest ist und einen eigenen Schlagschatten darunter wirft. Die Augen sind ueber die Koerperkontur nach vorn geschoben und ueberlappen die Frontkante, das Maul ist der vorderste Punkt und liegt nur ca. 350 px vom Zielobjekt entfernt, das noch unberuehrt am rechten Rand steht. Nichts im Bild bremst, der Zusammenprall steht noch bevor. B hat zwar eine aehnliche Streckung (ca. 700 x 270 px, rund 2,6:1), aber kein Gefaelle: der linke Abschluss misst ca. 250 px Hoehe, die Mitte ca. 260, die rechte Front ca. 230. Die Breite bleibt ueber die gesamte Laenge konstant, das hintere Ende ist eine sauber gerundete Kappe ohne Faden, Streifen oder Ausduennung. Damit ist die Achse richtungsneutral: die Form liesse sich seitenverkehrt lesen, ohne dass sich etwas aendert. Schlimmer noch, das groesste Volumen sitzt im mittleren und hinteren Drittel, waehrend die Form vorne zu einem schmalen Zipfel zusammenlaeuft, der sich unter dem Zielobjekt wegduckt. Das ist die Umkehrung des Kriteriums. Zudem liegt die Unterkante ueber die volle Laenge buendig auf den Bodenkacheln auf, ohne Luecke, ohne Schatten unter der Front, ohne Stauchung an der Kontaktstelle. Das Ziel wird vorne bereits ueberlappt, ohne dass eine der beiden Formen deformiert waere, also ist unklar, ob der Aufprall bevorsteht oder schon vorbei ist. Die Spannung des Moments davor fehlt vollstaendig.",
+   "luecke": "B muss die Masse nach vorn umverteilen: die konstante Breite durch eine schwere, ueberhaengende Frontbeule direkt vor dem Ziel und ein duenn auslaufendes, den Boden nachschleifendes Hinterende ersetzen, damit ueberhaupt eine Bewegungsrichtung lesbar wird."
+  }
+ ]
+}

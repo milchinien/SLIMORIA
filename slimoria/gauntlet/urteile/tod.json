@@ -1,0 +1,16 @@
+{
+ "key": "tod",
+ "lane": "DEATH",
+ "titel": "Todesanimation",
+ "szenario": "tod",
+ "gdd": "GDD 01 §50 (Form verlieren, stark zittern, PLATZEN, dunklere Schleimpfuetze bleibt, Augen schwimmen sichtbar darin, Farbe dunkler und tot) und §49 (er faellt nicht um, er hat keine Knochen)",
+ "gewonnen": true,
+ "urteil": "A zeigt eine Masse von ca. 380 px Breite bei nur ~45 px sichtbarer Aufwoelbung — Verhaeltnis rund 8:1 — und damit eine echte flache Ausbreitung; als Massstab stehen im selben Bild Kuppeln mit ~220 px Breite zu ~110 px Hoehe (2:1) daneben, der Unterschied ist also messbar und nicht behauptet. Der Uebergang zum Boden erfolgt in A ohne Absatz: die blaue Flaeche laeuft in einen breiten, weich abgestuften Dunkelsaum aus, die Augen liegen fast auf Oberflaechenniveau und der Mund ist in die Oberflaeche eingesunken statt frontal aufgerichtet — die Formaufgabe ist dem Koerper selbst anzusehen. Was A fehlt: die Silhouette ist eine sauber symmetrische Ellipse mit harter, fast aliasingscharfer Kante und einem hellen Reflexbogen entlang des hinteren Randes, der wie ein aufgestellter Schalenrand wirkt; es gibt keinen duennen, auslaufenden Vorderrand, keine Dickenverlaufsspur zum Rand hin und keine Reaktion der Kontur auf die Bodenkacheln — die Pfuetze koennte auch ein starres Linsenobjekt sein, das auf den Boden gelegt wurde. B verfehlt das Kriterium deutlicher: die Masse misst nur ~165 px Breite bei ~55 px Kuppelhoehe (3:1) und besteht aus zwei klar getrennten Geometrien — einer weiterhin praller Kuppel und einem duennen, umlaufenden Flanschring. Zwischen beiden sitzt eine Silhouettenkante, ein echter Knick statt eines stetigen Dickenabfalls; der Ring hat ueberall dieselbe Staerke, statt nach aussen auszuduennen, und vorne links ist zwischen Ringunterkante und Boden ein Spalt mit Schatten sichtbar, sodass das Objekt schwebt statt zu benetzen. Das Gesicht in B ist zudem vollstaendig aufrecht und unverzerrt nach vorne gerichtet — Augen rund, Mund offen und kreisfoermig — die Form ist also gestaucht, nicht aufgegeben.",
+ "luecke": "",
+ "beideSchwach": false,
+ "blindOrdner": "gauntlet/blind/tod/0dfffbfc",
+ "unserBild": "gauntlet/shots/tod/pruefung/frame_015.png",
+ "referenzBild": "ref/slime-rancher/sr1-extreme-flatten-disc-skirt.jpg",
+ "runde": 1,
+ "historie": []
+}

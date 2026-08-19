@@ -1,0 +1,616 @@
+/* ---------------------------------------------------------------------------
+ * HUD-Gestaltung. BESITZER: Lane UI.
+ *
+ * Referenzlayout GDD 10 §150: Minimap oben rechts, Quest-Tracker darunter,
+ * Gruppe links, HP/Ressource links unten, Hotbar zentriert unten.
+ * Qualitätsmaßstab: World of Warcraft — The War Within bei 1600x900.
+ * ------------------------------------------------------------------------- */
+
+:root {
+  --hud-bg: rgba(8, 11, 16, .72);
+  --hud-rand: rgba(150, 170, 200, .22);
+  --hud-rand-hell: rgba(190, 210, 240, .38);
+  --hud-text: #e9eef6;
+  --hud-text-schwach: #9fabbe;
+  --hp: linear-gradient(180deg, #56c46a, #2d8b41);
+  --hp-feind: linear-gradient(180deg, #d8574c, #96322a);
+  --mana: linear-gradient(180deg, #4f9be8, #2a5fa8);
+  --xp: linear-gradient(180deg, #a970e0, #6f3fb0);
+  --schrift: "Segoe UI", "Noto Sans", system-ui, sans-serif;
+}
+
+body[data-faction="ravok"] { --fraktion: #ff8578; }
+body { --fraktion: #7fd8ff; }
+
+#hud {
+  position: fixed; inset: 0; pointer-events: none;
+  font-family: var(--schrift); color: var(--hud-text);
+  font-size: 13px; user-select: none;
+  -webkit-font-smoothing: antialiased;
+}
+body.hud-aus #hud { display: none; }
+
+#hud .balken, .sp-balken, .z-balken {
+  position: relative; overflow: hidden;
+  background: rgba(0, 0, 0, .55);
+  border: 1px solid var(--hud-rand);
+  border-radius: 2px;
+}
+.sp-balken i, .z-balken i {
+  display: block; height: 100%; width: 100%;
+  transition: width .12s linear;
+}
+.sp-balken span, .z-balken span {
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 600;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, .95);
+  font-variant-numeric: tabular-nums;
+}
+
+/* --- Minimap (oben rechts) ------------------------------------------------ */
+#ui-minimap { position: absolute; top: 14px; right: 16px; text-align: center; }
+.mm-rand {
+  width: 150px; height: 150px; border-radius: 50%;
+  border: 2px solid var(--hud-rand-hell);
+  box-shadow: 0 0 0 3px rgba(0, 0, 0, .5), 0 4px 18px rgba(0, 0, 0, .6);
+  overflow: hidden; background: #0d1218;
+}
+.mm-titel {
+  margin-top: 5px; font-size: 11px; letter-spacing: .4px;
+  color: var(--hud-text-schwach); text-shadow: 0 1px 2px #000;
+}
+
+/* --- Quest-Tracker (unter der Minimap) ------------------------------------ */
+#ui-quests {
+  position: absolute; top: 196px; right: 16px; width: 190px;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, .9);
+}
+.q-kopf {
+  font-size: 12px; font-weight: 700; letter-spacing: .6px;
+  color: #f0d9a0; margin-bottom: 5px; text-transform: uppercase;
+}
+.q-eintrag {
+  display: flex; justify-content: space-between; gap: 6px;
+  font-size: 12px; color: var(--hud-text-schwach); padding: 2px 0;
+}
+.q-name { color: #cfd8e6; }
+.q-fort { font-variant-numeric: tabular-nums; color: #9dd8a6; }
+
+/* --- Gruppe (links) ------------------------------------------------------- */
+#ui-gruppe { position: absolute; left: 16px; top: 190px; width: 160px; }
+.gr-titel {
+  font-size: 11px; text-transform: uppercase; letter-spacing: .6px;
+  color: var(--hud-text-schwach); margin-bottom: 4px;
+}
+.gr-leer { font-size: 11px; color: rgba(159, 171, 190, .5); font-style: italic; }
+
+/* --- Zielanzeige — GDD 10 §21 / GDD 02 §3 ---------------------------------
+ * Ort gegen die Referenz geprueft (gameplay-target-frame-boss-nameplate-party,
+ * dargestellt 2000x1125): Spieler- und Zielrahmen liegen dort auf EINER
+ * Grundlinie (beide y 737..800), gespiegelt links und rechts der Hotbar. Nur
+ * so lassen sich „ich" und „mein Ziel" in einem Blick vergleichen. Oben
+ * mittig lagen hier 530 px senkrechter Blicksprung zwischen dem Gegner und
+ * seiner Beschriftung.
+ * Balkenmasse ebendort: 215 x 27 px = 10.8 % Bildbreite, 2.4 % Bildhoehe.
+ * Bei 1600x900 sind das 172 x 22 px — die Werte unten.
+ * Portrait: Kreis am AEUSSEREN Rand, gespiegelt zum Spielerrahmen.
+ * ------------------------------------------------------------------------- */
+#ui-ziel {
+  position: absolute; right: 16px; bottom: 96px;
+  display: flex; gap: 9px; align-items: center;
+  padding: 8px; width: 262px;
+  background: var(--hud-bg); border: 1px solid var(--hud-rand);
+  border-radius: 4px; box-shadow: 0 3px 14px rgba(0, 0, 0, .5);
+  transition: opacity .12s;
+}
+#ui-ziel.aus { opacity: 0; }
+.z-werte { flex: 1; min-width: 0; }
+.z-kopf {
+  display: flex; align-items: baseline; gap: 6px; margin-bottom: 3px;
+}
+.z-name {
+  font-size: 13px; font-weight: 700; flex: 1; min-width: 0;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  text-shadow: 0 1px 2px #000;
+}
+.z-prozent {
+  font-size: 11px; color: var(--hud-text-schwach); font-weight: 600;
+  font-variant-numeric: tabular-nums; flex: none;
+}
+.z-balken { height: 22px; }
+.z-balken i { background: var(--hp-feind); }
+.z-balken span { font-size: 12px; }
+.z-fress {
+  margin-top: 4px; font-size: 11px;
+  display: flex; justify-content: space-between; align-items: baseline;
+}
+.z-fress b {
+  font-weight: 600; color: var(--hud-text-schwach);
+  text-transform: uppercase; letter-spacing: .5px; font-size: 10px;
+}
+.z-fress span { font-weight: 800; font-variant-numeric: tabular-nums; }
+.z-fress .gut { color: #86e0a0; }
+.z-fress .mittel { color: #e8d08a; }
+.z-fress .nein { color: #d07a70; }
+
+/* Levelzahl als Gefahrenampel — in der Referenz ist sie farbig, nicht
+   dekorativ: sie sagt, ob dieser Gegner ueberhaupt zu schaffen ist. */
+.z-level {
+  font-size: 13px; font-weight: 800; flex: none;
+  background: rgba(0, 0, 0, .5); border-radius: 3px; padding: 1px 6px;
+  font-variant-numeric: tabular-nums; text-shadow: 0 1px 2px #000;
+}
+.lvl-trivial  { color: #96a3b4; }
+.lvl-leicht   { color: #8fdc92; }
+.lvl-gleich   { color: #f0d98a; }
+.lvl-schwer   { color: #f5a45c; }
+.lvl-toedlich { color: #ff7a6a; }
+#ui-ziel.stufe-schwer  { border-color: rgba(230, 150, 80, .55); }
+#ui-ziel.stufe-toedlich { border-color: rgba(235, 110, 90, .65); }
+
+/* Portrait: dieselbe Groesse wie beim Spieler, damit die beiden Rahmen als
+   Paar gelesen werden. Die Silhouette benennt die Art — eine getoente
+   Scheibe waere bei 46 px bei jeder Kreatur dasselbe. */
+.z-portrait {
+  position: relative; width: 46px; height: 46px; flex: none;
+  border-radius: 50%; border: 2px solid rgba(226, 130, 110, .55);
+  background: radial-gradient(circle at 38% 32%, #1e1a1c, #0a0e13);
+  box-shadow: 0 0 8px rgba(210, 90, 70, .28);
+  display: flex; align-items: center; justify-content: center;
+  overflow: hidden;
+}
+/* Zwei Schichten, weil eine allein nicht reicht: die Farbflaeche kommt aus
+   der Kreaturfarbe (JS setzt --tier aus k.farbe), die Form aus einer Maske.
+   `currentColor` waere in einem data:-Hintergrund wirkungslos — der ist ein
+   eigenes Dokument und erbt nichts. Die Detailzeichnung (Augen, Hauer) liegt
+   als zweiter, fest gefaerbter Hintergrund darueber. */
+.tier {
+  position: relative; flex: none;
+  background-color: var(--tier, #8a8894);
+  -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
+  -webkit-mask-size: 100% 100%; mask-size: 100% 100%;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, .85));
+}
+.tier::after {
+  content: ''; position: absolute; inset: 0;
+  background-repeat: no-repeat; background-size: 100% 100%;
+}
+/* Dieselbe Silhouette in zwei Groessen: im Rahmen unten und am Weltschild.
+   Sie ist das Band zwischen beiden — man sieht ohne Lesen, dass der Kasten
+   am Bildrand von genau diesem Tier spricht. */
+.z-tier { width: 38px; height: 38px; }
+.np-tier { width: 17px; height: 17px; }
+.tier-wolf {
+  -webkit-mask-image: var(--m-wolf); mask-image: var(--m-wolf);
+}
+.tier-wolf::after { background-image: var(--d-wolf); }
+.tier-eber {
+  -webkit-mask-image: var(--m-eber); mask-image: var(--m-eber);
+}
+.tier-eber::after { background-image: var(--d-eber); }
+.tier-schleimling {
+  -webkit-mask-image: var(--m-schleim); mask-image: var(--m-schleim);
+}
+.tier-schleimling::after { background-image: var(--d-schleim); }
+
+:root {
+  /* Silhouetten (Maske): nur Form, Farbe kommt von --tier. */
+  --m-wolf: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Cpath d='M9 15 L6 3 L15 9 Z M31 15 L34 3 L25 9 Z' fill='%23000'/%3E%3Cpath d='M20 8 C29 8 33 14 33 21 C33 31 27 37 20 37 C13 37 7 31 7 21 C7 14 11 8 20 8 Z' fill='%23000'/%3E%3C/svg%3E");
+  --m-eber: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Cpath d='M9 13 L7 5 L14 9 Z M31 13 L33 5 L26 9 Z' fill='%23000'/%3E%3Cpath d='M20 7 C30 7 36 14 36 23 C36 32 29 38 20 38 C11 38 4 32 4 23 C4 14 10 7 20 7 Z' fill='%23000'/%3E%3C/svg%3E");
+  --m-schleim: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Cpath d='M20 6 C29 6 37 20 37 29 C37 35 30 37 20 37 C10 37 3 35 3 29 C3 20 11 6 20 6 Z' fill='%23000'/%3E%3C/svg%3E");
+  /* Detailzeichnung: Augen und Hauer, fest gefaerbt, damit die Silhouette
+     bei 38 px eine Kreatur bleibt und keine Farbscheibe wird. */
+  --d-wolf: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Cpath d='M20 25 C23.5 25 26 27.5 26 31 C26 34.5 23.5 37 20 37 C16.5 37 14 34.5 14 31 C14 27.5 16.5 25 20 25 Z' fill='rgba(0,0,0,.42)'/%3E%3Cellipse cx='20' cy='28.5' rx='2.6' ry='2' fill='%230d0a10'/%3E%3Cpath d='M14 18 L19 20 L14 22 Z M26 18 L21 20 L26 22 Z' fill='%23120d10'/%3E%3C/svg%3E");
+  --d-eber: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Cellipse cx='20' cy='30' rx='9' ry='6.5' fill='rgba(0,0,0,.40)'/%3E%3Cellipse cx='16.6' cy='30' rx='1.9' ry='2.5' fill='%23140d0a'/%3E%3Cellipse cx='23.4' cy='30' rx='1.9' ry='2.5' fill='%23140d0a'/%3E%3Cpath d='M11 32 C8 29 8 24 10 22 C10 27 12 30 14 31 Z M29 32 C32 29 32 24 30 22 C30 27 28 30 26 31 Z' fill='%23f4ecda'/%3E%3Ccircle cx='13.5' cy='19' r='2.1' fill='%23140d0a'/%3E%3Ccircle cx='26.5' cy='19' r='2.1' fill='%23140d0a'/%3E%3C/svg%3E");
+  --d-schleim: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Cellipse cx='14' cy='25' rx='2.6' ry='3.6' fill='%230b1408'/%3E%3Cellipse cx='26' cy='25' rx='2.6' ry='3.6' fill='%230b1408'/%3E%3Cellipse cx='14.5' cy='14' rx='5' ry='2.8' fill='rgba(255,255,255,.40)'/%3E%3C/svg%3E");
+}
+
+/* --- Weltschild ueber dem Ziel — GDD 02 §3 --------------------------------
+ * In jeder Referenzaufnahme haengt der Name des Gegners UEBER ihm, mit
+ * schmalem HP-Balken (dort 165 x 18 px auf 2000x1125 = 8.2 % x 1.6 %; hier
+ * 132 x 14 px auf 1600x900). Der Pfeil darunter zeigt auf den Koerper und
+ * beantwortet „welchen greife ich an" ohne einen Blick ans HUD.
+ * ------------------------------------------------------------------------- */
+/* Eigene Fassung, wie beim Boss-Namensschild der Referenz: der helle Boden
+   der Testarena frisst reinen Text mit Schlagschatten, und die aufsteigenden
+   Schadenszahlen kreuzen genau hier durch. Auf dunklem Grund bleiben Name
+   und Balken auch dann noch eine eigene Einheit. */
+#ui-schild {
+  position: absolute; top: 0; left: 0; width: 142px;
+  padding: 3px 6px 4px; box-sizing: content-box;
+  background: rgba(6, 9, 14, .62);
+  border: 1px solid rgba(150, 170, 200, .18);
+  border-radius: 3px; box-shadow: 0 2px 10px rgba(0, 0, 0, .55);
+  will-change: transform; pointer-events: none;
+}
+#ui-schild.aus { display: none; }
+/* Linksbuendig wie im Referenzschild („82 Bogpiper"). Das ist hier kein
+   Geschmack: die Schadenszahlen steigen aus der Mitte des Schildes auf und
+   verdeckten die zentrierte Levelzahl vollstaendig. Am linken Rand steht die
+   Gefahrenstufe ausserhalb ihrer Flugbahn. */
+.np-kopf {
+  display: flex; align-items: baseline; gap: 5px; justify-content: flex-start;
+  text-shadow: 0 2px 4px #000, 0 0 6px rgba(0, 0, 0, .95), 0 0 3px #000;
+  margin-bottom: 3px;
+}
+.np-kopf .np-name { flex: 1; min-width: 0; }
+.np-level { font-size: 13px; font-weight: 800; font-variant-numeric: tabular-nums; }
+.np-name {
+  font-size: 15px; font-weight: 700; color: #ffb8ac; letter-spacing: .2px;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.np-reihe { display: flex; align-items: center; gap: 4px; }
+.np-reihe .np-balken { flex: 1; }
+#ui-schild.stufe-trivial  .np-level { color: #96a3b4; }
+#ui-schild.stufe-leicht   .np-level { color: #8fdc92; }
+#ui-schild.stufe-gleich   .np-level { color: #f0d98a; }
+#ui-schild.stufe-schwer   .np-level { color: #f5a45c; }
+#ui-schild.stufe-toedlich .np-level { color: #ff7a6a; }
+.np-balken {
+  position: relative; height: 14px; overflow: hidden;
+  background: rgba(0, 0, 0, .78);
+  border: 1px solid rgba(255, 190, 175, .55); border-radius: 2px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, .7);
+}
+.np-balken i { display: block; height: 100%; background: var(--hp-feind); }
+/* Der Pfeil ist die eigentliche Zuordnung: er zeigt vom Schild auf den
+   Koerper. Ohne ihn schwebt der Name bei mehreren Gegnern zwischen ihnen. */
+.np-pfeil {
+  position: absolute; left: 50%; bottom: -11px; margin-left: -8px;
+  width: 0; height: 0; border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-top: 11px solid #ffcabb;
+  filter: drop-shadow(0 2px 3px rgba(0, 0, 0, .95));
+}
+
+/* --- Spielerrahmen (links unten) ------------------------------------------ */
+#ui-spieler {
+  position: absolute; left: 16px; bottom: 96px;
+  display: flex; gap: 9px; align-items: center;
+  padding: 8px; width: 262px;
+  background: var(--hud-bg); border: 1px solid var(--hud-rand);
+  border-radius: 4px; box-shadow: 0 3px 14px rgba(0, 0, 0, .5);
+}
+.sp-portrait {
+  position: relative; width: 46px; height: 46px; flex: none;
+  border-radius: 50%; border: 2px solid var(--hud-rand-hell);
+  background: radial-gradient(circle at 38% 32%, #1b2530, #0a0e13);
+  display: flex; align-items: center; justify-content: center;
+}
+.sp-blob {
+  width: 26px; height: 21px; border-radius: 50% 50% 46% 46%;
+  background: radial-gradient(circle at 38% 30%,
+    color-mix(in srgb, var(--fraktion) 92%, white), var(--fraktion));
+  box-shadow: inset 0 -3px 6px rgba(0, 0, 0, .45);
+}
+.sp-portrait span {
+  position: absolute; right: -5px; bottom: -4px;
+  min-width: 17px; height: 17px; line-height: 16px; text-align: center;
+  font-size: 11px; font-weight: 700; color: #f5e6bd;
+  background: #12171f; border: 1px solid var(--hud-rand-hell); border-radius: 50%;
+}
+.sp-werte { flex: 1; min-width: 0; }
+.sp-name {
+  font-size: 12px; font-weight: 600; margin-bottom: 3px;
+  text-shadow: 0 1px 2px #000; color: var(--fraktion);
+}
+.sp-balken { height: 15px; margin-bottom: 3px; }
+.sp-balken.hp i { background: var(--hp); }
+.sp-balken.mana { height: 11px; }
+.sp-balken.mana i { background: var(--mana); }
+
+/* --- XP-Leiste (ganz unten) ----------------------------------------------- */
+#ui-xp {
+  position: absolute; left: 0; right: 0; bottom: 0; height: 11px;
+  background: rgba(0, 0, 0, .62); border-top: 1px solid rgba(150, 170, 200, .16);
+}
+#ui-xp i { display: block; height: 100%; background: var(--xp); transition: width .18s; }
+#ui-xp span {
+  position: absolute; inset: 0; display: flex; align-items: center;
+  justify-content: center; font-size: 9.5px; letter-spacing: .3px;
+  color: #d8cdea; text-shadow: 0 1px 2px #000; font-variant-numeric: tabular-nums;
+}
+
+/* --- Hotbar (unten mittig) — GDD 10 §12–17 --------------------------------
+ * Maße gegen wow-hud/wiki-hud-modern-layout.png geprüft: dort belegt die
+ * Leiste 30 % der Bildbreite, ein Slot ist ~2.4 % breit, der Spalt zwischen
+ * zwei Slots ~4 % der Slotbreite. Bei 10 Slots auf 1600 px ergibt das
+ * 44 px Slot + 3 px Spalt = 467 px = 29.2 % — dieselbe Dichte.
+ * ------------------------------------------------------------------------- */
+#ui-hotbar {
+  position: absolute; left: 50%; bottom: 21px; transform: translateX(-50%);
+  display: flex; gap: 3px; pointer-events: auto;
+}
+/* Die Leiste muss als ein Block lesbar sein, nicht als zehn Einzelkacheln
+   über der Welt — in der Referenz trägt sie ebenfalls eine eigene Fassung. */
+#ui-hotbar::before {
+  content: ''; position: absolute; inset: -6px -8px -7px; z-index: -1;
+  background: linear-gradient(180deg, rgba(5, 8, 13, .34), rgba(5, 8, 13, .70));
+  border: 1px solid rgba(150, 170, 200, .14);
+  border-radius: 5px; box-shadow: 0 4px 16px rgba(0, 0, 0, .55);
+}
+/* Kein overflow:hidden. Der Bereitblitz muss über den Slotrand hinaus
+   wachsen dürfen — eingesperrt war er nur ein etwas hellerer Slot und der
+   Moment „wieder verfügbar" (§15) fand im Bild nicht statt. Alles, was
+   vorher vom Rahmen beschnitten wurde (Wisch, Mangelfläche), trägt seinen
+   Radius jetzt selbst. */
+.hb-slot {
+  position: relative; width: 44px; height: 44px;
+  background: #05080c; border: 1px solid #010306;
+  border-radius: 3px; cursor: pointer;
+  box-shadow: inset 0 0 0 1px rgba(168, 190, 220, .30),
+              inset 0 1px 0 rgba(255, 255, 255, .10),
+              0 2px 8px rgba(0, 0, 0, .6);
+}
+.hb-slot.leer {
+  background: rgba(8, 11, 17, .5);
+  box-shadow: inset 0 0 0 1px rgba(120, 140, 170, .16);
+  cursor: default;
+}
+.hb-slot:not(.leer):hover { box-shadow: inset 0 0 0 1px rgba(230, 244, 255, .75), 0 2px 8px rgba(0, 0, 0, .6); }
+
+/* Icons sind Piktogramme, keine Farbflächen: die Silhouette muss die
+   Fähigkeit benennen, sonst sind fünf Slots fünfmal dasselbe (GDD 10 §13,
+   GDD 01 §68 „klare Silhouetten"). Farbfeld = schnelle Wiedererkennung,
+   dunkles Zeichen darauf = Bedeutung. */
+.hb-icon {
+  position: absolute; inset: 2px; border-radius: 2px;
+  background-repeat: no-repeat; background-position: center;
+  background-size: 100% 100%, 100% 100%;
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, .55);
+  /* Der Stups beim Bereitwerden wird aus JS gesetzt (dt-gesteuert). */
+  transform-origin: 50% 50%;
+}
+.ic-biss {
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Cellipse cx='20' cy='20' rx='16' ry='13' fill='%23050f18'/%3E%3Cpath d='M4 8 L9 18 L14 8 L19 18 L24 8 L29 18 L34 8 L36 8 L36 6 L4 6 Z' fill='%23f4f9ff'/%3E%3Cpath d='M4 32 L9 22 L14 32 L19 22 L24 32 L29 22 L34 32 L36 32 L36 34 L4 34 Z' fill='%23cfe0ee'/%3E%3C/svg%3E"),
+    radial-gradient(circle at 34% 26%, #86c1e4, #2b6690 58%, #10222f);
+}
+/* Körperstoß: dunkle Masse links, zwei helle Winkel nach rechts. Ein
+   zentrierter Klumpen mit Pfeil daneben las sich bei 44 px als Auge —
+   die Silhouette muss die Richtung tragen, nicht das Detail. */
+.ic-stoss {
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Cellipse cx='12' cy='20' rx='10' ry='12' fill='%23051622'/%3E%3Cg fill='none' stroke='%23fff6dc' stroke-width='4.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M21 9 L30 20 L21 31'/%3E%3Cpath d='M30 9 L38 20 L30 31'/%3E%3C/g%3E%3C/svg%3E"),
+    radial-gradient(circle at 30% 28%, #9fdcf6, #2f7ba8 60%, #14344a);
+}
+.ic-saeure {
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Cpath d='M20 3 C20 3 32 19 32 26 A12 12 0 0 1 8 26 C8 19 20 3 20 3 Z' fill='%230b1c06'/%3E%3Cellipse cx='15.5' cy='25' rx='3.6' ry='4.8' fill='%23d9ff96'/%3E%3Ccircle cx='5' cy='33' r='3.4' fill='%230b1c06'/%3E%3Ccircle cx='35' cy='31' r='2.8' fill='%230b1c06'/%3E%3C/svg%3E"),
+    radial-gradient(circle at 36% 26%, #dcff9c, #6aab31 58%, #26401a);
+}
+.ic-straffen {
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Ccircle cx='20' cy='20' r='16' fill='none' stroke='%233a2408' stroke-width='3'/%3E%3Cpath d='M16 6 h8 v10 h10 v8 h-10 v10 h-8 v-10 h-10 v-8 h10 z' fill='%233a2408'/%3E%3Cpath d='M17.6 8 h4.8 v10 h10 v4.8 h-10 v10 h-4.8 v-10 h-10 v-4.8 h10 z' fill='%23fff3d2'/%3E%3C/svg%3E"),
+    radial-gradient(circle at 36% 26%, #ffeec0, #d2932f 58%, #4a3113);
+}
+.ic-fressen {
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Cpath d='M20 20 L34.7 9.7 A18 18 0 1 0 34.7 30.3 Z' fill='%23370716'/%3E%3Ccircle cx='16' cy='20' r='4.4' fill='%23ffd0e0'/%3E%3Ccircle cx='36' cy='20' r='2.6' fill='%23370716'/%3E%3C/svg%3E"),
+    radial-gradient(circle at 40% 26%, #ffc9dc, #cd4468 56%, #4d1425);
+}
+
+/* Abklingzeit: abdunkeln + radialer Wisch + Restzeit (GDD 10 §15).
+   Der Wisch deckt den REST ab und schrumpft im Uhrzeigersinn weg; die
+   Vorderkante ist hell, damit die Bewegung überhaupt sichtbar ist. */
+.hb-cd { position: absolute; inset: 0; display: none; }
+.hb-slot.kuehlt .hb-cd { display: block; }
+/* Nur leicht absenken. Das eigentliche Abdunkeln macht der Wisch — bei
+   brightness(.66) lag AUCH der schon freigegebene Sektor im Dunkeln, und
+   damit war der Unterschied zwischen „abgelaufen" und „läuft noch" auf
+   zwei Grautöne zusammengeschrumpft. In der Referenz steht der abgelaufene
+   Teil des Icons in voller Helligkeit da, nur der Rest ist verdeckt. */
+.hb-slot.kuehlt .hb-icon { filter: brightness(.90) saturate(.88); }
+.hb-cd i { position: absolute; inset: 0; display: block; border-radius: 3px; }
+.hb-cd b {
+  position: absolute; inset: 0; display: flex;
+  align-items: center; justify-content: center;
+  font-size: 16px; font-weight: 800; color: #fff; letter-spacing: -.3px;
+  text-shadow: 0 1px 3px #000, 0 0 7px rgba(0, 0, 0, .95);
+  font-variant-numeric: tabular-nums;
+}
+/* Wiederverfügbarkeit: der Moment des Bereitwerdens bekommt einen eigenen
+   Blitz. Ohne ihn verschwindet die Abdunklung lautlos und §15 ist nicht
+   erfüllt. Deckkraft/Skalierung kommen aus JS (dt-gesteuert, kein CSS-Timer
+   — sonst wäre die Aufnahme nicht wiederholbar). */
+/* Stoßwelle: startet auf Slotgröße und wächst auf das 1,9-fache HINAUS.
+   Genau das war vorher unmöglich (Slot war overflow:hidden) — ein Ring, der
+   nur bis zum eigenen Rand wachsen darf, sagt nichts, was der verschwundene
+   Wisch nicht schon gesagt hätte. Der Rand ist dick genug, um bei 1,9-facher
+   Skalierung immer noch als Ring und nicht als Haarlinie zu lesen. */
+.hb-blitz {
+  position: absolute; inset: -1px; display: block; opacity: 0; z-index: 4;
+  border: 2.5px solid #ffffff; border-radius: 4px; pointer-events: none;
+  transform-origin: 50% 50%;
+  background: radial-gradient(circle, rgba(214, 244, 255, .22), rgba(190, 230, 255, 0) 62%);
+  box-shadow: 0 0 14px 3px rgba(190, 232, 255, .90), inset 0 0 10px rgba(255, 255, 255, .60);
+}
+/* Glanz: bleibt auf dem Slot liegen und hält den Moment fest, während die
+   Stoßwelle schon weg ist. Weiße Fläche bei 28 % — das Piktogramm bleibt
+   lesbar, der Slot ist trotzdem eindeutig „gerade aufgeleuchtet". */
+.hb-glanz {
+  position: absolute; inset: 0; display: block; opacity: 0; z-index: 2;
+  border-radius: 3px; pointer-events: none;
+  background: linear-gradient(180deg, rgba(255, 255, 255, .40), rgba(176, 226, 255, .18));
+  box-shadow: inset 0 0 0 2px rgba(236, 250, 255, .95),
+              0 0 10px 2px rgba(150, 215, 255, .55);
+}
+
+/* Verweigert: der Spieler hat gedrückt und es ist nichts passiert. Der Slot
+   bekommt einen roten Riegel quer über das Icon — er benennt WELCHER Knopf
+   nicht gezündet hat, während die rote Zeile oben mittig das WARUM trägt
+   (GDD 10 §73, Arbeitsliste 20). Deckkraft und Ruck kommen aus JS,
+   dt-gesteuert, damit die Aufnahme wiederholbar bleibt. */
+.hb-nein {
+  position: absolute; inset: -2px; display: block; opacity: 0; z-index: 5;
+  border-radius: 4px; pointer-events: none;
+  border: 2px solid #ff4634;
+  background:
+    linear-gradient(135deg, transparent calc(50% - 2.5px), #ff4634 calc(50% - 2.5px),
+      #ff4634 calc(50% + 2.5px), transparent calc(50% + 2.5px)),
+    rgba(70, 6, 4, .48);
+  box-shadow: 0 0 12px 2px rgba(255, 60, 40, .65);
+}
+
+/* Fehlende Ressource muss ohne Ausprobieren erkennbar sein (§16): drei
+   Signale gleichzeitig — Icon blau abgesenkt, Rahmen blau, Kostenzahl rot. */
+.hb-slot.arm .hb-icon { filter: saturate(.20) brightness(.42); }
+.hb-slot.arm::after {
+  content: ''; position: absolute; inset: 0; border-radius: 3px;
+  background: rgba(38, 74, 150, .46); pointer-events: none;
+}
+/* Der blaue Rahmen und die rote Kostenzahl stehen auch dann, wenn der Slot
+   gerade kühlt: „das Mana reicht nicht" gilt unabhängig davon, warum der
+   Slot sonst noch gesperrt ist (§16). Nur die blaue Vollfläche bleibt dem
+   Fall vorbehalten, in dem das Mana die EINZIGE Sperre ist — sonst deckt
+   sie den Wisch zu und beide Aussagen gehen in derselben Trübung unter. */
+.hb-slot.knapp { box-shadow: inset 0 0 0 1px rgba(96, 150, 235, .85), 0 2px 8px rgba(0, 0, 0, .6); }
+.hb-slot.knapp .hb-kosten { color: #ff8578; font-weight: 800; }
+/* Kein gültiges Ziel: ausgegraut, aber nicht blau — sonst verwechselbar. */
+.hb-slot.kein-ziel .hb-icon { filter: grayscale(.78) brightness(.55); }
+
+.hb-taste {
+  position: absolute; top: 0; right: 2px; z-index: 3;
+  font-size: 10px; font-weight: 700; line-height: 12px;
+  color: #f2f6fb; text-shadow: 0 1px 2px #000, 0 0 3px #000, 0 0 3px #000;
+  font-variant-numeric: tabular-nums;
+}
+.hb-slot.leer .hb-taste { color: rgba(190, 205, 225, .45); }
+/* GDD 10 §18: E ist ausschließlich für Fressen reserviert. Der Slot trägt
+   seine Zahl (die ihn ebenfalls auslöst) UND das reservierte Kürzel. */
+.hb-sondertaste {
+  position: absolute; top: 1px; left: 2px; z-index: 3;
+  font-size: 9px; font-weight: 800; line-height: 10px; padding: 0 2.5px;
+  color: #ffe6f0; background: rgba(80, 8, 30, .82);
+  border: 1px solid rgba(255, 170, 200, .55); border-radius: 2px;
+}
+.hb-kosten {
+  position: absolute; bottom: 0; right: 2px; z-index: 3;
+  font-size: 11px; font-weight: 700; line-height: 13px;
+  color: #9fd0ff; text-shadow: 0 1px 2px #000, 0 0 3px #000;
+  font-variant-numeric: tabular-nums;
+}
+
+/* --- Schwebender Kampftext ------------------------------------------------ */
+#ui-welt { position: absolute; inset: 0; overflow: hidden; }
+.st {
+  position: absolute; top: 0; left: 0;
+  /* Ziffernhöhe am Material gemessen: „728" in remix-damage-numbers-target
+   * ist 22 px bei 1080 Bildhöhe = 2,0 %; auf 900 sind das 18,5 px Ziffer,
+   * also rund 26 px Schriftgrad. Vorher standen 22 px (15,7 px Ziffer,
+   * 1,7 %) — knapp unter dem Maß, und mit dem blassen Creme war die Zahl
+   * vom hellen Arenaboden kaum zu trennen. Die Wucht multipliziert bis
+   * 1,38, große Treffer erreichen damit die 2,6 % der Referenz. */
+  font-weight: 800; font-size: 26px; line-height: 1; letter-spacing: .2px;
+  font-variant-numeric: tabular-nums;
+  /* Harte Kontur statt Weichzeichner. Jede Schadenszahl der Referenz trägt
+   * einen schwarzen Rand, der sie vor hellem Gras genauso stehen lässt wie
+   * vor grauem Himmel. Ein reiner Schlagschatten tut das nicht: das blasse
+   * Gelb löste sich vor dem Horizont der Testarena schlicht auf. */
+  text-shadow:
+    2px 0 0 #04060a, -2px 0 0 #04060a, 0 2px 0 #04060a, 0 -2px 0 #04060a,
+    1.5px 1.5px 0 #04060a, -1.5px 1.5px 0 #04060a,
+    1.5px -1.5px 0 #04060a, -1.5px -1.5px 0 #04060a,
+    0 3px 8px rgba(0, 0, 0, .85);
+  will-change: transform, opacity; white-space: nowrap;
+  transform-origin: 50% 50%;
+}
+/* Vier Kategorien, vier Farbfamilien, und zwischen je zweien liegt mehr als
+ * ein Farbtonschritt — genau die Trennung, an der die alte Fassung
+ * gescheitert ist (Orange gegen Lachsrot war ein Farbton Abstand). Am
+ * Material abgelesen: WoW gibt AUSGETEILTEN Schaden Gold, ERLITTENEN Rot,
+ * Heilung Grün. Die Farbe allein trägt nichts — jede Zahl hat zusätzlich
+ * ihr Vorzeichen und ihren eigenen Ankerpunkt im Bild. */
+.st-schaden   { color: #ffbe23; }   /* ausgeteilt: sattes Gold, mit − */
+.st-erlitten  { color: #ff2f22; }   /* erlitten: reines Rot, mit − */
+.st-heilung   { color: #2fe563; }   /* Heilung: sattes Grün, mit + */
+.st-ressource { color: #5fb2ff; font-size: 19px; font-weight: 800; }
+.st-xp        { color: #c79bff; font-size: 18px; font-weight: 700; }
+.st-gefressen { color: #ffc2dd; font-size: 28px; letter-spacing: 1.2px; }
+.st-fehl      { color: #ff9a5c; font-size: 24px; letter-spacing: 1px; }
+.st-gross     { color: #ffdf8a; font-size: 28px; letter-spacing: 1.6px; }
+
+/* --- Meldungen (Mitte oben) ------------------------------------------------ */
+#ui-hinweise {
+  position: absolute; top: 122px; left: 50%; transform: translateX(-50%);
+  display: flex; flex-direction: column; align-items: center; gap: 5px;
+}
+.hw {
+  font-size: 15px; font-weight: 600; letter-spacing: .3px;
+  text-shadow: 0 2px 5px rgba(0, 0, 0, .95); color: #e6edf7;
+}
+/* Die Banderole ist jetzt die einzige Stelle, die das Ergebnis ausspricht —
+ * dafür darf sie auch tragen. Glut statt Kasten: die Referenz setzt ihre
+ * Ereignismeldungen ebenfalls ohne Rahmen, nur mit Kontur und Schein. */
+.hw-gross {
+  font-size: 28px; font-weight: 800; letter-spacing: 1.2px; color: #ffe4a0;
+  text-shadow:
+    1.5px 0 0 #0a0a10, -1.5px 0 0 #0a0a10, 0 1.5px 0 #0a0a10, 0 -1.5px 0 #0a0a10,
+    0 0 20px rgba(255, 190, 90, .55), 0 2px 5px rgba(0, 0, 0, .95);
+}
+.hw-fehl { color: #ff9a7a; }
+/* Verweigerte Aktion. In der Referenz steht die Fehlermeldung rot und oben
+ * mittig, dort wo der Blick beim Zaubern ohnehin ist — nicht am Rand.
+ * Vorher gab es sie gar nicht: game.js lieferte den Grund, niemand las ihn
+ * (Arbeitsliste 20). */
+.hw-sperre {
+  font-size: 17px; font-weight: 800; letter-spacing: .4px; color: #ff6a58;
+  text-shadow:
+    1.5px 0 0 #12060a, -1.5px 0 0 #12060a, 0 1.5px 0 #12060a, 0 -1.5px 0 #12060a,
+    0 0 14px rgba(255, 70, 50, .5), 0 2px 5px rgba(0, 0, 0, .95);
+}
+
+/* --- Reaktion am Spielerrahmen (GDD 10 §73, Arbeitsliste 23) --------------
+ * Die schwebende Zahl sagt WAS, der Rahmen sagt AN WEM. Ohne diese zweite
+ * Aussage war ein Treffer am Spieler nur eine kleine Zahl irgendwo im Bild —
+ * im Spielbericht wurde der Spieler 27-mal getroffen, ohne zu bemerken,
+ * dass er gemeint war. */
+.sp-blitz {
+  position: absolute; inset: -2px; border-radius: 5px; opacity: 0;
+  pointer-events: none; z-index: 4;
+}
+#ui-spieler[data-reaktion="schaden"] .sp-blitz {
+  box-shadow: inset 0 0 0 2px #ff3b2c, inset 0 0 22px rgba(255, 45, 30, .55),
+              0 0 18px rgba(255, 50, 35, .55);
+  background: radial-gradient(ellipse at 50% 50%, rgba(255, 40, 25, .22), transparent 72%);
+}
+#ui-spieler[data-reaktion="heilung"] .sp-blitz {
+  box-shadow: inset 0 0 0 2px #3ce56c, inset 0 0 22px rgba(50, 225, 100, .45),
+              0 0 18px rgba(50, 225, 100, .45);
+  background: radial-gradient(ellipse at 50% 50%, rgba(45, 220, 95, .18), transparent 72%);
+}
+
+/* Der Angreifer. Ist er das Ziel, glüht seine Namensplatte — kein zusätzliches
+ * Element (GDD 10 §98). Ist er es nicht, bekommt er eine eigene, kleine Marke. */
+/* Deckkraft kommt aus JS (dt-gesteuert): voller Ausschlag beim Treffer,
+   danach ruhiges Grundleuchten. Ein CSS-Timer wäre in der Aufnahme nicht
+   wiederholbar, eine feste Deckkraft ein dauerhaft roter Kasten. */
+.np-angriff {
+  position: absolute; inset: -2px; border-radius: 4px; opacity: 0;
+  box-shadow: 0 0 0 1.5px #ff4a38, 0 0 13px rgba(255, 70, 45, .5);
+  pointer-events: none;
+}
+#ui-schild.greift-an { border-color: rgba(255, 110, 90, .65); }
+#ui-angreifer {
+  position: absolute; top: 0; left: 0;
+  font-size: 11px; font-weight: 800; letter-spacing: 1px;
+  padding: 2px 7px 3px; border-radius: 3px; white-space: nowrap;
+  color: #ffe2dc; background: rgba(120, 20, 12, .82);
+  border: 1px solid #ff5c48; box-shadow: 0 0 12px rgba(255, 60, 40, .5);
+  will-change: transform; pointer-events: none;
+}
+#ui-angreifer.aus { display: none; }
+
+/* --- Zeigerfang (GDD 10 §151, Arbeitsliste 21) ---------------------------
+ * Linksklick gehoert auch der Oberflaeche. Bisher stand nur die Hotbar auf
+ * pointer-events:auto — ein Klick auf Minimap, Quest-Tracker, Gruppe oder
+ * einen der beiden Rahmen ging durch das HUD hindurch auf den Boden und
+ * schickte den Schleim los. Die schwebenden Zahlen und das Weltschild
+ * bleiben durchlaessig: sie stehen mitten im Bild und duerfen nichts fangen.
+ * ------------------------------------------------------------------------- */
+#ui-minimap, #ui-quests, #ui-gruppe, #ui-ziel, #ui-spieler, #ui-xp {
+  pointer-events: auto;
+}
+#ui-ziel.aus { pointer-events: none; }
+#ui-welt, .st, #ui-schild, #ui-angreifer, #ui-hinweise, .hw { pointer-events: none; }

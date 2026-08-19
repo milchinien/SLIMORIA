@@ -1,0 +1,23 @@
+{
+ "key": "vollgas",
+ "lane": "MOTION",
+ "titel": "Vollgas-Streckung",
+ "szenario": "vollgas",
+ "gdd": "GDD 01 §14 (schnell = deutlich in Bewegungsrichtung gestreckt; sehr schnell = vorne flacher und laenger, hinterer Teil nachgezogen)",
+ "gewonnen": true,
+ "urteil": "In Runde 2 blind gewonnen. Der Wortlaut des Urteils ging verloren, weil der Protokoll-Agent an einem Verbindungsfehler starb — das Ergebnis selbst steht im Workflow-Rueckgabewert und ist belegt.",
+ "luecke": "",
+ "beideSchwach": false,
+ "blindOrdner": "gauntlet/blind/vollgas/4ee31537",
+ "unserBild": "D:/Projects/Claude/Desktop/Games/SLIMORIA/slimoria/gauntlet/shots/vollgas/pruefung/frame_003.png",
+ "referenzBild": "D:/Projects/Claude/Desktop/Games/SLIMORIA/slimoria/ref/slime-rancher/sr1-yellow-slime-hop-arc.jpg",
+ "runde": 2,
+ "historie": [
+  {
+   "runde": 1,
+   "gewonnen": false,
+   "urteil": "A hat eine gerichtete Silhouette, B hat keine. A misst rund 340 x 230 px (Seitenverhaeltnis ca. 1,48:1 horizontal), und die Achse ist nicht nur laenger, sie ist auch asymmetrisch besetzt: der Scheitel sitzt bei etwa x=580 deutlich links der Koerpermitte, von dort faellt die rechte Flanke in einem langen, fast geraden Zug bis zur unteren rechten Ecke bei (760, 555) ab, waehrend die linke Flanke in einem kurzen, steilen Bogen schliesst. Diese Kombination aus verschobenem Scheitel und einseitig gestreckter Flanke ist die einzige echte Formaussage ueber Bewegung in beiden Bildern. Dazu kommt, dass A den Bodenkontakt aufgibt: die Unterkante ist eine durchgehende, leicht nach rechts kippende Linie ohne aufsitzende Standflaeche. Der Umriss bleibt dabei geschlossen und konvex, keine Faeden, keine aufgeloesten Kanten - als Blob noch klar lesbar.\n\nB ist formal statisch. Der Koerper misst ca. 365 x 290 px (1,26:1), also fast quadratisch, und der Umriss ist spiegelsymmetrisch zur Vertikalen: linke und rechte Flanke laufen beide von der breitesten Stelle an der Basis (y ca. 610) in gleicher Kruemmung nach oben zu einem flachen Scheitelbogen, der genau ueber der Basismitte steht. Es gibt keine Streckung entlang irgendeiner Achse, keine Verjuengung nach hinten, keine Neigung des Massenschwerpunkts. Die Basis flaresst nach beiden Seiten gleich weit aus - das ist das Profil eines sitzenden, ruhenden Tropfens.\n\nBeide verfehlen das Kriterium aber teilweise. A: 1,48:1 ist fuer \"schnell\" eine schwache Streckung, und das Heck laeuft nicht aus, sondern rundet nur ab - es fehlt die duenne, zugespitzte Schleppkante. Ausserdem traegt A den Bewegungseindruck zu grossen Teilen ueber gezeichnete Speedlines und Partikelbaender, also gerade nicht ueber die Form; zieht man die ab, bleibt ein leicht schraeger Klecks. Der Vorderkante fehlt zudem jede Stauchung/Verdickung, die bei Tempo entstehen muesste. B verfehlt das Kriterium vollstaendig.",
+   "luecke": "B muesste seine Masse entlang einer klaren Bewegungsachse verschieben - Scheitel und Volumen nach vorn ueber die Vorderkante kippen und das Heck von der breitesten Stelle in eine duenner werdende, ausgezogene Schleppkante ziehen, statt links und rechts spiegelgleich zur Basismitte zu schliessen."
+  }
+ ]
+}

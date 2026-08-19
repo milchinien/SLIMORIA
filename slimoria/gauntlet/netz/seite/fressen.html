@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="de"><head><meta charset="utf-8"><title>Fressversuch — vom Server entschieden, von beiden Clients gesehen</title>
+<style>
+  html, body { margin: 0; background: #12141a; color: #e8ecf4;
+    font: 13px/1.4 "Segoe UI", system-ui, sans-serif; }
+  header { padding: 18px 20px 10px; border-bottom: 1px solid #262b36; }
+  h1 { margin: 0 0 4px; font-size: 20px; font-weight: 650; letter-spacing: .2px; }
+  .unter { color: #9fabc2; font-size: 13px; max-width: 1500px; }
+  .kopfzeile { margin-top: 8px; color: #6f7a8d; font-size: 12px;
+    font-variant-numeric: tabular-nums; }
+  .kopfzeile b { color: #aab4c8; font-weight: 600; }
+  .raster { display: grid; gap: 12px; padding: 14px 20px 6px; align-items: start; }
+  figure { margin: 0; background: #0c0e13; border: 1px solid #262b36; border-radius: 6px;
+    overflow: hidden; }
+  .gruppe { display: flex; justify-content: space-between; align-items: baseline; gap: 10px;
+    padding: 6px 10px; background: #1a1e27; border-bottom: 1px solid #262b36; }
+  .gruppe .wer { font-size: 14px; font-weight: 700; letter-spacing: .3px; }
+  .gruppe .wann { font-size: 12px; color: #9fabc2; }
+  .wer.c1 { color: #7fb4ff; }
+  .wer.c2 { color: #ff9a8f; }
+  .wer.c0 { color: #d7dde8; }
+  .rahmen { position: relative; line-height: 0; }
+  .rahmen img { display: block; width: 100%; height: auto; }
+  .marke { position: absolute; transform: translate(-50%, -50%); pointer-events: none; }
+  .marke .ring { width: 46px; height: 46px; margin: -23px 0 0 -23px; position: absolute;
+    border-radius: 50%; border: 2px solid currentColor; opacity: .95; }
+  .marke .zettel { position: absolute; transform: translate(-50%, -100%);
+    top: -28px; white-space: nowrap; padding: 3px 7px; border-radius: 4px;
+    background: rgba(8,10,14,.88); border: 1px solid currentColor;
+    font-size: 12px; font-weight: 650; line-height: 1.25; }
+  .marke .zettel small { display: block; font-weight: 400; font-size: 10.5px;
+    color: #b9c3d4; letter-spacing: .1px; }
+  .marke .stiel { position: absolute; left: -1px; top: -28px; width: 2px; height: 28px;
+    background: currentColor; opacity: .8; }
+  /* Kreaturen bekommen ihren Zettel nach unten. Sie stehen fast immer dicht
+   * neben einem Schleim, und zwei Zettel uebereinander liest niemand. */
+  .marke.unten .zettel { top: 28px; transform: translate(-50%, 0); }
+  .marke.unten .stiel { top: 0; }
+  .marke.blau { color: #6fa8ff; }
+  .marke.rot { color: #ff7d6d; }
+  .marke.kreatur { color: #ffd166; }
+  .lupen { display: flex; flex-direction: column; gap: 8px; margin: 8px 10px 2px; }
+  .lupe .titel { font-size: 11.5px; color: #8b96aa; margin-bottom: 4px;
+    text-transform: uppercase; letter-spacing: .6px; }
+  .lupe .glas { border: 1px solid #3a4152; border-radius: 4px; background-repeat: no-repeat;
+    background-color: #05070a; max-width: 100%; }
+  figcaption { padding: 7px 10px 9px; font-size: 12px; color: #aab4c8;
+    border-top: 1px solid #21262f; font-variant-numeric: tabular-nums; }
+  figcaption b { color: #eef2f8; font-weight: 650; }
+  figcaption .zeile { display: block; }
+  figcaption .gut { color: #7fd4a8; }
+  figcaption .warn { color: #ffb066; }
+  pre { margin: 0; padding: 10px 12px; font: 12px/1.5 Consolas, monospace;
+    color: #cfd8e6; white-space: pre-wrap; word-break: break-word; }
+  footer { padding: 10px 20px 20px; color: #7c8697; font-size: 12px; max-width: 1500px; }
+  footer .titel { color: #aab4c8; font-weight: 650; }
+</style></head><body>
+<header>
+  <h1>Fressversuch — vom Server entschieden, von beiden Clients gesehen</h1>
+  <div class="unter">NetzBlau (Level 10) frisst einen Wolf auf Level 1 — nach GDD 01 §25 der Fall mit 100 % Chance, gewuerfelt hat trotzdem der Server. Beide Clients blicken mit identisch gesetzter, fest stehender Kamera auf dieselbe Stelle; die drei Spalten sind dieselben drei Augenblicke, jeweils in einem Zug von beiden Bildschirmen genommen.</div>
+  <div class="kopfzeile"><b>Aufgenommen</b> 2026-08-19 05:07:49 &nbsp;·&nbsp; <b>Aufloesung</b> 1600 × 900 je Client &nbsp;·&nbsp; <b>Server</b> ws://127.0.0.1:54603 (Startwert 4242) &nbsp;·&nbsp; <b>Bildpaare</b> 1573 / 1695 / 1629 ms Spanne</div>
+</header>
+<div class="raster" style="grid-template-columns:repeat(3, 1fr)">
+<figure><div class="gruppe"><span class="wer c1">Client 1 — NetzBlau</span><span class="wann">vorher: Ziel gewaehlt</span></div><div class="rahmen"><img src="../roh/fressen-vorher-client1.png" alt=""><div class="marke kreatur unten" style="left:35.806%;top:40.133%"><i class="ring"></i><i class="stiel"></i><span class="zettel">Wolf · Lv 1<small>12/34 HP</small></span></div><div class="marke blau" style="left:46.600%;top:31.022%"><i class="ring"></i><i class="stiel"></i><span class="zettel">NetzBlau · Lv 10<small>eigener Schleim</small></span></div><div class="marke rot" style="left:65.000%;top:37.833%"><i class="ring"></i><i class="stiel"></i><span class="zettel">NetzRot · Lv 10<small>fremder Schleim (vom Server)</small></span></div></div><figcaption><span class="zeile">Phase: frei</span><span class="zeile">Ziel Nr. 9 in der Welt dieses Clients: ja (12/34 HP)</span><span class="zeile">NetzBlau: Level 10 · 0/1776 XP</span></figcaption></figure>
+<figure><div class="gruppe"><span class="wer c1">Client 1 — NetzBlau</span><span class="wann">waehrend: Umschlingen</span></div><div class="rahmen"><img src="../roh/fressen-waehrend-client1.png" alt=""><div class="marke kreatur unten" style="left:35.806%;top:40.133%"><i class="ring"></i><i class="stiel"></i><span class="zettel">Wolf · Lv 1<small>12/34 HP</small></span></div><div class="marke blau" style="left:44.244%;top:25.811%"><i class="ring"></i><i class="stiel"></i><span class="zettel">NetzBlau · Lv 10<small>eigener Schleim</small></span></div><div class="marke rot" style="left:64.950%;top:37.822%"><i class="ring"></i><i class="stiel"></i><span class="zettel">NetzRot · Lv 10<small>fremder Schleim (vom Server)</small></span></div></div><figcaption><span class="zeile">Phase: fressen / umschlingen</span><span class="zeile">Ziel Nr. 9 in der Welt dieses Clients: ja (12/34 HP)</span><span class="zeile">NetzBlau: Level 10 · 0/1776 XP</span></figcaption></figure>
+<figure><div class="gruppe"><span class="wer c1">Client 1 — NetzBlau</span><span class="wann">nachher: Gegner weg</span></div><div class="rahmen"><img src="../roh/fressen-nachher-client1.png" alt=""><div class="marke blau" style="left:36.700%;top:30.067%"><i class="ring"></i><i class="stiel"></i><span class="zettel">NetzBlau · Lv 10<small>eigener Schleim</small></span></div><div class="marke rot" style="left:64.881%;top:37.811%"><i class="ring"></i><i class="stiel"></i><span class="zettel">NetzRot · Lv 10<small>fremder Schleim (vom Server)</small></span></div></div><figcaption><span class="zeile">Phase: frei</span><span class="zeile">Ziel Nr. 9 in der Welt dieses Clients: nein</span><span class="zeile">NetzBlau: Level 10 · 49/1776 XP</span><span class="zeile gut">Serverurteil: Chance 100.0 %, Wurf 0.357251, Wurf-Nr. 0 — Erfolg</span></figcaption></figure>
+<figure><div class="gruppe"><span class="wer c2">Client 2 — NetzRot</span><span class="wann">vorher (Zuschauer)</span></div><div class="rahmen"><img src="../roh/fressen-vorher-client2.png" alt=""><div class="marke kreatur unten" style="left:37.219%;top:40.200%"><i class="ring"></i><i class="stiel"></i><span class="zettel">Wolf · Lv 1<small>12/34 HP</small></span></div><div class="marke rot" style="left:65.356%;top:31.378%"><i class="ring"></i><i class="stiel"></i><span class="zettel">NetzRot · Lv 10<small>eigener Schleim</small></span></div><div class="marke blau" style="left:46.594%;top:36.411%"><i class="ring"></i><i class="stiel"></i><span class="zettel">NetzBlau · Lv 10<small>fremder Schleim (vom Server)</small></span></div></div><figcaption><span class="zeile">Phase: frei</span><span class="zeile">Ziel Nr. 9 in der Welt dieses Clients: ja (12/34 HP)</span><span class="zeile">NetzRot: Level 10 · 0/1776 XP</span></figcaption></figure>
+<figure><div class="gruppe"><span class="wer c2">Client 2 — NetzRot</span><span class="wann">waehrend (Zuschauer)</span></div><div class="rahmen"><img src="../roh/fressen-waehrend-client2.png" alt=""><div class="marke kreatur unten" style="left:37.219%;top:40.200%"><i class="ring"></i><i class="stiel"></i><span class="zettel">Wolf · Lv 1<small>12/34 HP</small></span></div><div class="marke rot" style="left:65.319%;top:32.189%"><i class="ring"></i><i class="stiel"></i><span class="zettel">NetzRot · Lv 10<small>eigener Schleim</small></span></div><div class="marke blau" style="left:47.194%;top:36.444%"><i class="ring"></i><i class="stiel"></i><span class="zettel">NetzBlau · Lv 10<small>fremder Schleim (vom Server)</small></span></div></div><figcaption><span class="zeile">Phase: frei</span><span class="zeile">Ziel Nr. 9 in der Welt dieses Clients: ja (12/34 HP)</span><span class="zeile">NetzRot: Level 10 · 0/1776 XP</span></figcaption></figure>
+<figure><div class="gruppe"><span class="wer c2">Client 2 — NetzRot</span><span class="wann">nachher (Zuschauer)</span></div><div class="rahmen"><img src="../roh/fressen-nachher-client2.png" alt=""><div class="marke rot" style="left:65.194%;top:32.656%"><i class="ring"></i><i class="stiel"></i><span class="zettel">NetzRot · Lv 10<small>eigener Schleim</small></span></div><div class="marke blau" style="left:36.994%;top:36.444%"><i class="ring"></i><i class="stiel"></i><span class="zettel">NetzBlau · Lv 10<small>fremder Schleim (vom Server)</small></span></div></div><figcaption><span class="zeile">Phase: frei</span><span class="zeile">Ziel Nr. 9 in der Welt dieses Clients: nein</span><span class="zeile">NetzRot: Level 10 · 0/1776 XP</span></figcaption></figure>
+</div>
+<footer><span class="titel">Was das belegt:</span> Client 1 hat nur &quot;ich will Nr. 9 fressen&quot; geschickt. Serverurteil: Chance 100.0 %, Wurf 0.357251, Wurf-Nr. 0 — Erfolg. Bei Client 2 stand der Gegner vorher in der Welt und ist nachher daraus verschwunden — ohne dass Client 2 etwas getan haette.</footer><footer><span class="titel">Was es nicht belegt:</span> Die Fressanimation beim Zuschauer. Der Gegner steht bei Client 2 waehrend des Versuchs noch, so weit stimmt die Welt. Aber der fremde Schleim wird bei ihm als ruhender Koerper gezeichnet: kein Anlauf, kein Umschlingen, kein Rueckschnapp. Der Zustand eines fremden Spielers kommt ohne seine Phase beim Zuschauer an, deshalb kann dessen Client sie nicht abspielen.</footer>
+<script>
+(function () {
+  const bilder = [...document.images];
+  let offen = bilder.length;
+  if (!offen) { window.__fertig = true; return; }
+  for (const b of bilder) {
+    if (b.complete) { if (--offen === 0) window.__fertig = true; continue; }
+    b.onload = b.onerror = () => { if (--offen === 0) window.__fertig = true; };
+  }
+})();
+</script>
+</body></html>

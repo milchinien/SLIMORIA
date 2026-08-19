@@ -1,0 +1,24 @@
+{
+  "name": "slimoria",
+  "version": "1.0.0",
+  "description": "SLIMORIA — spielbarer Prototyp (GDD 12 Phase 1 und 2). Reines WebGL2, kein Build-Schritt.",
+  "main": "index.js",
+  "scripts": {
+    "dev": "node tools/start.mjs",
+    "spielen": "node tools/start.mjs",
+    "allein": "node tools/start.mjs --allein",
+    "server": "node server/server.mjs",
+    "abnahme": "node tools/abnahme.mjs",
+    "zweispieler": "node tools/zweispieler.mjs",
+    "aufnehmen": "node tools/capture.mjs",
+    "fortschritt": "node tools/livestand.mjs"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "puppeteer-core": "^24.43.1",
+    "ws": "^8.21.3"
+  }
+}

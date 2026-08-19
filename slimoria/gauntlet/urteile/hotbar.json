@@ -1,0 +1,16 @@
+{
+ "key": "hotbar",
+ "lane": "UI",
+ "titel": "Hotbar",
+ "szenario": "hotbar",
+ "gdd": "GDD 10 §12–17 (10 Slots, Hotkeys 1–10, Icon, Abklingzeit, Ressourcenverbrauch, Tastenkuerzel, momentane Verfuegbarkeit; fehlende Ressource ohne Ausprobieren erkennbar)",
+ "gewonnen": true,
+ "urteil": "Raster: B hat 10 gleich grosse Quadrate mit konstantem Steg von rund 8-9 px zwischen den Slots und identischem Eckradius; jede Slotgrenze ist eindeutig lokalisierbar. A stellt 12 Slots bei etwa 100 px Teilung auf 2-3 px Fuge, also praktisch auf Stoss - die Icons laufen bis an die Kante und ueber die duenne dunkle Trennlinie hinweg (Slot 6/7 Feuerstreifen, Slot 11/12), sodass das Auge die Slotgrenze rekonstruieren muss statt sie zu sehen. Rahmen: A hat nur eine 1-2 px dunkle Linie ohne Wiederholung links am ersten Slot, der ohne linke Fassung direkt aus dem Aussenrahmen herauswaechst und dadurch schmaler wirkt als die uebrigen; B fasst jeden Slot mit demselben Rahmenkoerper ein. Tastenkuerzel: A setzt weisse Ziffern ohne Kontur oder dunkle Unterlegung auf helle Icons - die 2 auf weiss-orange, die 9 auf hellblau, die 0 auf hellem Gesicht sind faktisch kontrastlos, und Slot 1 traegt ueberhaupt kein Kuerzel, Slot 12 ein = statt einer Zifferfolge. B haelt alle Ziffern auf derselben Position mit dunklem Grund darunter. Ikonografie: A liefert ueberwiegend Rauch-, Feuer- und Nebelflecken ohne geschlossene Silhouette - Slot 2, 3, 6, 11 und 12 sind bei Slotgroesse nicht als unterschiedliche Aktionen unterscheidbar, drei davon sind derselbe orangene Wirbel. B arbeitet mit reduzierten Formen auf Flaeche (Zahnreihe, Kreis, Keil) die auch klein noch als verschiedene Zeichen trennen, auch wenn 3 davon durch die Cooldownzahl halb verdeckt sind. Zustandstrennung: A hat gar keine - alle 12 Slots stehen bei gleicher Saettigung und Helligkeit, nichts markiert Abklingzeit, Kosten oder leere Plaetze. B trennt drei Zustaende sichtbar: belegt und bereit (heller Rahmen, Slot 1 und 5), belegt und laufend (abgedunkeltes Icon plus Restzeit 3.5/7.5/18), leer (flache dunkle Flaeche, ausgegraute Ziffer 6-0). B verfehlt an Details - die Kosten 12 in Slot 2 schneidet in die untere Rahmenkante, die Cooldownziffer laeuft in Slot 2 und 3 in das Tastenkuerzel hinein, und der blaue Auswahlrahmen an Slot 1 ist als einziger anders gewichtet - aber das sind Kollisionen innerhalb eines vorhandenen Systems, waehrend A das halbe Kriterium ueberhaupt nicht bedient.",
+ "luecke": "",
+ "beideSchwach": false,
+ "blindOrdner": "gauntlet/blind/hotbar/2beab81d",
+ "unserBild": "D:/Projects/Claude/Desktop/Games/SLIMORIA/slimoria/gauntlet/shots/hotbar/pruefung/frame_005.png",
+ "referenzBild": "D:/Projects/Claude/Desktop/Games/SLIMORIA/slimoria/ref/wow-hud/wiki-hud-modern-layout.png",
+ "runde": 1,
+ "historie": []
+}

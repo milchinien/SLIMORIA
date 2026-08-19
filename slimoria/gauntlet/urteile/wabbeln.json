@@ -1,0 +1,23 @@
+{
+ "key": "wabbeln",
+ "lane": "MOTION",
+ "titel": "Wabbeln im Stand",
+ "szenario": "wabbeln",
+ "gdd": "GDD 01 §12 (niedriges Tempo: kompakt, leichte Wellenbewegung, kleine seitliche Verformungen, leichtes Wippen) und §5 (weich, rundlich, leicht asymmetrisch, elastisch, wabbelnd)",
+ "gewonnen": true,
+ "urteil": "In Runde 2 blind gewonnen. Der Wortlaut des Urteils ging verloren, weil der Protokoll-Agent an einem Verbindungsfehler starb — das Ergebnis selbst steht im Workflow-Rueckgabewert und ist belegt.",
+ "luecke": "",
+ "beideSchwach": false,
+ "blindOrdner": "gauntlet/blind/wabbeln/d15d182e",
+ "unserBild": "gauntlet/shots/wabbeln/pruefung/frame_019.png",
+ "referenzBild": "ref/slime-rancher/sr1-single-pink-rest-form-clean.jpg",
+ "runde": 2,
+ "historie": [
+  {
+   "runde": 1,
+   "gewonnen": true,
+   "urteil": "Messbar am Silhouettenverlauf: Bei A liegt die groesste Breite (ca. x=497 bis x=750, ~253 px) exakt an der Bodenlinie, bei einer Hoehe von nur ~195 px — Verhaeltnis ~1,3:1, also eine niedrig gelagerte Masse, die nach unten auslaeuft. Bei B liegt die groesste Breite (~255 px) auf mittlerer Hoehe (etwa Mundhoehe), und darunter zieht die Kontur nach rechts unten wieder ein, bevor sie den Boden trifft; bei ~235 px Hoehe ergibt das ~1,08:1 — ein nahezu rotationssymmetrisches Ei, das unten schmaler wird statt breiter. Das ist genau die Gegenrichtung zu Schwerkraft. A ist zusaetzlich asymmetrisch: der Scheitel sitzt links der Mitte, rechts hinter dem Auge faellt die Kontur steiler und mit einer Delle ab, links baucht sie ueber den Basisrand hinaus; dazu laeuft eine diagonale Innenfalte von links oben nach rechts unten quer durch den Koerper, die Volumen im Inneren andeutet. Bei B ist die Kontur ein einziger ununterbrochener glatter Bogen ohne eine einzige Richtungsaenderung, ohne Delle, ohne Ueberhang; das Glanzlicht ist ein einzelner runder Fleck wie auf einer Kugel, und der Uebergang zum Boden besteht nur aus einem kleinen Kontaktschatten — kein Aufsetzen, kein Verbreitern, kein Andruck. Beide verfehlen das Kriterium aber im Kern: keiner der beiden Koerper zeigt an der Bodenlinie eine echte Quetschung, also einen ueber die Silhouette hinausquellenden Gelfuss oder einen ueberhaengenden Wulst; A endet mit einer erstaunlich sauberen, fast gestanzten Unterkante, und die Oberflaeche beider wirkt als harte, geschlossene Huelle statt als traege Masse. A ist nur deutlich weniger schwach, weil Grundform und Asymmetrie stimmen.",
+   "luecke": ""
+  }
+ ]
+}

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<title>Kontaktbogen</title>
+<style>
+  html, body { margin: 0; background: #14161c; color: #e8ecf4;
+    font: 13px/1.35 "Segoe UI", system-ui, sans-serif; }
+  h1 { margin: 14px 16px 4px; font-size: 17px; font-weight: 600; letter-spacing: .2px; }
+  .hinweis { margin: 0 16px 12px; color: #98a3b8; font-size: 12px; }
+  .raster { display: grid; gap: 8px; padding: 0 16px 18px; }
+  figure { margin: 0; background: #0d0f14; border: 1px solid #262b36; border-radius: 5px;
+    overflow: hidden; }
+  figure img { display: block; width: 100%; height: auto; }
+  figcaption { display: flex; justify-content: space-between; gap: 8px;
+    padding: 4px 7px; font-size: 11px; color: #aab4c8;
+    font-variant-numeric: tabular-nums; border-top: 1px solid #21262f; }
+  figcaption .nr { color: #f0f3f8; font-weight: 700; }
+  figcaption .sq { color: #7fd4a8; }
+</style>
+</head>
+<body>
+<h1 id="titel"></h1>
+<div class="hinweis" id="hinweis"></div>
+<div class="raster" id="raster"></div>
+<script>
+const q = new URLSearchParams(location.search);
+const dir = q.get('dir');
+const n = parseInt(q.get('n'), 10);
+const spalten = parseInt(q.get('spalten') || '5', 10);
+const zeiten = (q.get('zeiten') || '').split(',');
+const squash = (q.get('squash') || '').split(',');
+
+document.getElementById('titel').textContent = q.get('titel') || 'Kontaktbogen';
+document.getElementById('hinweis').textContent =
+  `${n} Einzelbilder · 1600x900 · Zahl links = Bildnummer, Mitte = Millisekunde seit Szenenstart, rechts = gemessener Squash (Hoehe/Ruhehoehe)`;
+
+const raster = document.getElementById('raster');
+raster.style.gridTemplateColumns = `repeat(${spalten}, 1fr)`;
+
+let offen = n;
+for (let i = 0; i < n; i++) {
+  const fig = document.createElement('figure');
+  const img = new Image();
+  img.src = `/${dir}/frame_${String(i).padStart(3, '0')}.png`;
+  img.onload = img.onerror = () => { if (--offen === 0) window.__fertig = true; };
+  const cap = document.createElement('figcaption');
+  cap.innerHTML = `<span class="nr">#${i}</span>`
+    + `<span>${zeiten[i] ?? '?'} ms</span>`
+    + `<span class="sq">${squash[i] ?? '-'}</span>`;
+  fig.append(img, cap);
+  raster.appendChild(fig);
+}
+if (n === 0) window.__fertig = true;
+</script>
+</body>
+</html>

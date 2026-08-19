@@ -1,0 +1,23 @@
+{
+ "key": "autoangriff",
+ "lane": "COMBAT",
+ "titel": "Auto-Angriff",
+ "szenario": "autoangriff",
+ "gdd": "GDD 02 §2–5 (Ziel waehlen, hinbewegen, Reichweite erreichen, Auto-Angriff beginnt und laeuft von selbst weiter) und GDD 10 §73 (Kampfaktionen liefern unmittelbar verstaendliches Feedback)",
+ "gewonnen": true,
+ "urteil": "In Runde 2 blind gewonnen. Der Wortlaut des Urteils ging verloren, weil der Protokoll-Agent an einem Verbindungsfehler starb — das Ergebnis selbst steht im Workflow-Rueckgabewert und ist belegt.",
+ "luecke": "",
+ "beideSchwach": false,
+ "blindOrdner": "gauntlet/blind/autoangriff/9438cedc",
+ "unserBild": "gauntlet/shots/autoangriff/pruefung/frame_015.png",
+ "referenzBild": "ref/wow-hud/gameplay-remix-damage-heal-numbers-target.jpg",
+ "runde": 2,
+ "historie": [
+  {
+   "runde": 1,
+   "gewonnen": false,
+   "urteil": "A liefert Kampfevidenz redundant und großflächig: rote Namensbalken direkt über zwei Gegnern, rot umrandetes Zielporträt, \"Miss\"-Overlay am Spielerrahmen und zwei zentrale Fließtexte (\"-785\" rot, \"+49\" grün) mit darunterliegender Balkenkombination. Die Höhe der \"-785\"-Ziffern liegt bei etwa einem Zwanzigstel der Bildhöhe, rot auf olivgrünem Gras — der stärkste Einzelkontrast im Weltbereich beider Bilder. B hat genau einen Trefferkanal: die Ziffer \"7\", schätzungsweise ein Drittel dieser Höhe, weiß-gelb auf gesättigtem Blau und damit im selben Helligkeitsband wie der Körper darunter. Der Wolf ist vom Schleim verdeckt und trägt keine Weltmarkierung: kein Zielring, kein Kopfbalken, kein Trefferblitz; der einzige Ring im Bild liegt gelb um die eigene Figur und verwischt die Zielrichtung. Beide verfehlen das Kriterium gegenläufig: A verdünnt, weil die Kampfinfo mit Questtracker, Chatspam, Damage-Meter und drei Aktionsleisten konkurriert und die \"-785\" bei drei Hirschen, einem Pet und der halb verdeckten Spielerfigur keinem Körper eindeutig zugeordnet ist; B unterlässt, weil das Zielfenster oben zwar Name, Stufe und 56 % nennt, in der Welt aber kein einziges Signal für einen laufenden Schlagabtausch existiert. A ist das weniger schwache Bild, weil Zielkennzeichnung und Trefferrückmeldung dort mehrfach vorliegen statt auf ein kleines kontrastarmes Element reduziert zu sein.",
+   "luecke": "Der angegriffene Wolf trägt in der Welt überhaupt keine Markierung — setze einen roten Zielring plus Kopf-Lebensbalken direkt auf den Wolf und ersetze die kleine, farblich im Schleimblau untergehende \"7\" durch eine große, rot abgesetzte Schadenszahl mit kurzem Trefferblitz."
+  }
+ ]
+}

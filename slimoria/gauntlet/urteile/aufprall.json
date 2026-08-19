@@ -1,0 +1,23 @@
+{
+ "key": "aufprall",
+ "lane": "MOTION",
+ "titel": "Aufprall",
+ "szenario": "aufprall",
+ "gdd": "GDD 01 §20 (beim Kontakt flach gedrueckt, Masse federt zurueck, Koerper stabilisiert sich; humorvoll, ohne die Masse zu verlieren) und §5 (nie voellig flach)",
+ "gewonnen": false,
+ "urteil": "Builder und Pruefer sind an einem Verbindungsfehler gestorben, es gibt kein Urteil aus Runde 2.",
+ "luecke": "Statt die Form unten von der Bodenebene abschneiden zu lassen (mit weiter sichtbarer, unverformter Innenkugel), muss B beim Flachwerden die Grundflaeche um denselben Faktor verbreitern und die verdraengte Masse in einen gerundeten, am Boden anliegenden Wulst schieben – dann verschwinden zugleich die Knickkanten an der Flanke, weil die Kontur nicht mehr gegen die Schnittebene laeuft.",
+ "beideSchwach": false,
+ "blindOrdner": "gauntlet/blind/aufprall/68915f54",
+ "unserBild": "gauntlet/shots/aufprall/pruefung/frame_003.png",
+ "referenzBild": "ref/slime-rancher/sr1-quantum-slime-squashed-disc.jpg",
+ "runde": 2,
+ "historie": [
+  {
+   "runde": 1,
+   "gewonnen": false,
+   "urteil": "Silhouette: B bricht an mehreren Stellen in Knickkanten – links bei ca. (462,570) sitzt eine harte Ecke, wo die Kontur von der Waagerechten in die Senkrechte umschlaegt, und die Schulter oben links (ca. 520,505) zeigt eine Falzkante statt einer Kruemmung; unten rechts laeuft die Kontur von (780,590) bis (700,635) praktisch geradlinig. A hat ueber die gesamte Kontur keinen einzigen Knick: der Uebergang von Koerperkuppe in den ausgeworfenen Randwulst ist eine durchgehende S-Kurve, und der Wulstrand selbst rollt weich nach oben aus. Volumen: B verliert Masse, statt sie zu verdraengen – die Unterseite ist eine gerade Sehne, an der die Bodenebene die Form abschneidet, und durch die Huelle ist bei ca. (600,600) noch eine unverformte Innenkugel sichtbar; die Silhouette wird also nicht breiter, sondern nur unten weggeschnitten. Bei A wandert die verdraengte Masse sichtbar nach aussen in einen umlaufenden Wulst, dessen Aussendurchmesser (x≈275–650, ca. 375 px) deutlich groesser ist als der Kerndurchmesser der Kuppe (ca. 250 px) – das liest sich als Umverteilung, nicht als Verlust. Lesbarkeit: In B ist das Gesicht auf zwei duenne, scharf begrenzte weisse Boegen und eine dunkelrote Perlenkette reduziert, die halb unter der Oberflaeche verschwindet – der Charakter ist kaum noch identifizierbar. In A bleiben Augen als runde Punkte und der Mundbogen unverzerrt und an der richtigen Stelle im oberen Drittel der Kuppe. Schwaechen von A: Der breiteste Punkt liegt auf halber Hoehe und schwebt frei ueber dem Boden, waehrend der Bodenkontakt bei ca. (290,600) in eine schmale Spitze auslaeuft – die Standflaeche verbreitert sich also nicht, obwohl genau dort der Aufprall stattfindet; der Wulst wirkt dadurch wie ein umlaufender Ring auf Mittelhoehe statt wie herausgequetschte Masse an der Kontaktflaeche. Zusaetzlich ist die Kuppenoberseite kaum flacher als bei einem ruhenden Slime – der Squash steckt fast vollstaendig im Randwulst, nicht in der Stauchung des Koerpers. B ist zwar mit ca. 320 x 155 px (2:1) flacher als A, aber Flachheit allein erfuellt das Kriterium nicht, wenn sie durch Abschneiden am Boden statt durch Verdraengung entsteht.",
+   "luecke": "Statt die Form unten von der Bodenebene abschneiden zu lassen (mit weiter sichtbarer, unverformter Innenkugel), muss B beim Flachwerden die Grundflaeche um denselben Faktor verbreitern und die verdraengte Masse in einen gerundeten, am Boden anliegenden Wulst schieben – dann verschwinden zugleich die Knickkanten an der Flanke, weil die Kontur nicht mehr gegen die Schnittebene laeuft."
+  }
+ ]
+}

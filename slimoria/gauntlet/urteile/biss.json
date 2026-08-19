@@ -1,0 +1,23 @@
+{
+ "key": "biss",
+ "lane": "COMBAT",
+ "titel": "Biss",
+ "szenario": "biss",
+ "gdd": "GDD 02 §6/§7 (keine menschliche Waffenanimation; normaler Blob -> Mund oeffnet sich -> Koerper zieht sich zum Gegner -> Biss -> Schleim federt zurueck; der Angriff soll koerperlich wirken)",
+ "gewonnen": true,
+ "urteil": "In Runde 2 blind gewonnen. Der Wortlaut des Urteils ging verloren, weil der Protokoll-Agent an einem Verbindungsfehler starb — das Ergebnis selbst steht im Workflow-Rueckgabewert und ist belegt.",
+ "luecke": "",
+ "beideSchwach": false,
+ "blindOrdner": "gauntlet/blind/biss/e2e57bf5",
+ "unserBild": "gauntlet/shots/biss/pruefung/frame_010.png",
+ "referenzBild": "ref/slime-rancher/sr1-slime-eating-face-closeup.jpg",
+ "runde": 2,
+ "historie": [
+  {
+   "runde": 1,
+   "gewonnen": true,
+   "urteil": "B erfuellt das Kriterium teilweise, A gar nicht. In A ist der Koerperumriss eine nahezu perfekte Kuppel: die linke und rechte Flanke spiegeln sich, der obere Bogen laeuft von ca. x=460 bis x=730 als eine einzige ununterbrochene Kurve, und der Mund liegt vollstaendig innerhalb dieser Kurve, ohne sie irgendwo auszubeulen. Der Mund selbst ist eine rote Ellipse (~130x70 px) mit hart und gleichmaessig verlaufender Kante, ohne Lippendicke, ohne Randschatten, ohne Verdraengung der umgebenden blauen Oberflaeche; der helle Glanzstreifen laeuft ungestoert ueber den Mundbereich hinweg. Das Aufstandsgebiet liegt genau unter dem Koerperschwerpunkt, keine Verlagerung nach vorn, keine Stauchung an der Basis. Das gebissene Objekt schwebt vor der Oeffnung, ohne die Oberflaeche einzudellen. Ergebnis: Mund als Decal auf einer starren Kugel, Masse und Oeffnung sind zwei getrennte Dinge. In B liegt die lange Achse des Koerpers (ca. x=470 bis x=790, Verhaeltnis Laenge zu Hoehe rund 1,8:1) auf der Bissrichtung; die Masse ist also selbst nach vorn gezogen, und die vordere Kante ueberlappt das Zielobjekt (der blaue Kragen des Ziels wird vom Koerper teilweise verdeckt). Die Oeffnung bei ca. (600-690, 390-490) ist eine echte Kavitaet mit sichtbarer Randdicke links und einer zweiten, dahinterliegenden Innenflaeche, also Tiefe im Material statt Flaeche auf dem Material. Beide verfehlen dennoch: B hat keine Gegenbewegung, das hintere Ende ist eine glatte Kappe mit derselben Kruemmung wie die vordere Haelfte, kein Volumenausgleich, keine Stauchung; die Oeffnung ist ein fast kreisrundes Loch mit symmetrischer Kante, ober- und unterhalb identisch, ohne Ausduennung des Randes, also eher ein ausgestanztes Loch als eine von innen aufgedrueckte Oeffnung.",
+   "luecke": ""
+  }
+ ]
+}

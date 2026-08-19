@@ -1,0 +1,330 @@
+{
+ "werkzeug": "tools/zweispieler.mjs",
+ "startwert": 4242,
+ "spielPort": 51506,
+ "statikPort": 51505,
+ "datenOrdner": "server\\daten",
+ "pruefungen": [
+  {
+   "nr": 1,
+   "titel": "Zwei Spieler gleichzeitig verbunden",
+   "bestanden": true,
+   "belege": {
+    "verbindungA": true,
+    "verbindungB": true,
+    "spielerLautA": [
+     "PruefEins",
+     "PruefZwei"
+    ],
+    "spielerLautB": [
+     "PruefEins",
+     "PruefZwei"
+    ],
+    "fremdeBeiA": [
+     {
+      "id": 8,
+      "name": "PruefZwei",
+      "x": 0,
+      "z": 0.01
+     }
+    ],
+    "fremdeBeiB": [
+     {
+      "id": 7,
+      "name": "PruefEins",
+      "x": 0,
+      "z": 0
+     }
+    ],
+    "eigeneIds": {
+     "A": 7,
+     "B": 8
+    }
+   }
+  },
+  {
+   "nr": 2,
+   "titel": "Client 2 sieht die Bewegung von Client 1",
+   "bestanden": true,
+   "belege": {
+    "vorherBeiB": {
+     "x": 0,
+     "z": 0
+    },
+    "nachherBeiB": {
+     "x": 0,
+     "z": 8.7
+    },
+    "vomServerBeiB": {
+     "x": 0.003,
+     "z": 8.703
+    },
+    "eigenePositionA": {
+     "x": 0.01,
+     "z": 8.69
+    },
+    "zurueckgelegt": 8.7,
+    "abweichungZuA": 0.01,
+    "korrekturschritteA": 0,
+    "korrekturwegA": 0,
+    "bild": "gauntlet\\zweispieler\\client2-sieht-client1.png"
+   }
+  },
+  {
+   "nr": 3,
+   "titel": "Fressversuch entscheidet der Server, nicht der Client",
+   "bestanden": true,
+   "belege": {
+    "durchgang1": {
+     "clientGlaubt": "chance=1, wuerfel=0.0 (immer Erfolg)",
+     "folge": "110010",
+     "versuche": [
+      {
+       "versuch": 0,
+       "clientAntwort": {
+        "ok": true,
+        "wartet": true
+       },
+       "clientChance": 1,
+       "clientWuerfel": 0,
+       "serverChance": 0.4857,
+       "serverAugen": 0.166424,
+       "wurfNr": 0,
+       "erfolg": true
+      },
+      {
+       "versuch": 1,
+       "clientAntwort": {
+        "ok": true,
+        "wartet": true
+       },
+       "clientChance": 1,
+       "clientWuerfel": 0,
+       "serverChance": 0.4857,
+       "serverAugen": 0.159203,
+       "wurfNr": 1,
+       "erfolg": true
+      },
+      {
+       "versuch": 2,
+       "clientAntwort": {
+        "ok": true,
+        "wartet": true
+       },
+       "clientChance": 1,
+       "clientWuerfel": 0,
+       "serverChance": 0.4857,
+       "serverAugen": 0.666011,
+       "wurfNr": 2,
+       "erfolg": false
+      },
+      {
+       "versuch": 3,
+       "clientAntwort": {
+        "ok": true,
+        "wartet": true
+       },
+       "clientChance": 1,
+       "clientWuerfel": 0,
+       "serverChance": 0.4857,
+       "serverAugen": 0.801766,
+       "wurfNr": 3,
+       "erfolg": false
+      },
+      {
+       "versuch": 4,
+       "clientAntwort": {
+        "ok": true,
+        "wartet": true
+       },
+       "clientChance": 1,
+       "clientWuerfel": 0,
+       "serverChance": 0.4857,
+       "serverAugen": 0.397578,
+       "wurfNr": 4,
+       "erfolg": true
+      },
+      {
+       "versuch": 5,
+       "clientAntwort": {
+        "ok": true,
+        "wartet": true
+       },
+       "clientChance": 1,
+       "clientWuerfel": 0,
+       "serverChance": 0.4857,
+       "serverAugen": 0.588359,
+       "wurfNr": 5,
+       "erfolg": false
+      }
+     ]
+    },
+    "durchgang2": {
+     "clientGlaubt": "chance=0, wuerfel=0.999999 (nie Erfolg)",
+     "folge": "110010",
+     "versuche": [
+      {
+       "versuch": 0,
+       "clientAntwort": {
+        "ok": true,
+        "wartet": true
+       },
+       "clientChance": 0,
+       "clientWuerfel": 0.999999,
+       "serverChance": 0.4857,
+       "serverAugen": 0.166424,
+       "wurfNr": 0,
+       "erfolg": true
+      },
+      {
+       "versuch": 1,
+       "clientAntwort": {
+        "ok": true,
+        "wartet": true
+       },
+       "clientChance": 0,
+       "clientWuerfel": 0.999999,
+       "serverChance": 0.4857,
+       "serverAugen": 0.159203,
+       "wurfNr": 1,
+       "erfolg": true
+      },
+      {
+       "versuch": 2,
+       "clientAntwort": {
+        "ok": true,
+        "wartet": true
+       },
+       "clientChance": 0,
+       "clientWuerfel": 0.999999,
+       "serverChance": 0.4857,
+       "serverAugen": 0.666011,
+       "wurfNr": 2,
+       "erfolg": false
+      },
+      {
+       "versuch": 3,
+       "clientAntwort": {
+        "ok": true,
+        "wartet": true
+       },
+       "clientChance": 0,
+       "clientWuerfel": 0.999999,
+       "serverChance": 0.4857,
+       "serverAugen": 0.801766,
+       "wurfNr": 3,
+       "erfolg": false
+      },
+      {
+       "versuch": 4,
+       "clientAntwort": {
+        "ok": true,
+        "wartet": true
+       },
+       "clientChance": 0,
+       "clientWuerfel": 0.999999,
+       "serverChance": 0.4857,
+       "serverAugen": 0.397578,
+       "wurfNr": 4,
+       "erfolg": true
+      },
+      {
+       "versuch": 5,
+       "clientAntwort": {
+        "ok": true,
+        "wartet": true
+       },
+       "clientChance": 0,
+       "clientWuerfel": 0.999999,
+       "serverChance": 0.4857,
+       "serverAugen": 0.588359,
+       "wurfNr": 5,
+       "erfolg": false
+      }
+     ]
+    },
+    "folgenIdentisch": true,
+    "folgeGemischt": true,
+    "clientChanceIrrelevant": true,
+    "gegenprobeOhneServer": {
+     "verbunden": false,
+     "immerErfolg": {
+      "ok": true,
+      "erfolg": true,
+      "chance": 1
+     },
+     "nieErfolg": {
+      "ok": true,
+      "erfolg": false,
+      "chance": 0
+     }
+    },
+    "lesart": "Der Client behauptet einmal 100 % und einmal 0 % Fresschance und stellt den Wuerfel entsprechend. Die Folge der Ergebnisse bleibt identisch, weil sie aus Serverwerten entsteht. Ohne Server kippt dieselbe Manipulation das Ergebnis sofort."
+   }
+  },
+  {
+   "nr": 4,
+   "titel": "Charakter ueberlebt den Serverneustart",
+   "bestanden": true,
+   "belege": {
+    "vorNeustart": {
+     "level": 2,
+     "xp": 55,
+     "hp": 102
+    },
+    "verlauf": [
+     {
+      "anlauf": 0,
+      "ziel": 24,
+      "level": 2,
+      "hp": 102,
+      "serverZiel": null,
+      "serverAuto": true,
+      "serverTot": false
+     }
+    ],
+    "aufPlatte": {
+     "name": "PruefDauer",
+     "faction": "eldoran",
+     "level": 2,
+     "xp": 55,
+     "hp": 102,
+     "gold": 19,
+     "bestiarium": {
+      "wolf": {
+       "besiegt": 1,
+       "gefressen": 0
+      }
+     },
+     "wuerfe": 0,
+     "x": -0.242,
+     "z": -0.02
+    },
+    "nachNeustart": {
+     "name": "PruefDauer",
+     "faction": "eldoran",
+     "level": 2,
+     "xp": 55,
+     "hp": 102,
+     "gold": 19,
+     "bestiarium": {
+      "wolf": {
+       "besiegt": 1,
+       "gefressen": 0
+      }
+     },
+     "wuerfe": 0,
+     "x": -0.242,
+     "z": -0.02
+    },
+    "datei": "server\\daten\\PruefDauer.json",
+    "lesart": "Level und XP stammen aus erschlagenen Kreaturen, nicht aus dem Client. Der Serverprozess wurde hart beendet und neu gestartet."
+   }
+  }
+ ],
+ "bestanden": 4,
+ "gesamt": 4,
+ "alleBestanden": true,
+ "seitenfehler": [],
+ "dauerSekunden": 113.6
+}
