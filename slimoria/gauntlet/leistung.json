@@ -1,0 +1,969 @@
+{
+ "erzeugt": "2026-08-19T02:58:55.974Z",
+ "aufloesung": "1600x900",
+ "hinweis": "Kopfloser Chrome, SwiftShader auf der CPU. Zeichenzeit NICHT repraesentativ. Massgeblich sind Physik und Huelle.",
+ "leseanleitung": {
+  "kennzahl": "p10 — das zehntschnellste Prozent der Bilder. Auf einer ausgelasteten Maschine sind Median und p95 vom Scheduler bestimmt, nicht vom Prototyp; p10 und min zeigen den echten Rechenaufwand. Wie stark die Maschine stoert, steht unter \"eichschleife\": eine Schleife mit konstantem Aufwand.",
+  "physik": "SLIMORIA.step() x4 (4 Teilschritte zu 1/240 s = ein Bild bei 60 Hz). Enthaelt Weichkoerper, Kreaturen, Lanes UND das HUD.",
+  "davonHud": "Anteil von UI.aktualisieren an der Physikzeit — separat gemessen, weil game.js das HUD in jedem Teilschritt aufruft.",
+  "huelle": "G.applySurface(): zwei Loop-Unterteilungen, 162 -> 642 -> 2562 Punkte.",
+  "rechenlast": "Physik + Huelle. Das ist die Zahl, die zaehlt.",
+  "zeichnenSwiftshader": "NICHT repraesentativ — CPU-Rasterizer statt Grafikkarte."
+ },
+ "einstellungen": {
+  "bilderJeSzene": 300,
+  "dauerlaufSekunden": 60,
+  "teilschritteJeBild": 4,
+  "schrittweite": 0.004166666666666667
+ },
+ "umgebung": {
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/151.0.0.0 Safari/537.36",
+  "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+  "physikPunkte": 162,
+  "huellePunkte": 2562,
+  "huelleDreiecke": 5120,
+  "hardwareConcurrency": 12,
+  "praeziserHeap": true,
+  "gcVerfuegbar": true
+ },
+ "szenen": {
+  "kreaturen_1": {
+   "titel": "1 Kreatur(en) in der Arena, Auto-Angriff, Bewegung",
+   "bilder": 300,
+   "zaehler": {
+    "kreaturen": 0,
+    "ereignisse": 4,
+    "spur": 37,
+    "extras": 2,
+    "schwebetexte": 0,
+    "hinweise": 0,
+    "domKnoten": 627
+   },
+   "physik": {
+    "n": 300,
+    "min": 1.9,
+    "p10": 2.6,
+    "mittel": 12.3717,
+    "median": 7.4,
+    "p95": 41.9,
+    "max": 130.5
+   },
+   "davonHud": {
+    "n": 300,
+    "min": 0.1,
+    "p10": 0.4,
+    "mittel": 4.377,
+    "median": 1.2,
+    "p95": 20.9,
+    "max": 48.1
+   },
+   "physikOhneHud": {
+    "n": 300,
+    "min": 1.5,
+    "p10": 2,
+    "mittel": 7.9947,
+    "median": 4.3,
+    "p95": 24,
+    "max": 113.7
+   },
+   "huelle": {
+    "n": 300,
+    "min": 0.5,
+    "p10": 0.5,
+    "mittel": 2.5123,
+    "median": 0.7,
+    "p95": 13.9,
+    "max": 41.1
+   },
+   "rechenlast": {
+    "n": 300,
+    "min": 2.5,
+    "p10": 3.3,
+    "mittel": 14.884,
+    "median": 10.6,
+    "p95": 45.2,
+    "max": 159.9
+   },
+   "zeichnenSwiftshader": {
+    "n": 300,
+    "min": 0.9,
+    "p10": 1,
+    "mittel": 4.9847,
+    "median": 1.8,
+    "p95": 17.4,
+    "max": 70.9
+   },
+   "gesamtSwiftshader": {
+    "n": 300,
+    "min": 3.4,
+    "p10": 4.7,
+    "mittel": 19.8687,
+    "median": 15.7,
+    "p95": 55.2,
+    "max": 161.7
+   },
+   "budget16ms": 19.8,
+   "bilderProSekundeNurRechenlast": 303
+  },
+  "kreaturen_5": {
+   "titel": "5 Kreatur(en) in der Arena, Auto-Angriff, Bewegung",
+   "bilder": 300,
+   "zaehler": {
+    "kreaturen": 4,
+    "ereignisse": 9,
+    "spur": 37,
+    "extras": 2,
+    "schwebetexte": 2,
+    "hinweise": 0,
+    "domKnoten": 629
+   },
+   "physik": {
+    "n": 300,
+    "min": 1.9,
+    "p10": 2.4,
+    "mittel": 11.1873,
+    "median": 7.2,
+    "p95": 30,
+    "max": 111
+   },
+   "davonHud": {
+    "n": 300,
+    "min": 0.1,
+    "p10": 0.4,
+    "mittel": 5.897,
+    "median": 2.2,
+    "p95": 19.8,
+    "max": 106.9
+   },
+   "physikOhneHud": {
+    "n": 300,
+    "min": 1.5,
+    "p10": 1.9,
+    "mittel": 5.2903,
+    "median": 3.2,
+    "p95": 15.1,
+    "max": 39.4
+   },
+   "huelle": {
+    "n": 300,
+    "min": 0.4,
+    "p10": 0.5,
+    "mittel": 1.3893,
+    "median": 0.6,
+    "p95": 4.3,
+    "max": 23.2
+   },
+   "rechenlast": {
+    "n": 300,
+    "min": 2.4,
+    "p10": 3.1,
+    "mittel": 12.5767,
+    "median": 8.9,
+    "p95": 34.5,
+    "max": 112.6
+   },
+   "zeichnenSwiftshader": {
+    "n": 300,
+    "min": 0.9,
+    "p10": 1.1,
+    "mittel": 3.3807,
+    "median": 1.6,
+    "p95": 12.6,
+    "max": 25
+   },
+   "gesamtSwiftshader": {
+    "n": 300,
+    "min": 3.6,
+    "p10": 4.6,
+    "mittel": 15.9573,
+    "median": 12.6,
+    "p95": 41.1,
+    "max": 114
+   },
+   "budget16ms": 18.6,
+   "bilderProSekundeNurRechenlast": 323
+  },
+  "kreaturen_15": {
+   "titel": "15 Kreatur(en) in der Arena, Auto-Angriff, Bewegung",
+   "bilder": 300,
+   "zaehler": {
+    "kreaturen": 14,
+    "ereignisse": 19,
+    "spur": 37,
+    "extras": 2,
+    "schwebetexte": 3,
+    "hinweise": 0,
+    "domKnoten": 630
+   },
+   "physik": {
+    "n": 300,
+    "min": 2,
+    "p10": 2.6,
+    "mittel": 21.6393,
+    "median": 14.8,
+    "p95": 68.7,
+    "max": 125.5
+   },
+   "davonHud": {
+    "n": 300,
+    "min": 0.1,
+    "p10": 0.4,
+    "mittel": 12.0357,
+    "median": 4.6,
+    "p95": 45.3,
+    "max": 96.3
+   },
+   "physikOhneHud": {
+    "n": 300,
+    "min": 1.3,
+    "p10": 1.9,
+    "mittel": 9.6037,
+    "median": 4.4,
+    "p95": 30.2,
+    "max": 122.2
+   },
+   "huelle": {
+    "n": 300,
+    "min": 0.4,
+    "p10": 0.5,
+    "mittel": 2.2107,
+    "median": 0.7,
+    "p95": 12.1,
+    "max": 27.9
+   },
+   "rechenlast": {
+    "n": 300,
+    "min": 2.5,
+    "p10": 3.2,
+    "mittel": 23.85,
+    "median": 17.7,
+    "p95": 70.7,
+    "max": 126.1
+   },
+   "zeichnenSwiftshader": {
+    "n": 300,
+    "min": 1.2,
+    "p10": 1.4,
+    "mittel": 7.0483,
+    "median": 2.5,
+    "p95": 26.4,
+    "max": 93
+   },
+   "gesamtSwiftshader": {
+    "n": 300,
+    "min": 3.9,
+    "p10": 5.4,
+    "mittel": 30.8983,
+    "median": 24.1,
+    "p95": 87.2,
+    "max": 139.8
+   },
+   "budget16ms": 19.2,
+   "bilderProSekundeNurRechenlast": 313
+  },
+  "fressen_erfolg": {
+   "titel": "Fressanimation, Ausgang erfolg",
+   "bilder": 170,
+   "zaehler": {
+    "kreaturen": 0,
+    "ereignisse": 4,
+    "spur": 3,
+    "extras": 3,
+    "schwebetexte": 1,
+    "hinweise": 1,
+    "domKnoten": 629
+   },
+   "physik": {
+    "n": 170,
+    "min": 4.4,
+    "p10": 7.1,
+    "mittel": 18.7147,
+    "median": 17,
+    "p95": 37.3,
+    "max": 56.3
+   },
+   "davonHud": {
+    "n": 170,
+    "min": 2.5,
+    "p10": 4,
+    "mittel": 11.3276,
+    "median": 9.4,
+    "p95": 26.5,
+    "max": 39.7
+   },
+   "physikOhneHud": {
+    "n": 170,
+    "min": 1.8,
+    "p10": 2.5,
+    "mittel": 7.3871,
+    "median": 4.7,
+    "p95": 21.7,
+    "max": 44.4
+   },
+   "huelle": {
+    "n": 170,
+    "min": 0.4,
+    "p10": 0.5,
+    "mittel": 1.5924,
+    "median": 0.7,
+    "p95": 6.1,
+    "max": 13.4
+   },
+   "rechenlast": {
+    "n": 170,
+    "min": 5,
+    "p10": 7.7,
+    "mittel": 20.3071,
+    "median": 18.1,
+    "p95": 39.3,
+    "max": 57.7
+   },
+   "zeichnenSwiftshader": {
+    "n": 170,
+    "min": 0.8,
+    "p10": 1,
+    "mittel": 2.9041,
+    "median": 1.4,
+    "p95": 13.1,
+    "max": 20.2
+   },
+   "gesamtSwiftshader": {
+    "n": 170,
+    "min": 6.4,
+    "p10": 10.4,
+    "mittel": 23.2112,
+    "median": 21.2,
+    "p95": 40.7,
+    "max": 66.8
+   },
+   "budget16ms": 46.2,
+   "bilderProSekundeNurRechenlast": 130
+  },
+  "fressen_fehlschlag": {
+   "titel": "Fressanimation, Ausgang fehlschlag",
+   "bilder": 135,
+   "zaehler": {
+    "kreaturen": 1,
+    "ereignisse": 4,
+    "spur": 10,
+    "extras": 3,
+    "schwebetexte": 2,
+    "hinweise": 1,
+    "domKnoten": 630
+   },
+   "physik": {
+    "n": 135,
+    "min": 5.7,
+    "p10": 11,
+    "mittel": 25.6681,
+    "median": 23.7,
+    "p95": 49,
+    "max": 76.7
+   },
+   "davonHud": {
+    "n": 135,
+    "min": 3.3,
+    "p10": 6.4,
+    "mittel": 18.7059,
+    "median": 16.1,
+    "p95": 39.4,
+    "max": 64
+   },
+   "physikOhneHud": {
+    "n": 135,
+    "min": 1.7,
+    "p10": 2.4,
+    "mittel": 6.9622,
+    "median": 4.7,
+    "p95": 17.3,
+    "max": 36.4
+   },
+   "huelle": {
+    "n": 135,
+    "min": 0.4,
+    "p10": 0.5,
+    "mittel": 1.7941,
+    "median": 0.8,
+    "p95": 6.3,
+    "max": 12.8
+   },
+   "rechenlast": {
+    "n": 135,
+    "min": 6.2,
+    "p10": 12.6,
+    "mittel": 27.4622,
+    "median": 24.7,
+    "p95": 52.3,
+    "max": 77.2
+   },
+   "zeichnenSwiftshader": {
+    "n": 135,
+    "min": 0.8,
+    "p10": 1,
+    "mittel": 3.66,
+    "median": 1.9,
+    "p95": 10.4,
+    "max": 19
+   },
+   "gesamtSwiftshader": {
+    "n": 135,
+    "min": 7.2,
+    "p10": 14.5,
+    "mittel": 31.1222,
+    "median": 29.1,
+    "p95": 54.7,
+    "max": 78.5
+   },
+   "budget16ms": 75.6,
+   "bilderProSekundeNurRechenlast": 79
+  },
+  "tod": {
+   "titel": "Todesanimation bis Respawn",
+   "bilder": 240,
+   "zaehler": {
+    "kreaturen": 0,
+    "ereignisse": 2,
+    "spur": 0,
+    "extras": 4,
+    "schwebetexte": 1,
+    "hinweise": 1,
+    "domKnoten": 629
+   },
+   "physik": {
+    "n": 240,
+    "min": 1.9,
+    "p10": 2.4,
+    "mittel": 8.1671,
+    "median": 5.7,
+    "p95": 20.5,
+    "max": 50.6
+   },
+   "davonHud": {
+    "n": 240,
+    "min": 0.1,
+    "p10": 0.3,
+    "mittel": 1.7825,
+    "median": 0.8,
+    "p95": 9,
+    "max": 14.8
+   },
+   "physikOhneHud": {
+    "n": 240,
+    "min": 1.4,
+    "p10": 2,
+    "mittel": 6.3846,
+    "median": 3.9,
+    "p95": 16.8,
+    "max": 49.4
+   },
+   "huelle": {
+    "n": 240,
+    "min": 0.4,
+    "p10": 0.5,
+    "mittel": 1.5621,
+    "median": 0.7,
+    "p95": 5.8,
+    "max": 14.8
+   },
+   "rechenlast": {
+    "n": 240,
+    "min": 2.4,
+    "p10": 3.1,
+    "mittel": 9.7292,
+    "median": 7.2,
+    "p95": 22.1,
+    "max": 51.3
+   },
+   "zeichnenSwiftshader": {
+    "n": 240,
+    "min": 0.8,
+    "p10": 0.9,
+    "mittel": 3.42,
+    "median": 1.4,
+    "p95": 13.4,
+    "max": 25.5
+   },
+   "gesamtSwiftshader": {
+    "n": 240,
+    "min": 3.4,
+    "p10": 4.3,
+    "mittel": 13.1492,
+    "median": 12.1,
+    "p95": 28.7,
+    "max": 52.5
+   },
+   "budget16ms": 18.6,
+   "bilderProSekundeNurRechenlast": 323
+  }
+ },
+ "dauerlauf": {
+  "titel": "60 s Spielzeit bei 60 Bildern/s, laufender Betrieb (Kampf, Fressen, Tod, Respawn)",
+  "bilder": 3600,
+  "physik": {
+   "n": 3600,
+   "min": 1.8,
+   "p10": 4.7,
+   "mittel": 18.1566,
+   "median": 15.9,
+   "p95": 40.6,
+   "max": 155.7
+  },
+  "davonHud": {
+   "n": 3600,
+   "min": 0.1,
+   "p10": 1.4,
+   "mittel": 11.8724,
+   "median": 9,
+   "p95": 30.8,
+   "max": 125.7
+  },
+  "physikOhneHud": {
+   "n": 3600,
+   "min": 1.3,
+   "p10": 2.1,
+   "mittel": 6.2843,
+   "median": 4,
+   "p95": 18.5,
+   "max": 88.5
+  },
+  "huelle": {
+   "n": 3600,
+   "min": 0.4,
+   "p10": 0.5,
+   "mittel": 1.7716,
+   "median": 0.7,
+   "p95": 6.5,
+   "max": 169.2
+  },
+  "rechenlast": {
+   "n": 3600,
+   "min": 2.3,
+   "p10": 5.7,
+   "mittel": 19.9283,
+   "median": 17.7,
+   "p95": 42.5,
+   "max": 268.9
+  },
+  "zeichnenSwiftshader": {
+   "n": 3600,
+   "min": 0.7,
+   "p10": 1,
+   "mittel": 3.2136,
+   "median": 1.5,
+   "p95": 11.7,
+   "max": 92.3
+  },
+  "gesamtSwiftshader": {
+   "n": 3600,
+   "min": 3.2,
+   "p10": 7.7,
+   "mittel": 23.1419,
+   "median": 20.8,
+   "p95": 47.4,
+   "max": 295.9
+  },
+  "budget16ms": 34.2,
+  "bilderProSekundeNurRechenlast": 175,
+  "speicher": {
+   "einheit": "Bytes (performance.memory.usedJSHeapSize, jeweils nach window.gc())",
+   "proben": [
+    {
+     "t": 0,
+     "heap": 4117830,
+     "kreaturen": 5,
+     "ereignisse": 3,
+     "spur": 0,
+     "extras": 4,
+     "schwebetexte": 3,
+     "hinweise": 0,
+     "domKnoten": 630
+    },
+    {
+     "t": 2,
+     "heap": 4215702,
+     "kreaturen": 5,
+     "ereignisse": 10,
+     "spur": 12,
+     "extras": 4,
+     "schwebetexte": 3,
+     "hinweise": 0,
+     "domKnoten": 630
+    },
+    {
+     "t": 4,
+     "heap": 4231714,
+     "kreaturen": 5,
+     "ereignisse": 16,
+     "spur": 21,
+     "extras": 4,
+     "schwebetexte": 5,
+     "hinweise": 0,
+     "domKnoten": 632
+    },
+    {
+     "t": 6,
+     "heap": 4282610,
+     "kreaturen": 5,
+     "ereignisse": 19,
+     "spur": 16,
+     "extras": 4,
+     "schwebetexte": 1,
+     "hinweise": 0,
+     "domKnoten": 628
+    },
+    {
+     "t": 8,
+     "heap": 4307710,
+     "kreaturen": 5,
+     "ereignisse": 22,
+     "spur": 19,
+     "extras": 4,
+     "schwebetexte": 2,
+     "hinweise": 1,
+     "domKnoten": 630
+    },
+    {
+     "t": 10,
+     "heap": 4318910,
+     "kreaturen": 5,
+     "ereignisse": 25,
+     "spur": 13,
+     "extras": 4,
+     "schwebetexte": 1,
+     "hinweise": 0,
+     "domKnoten": 628
+    },
+    {
+     "t": 12,
+     "heap": 4329022,
+     "kreaturen": 5,
+     "ereignisse": 31,
+     "spur": 36,
+     "extras": 4,
+     "schwebetexte": 2,
+     "hinweise": 0,
+     "domKnoten": 629
+    },
+    {
+     "t": 14,
+     "heap": 4330318,
+     "kreaturen": 5,
+     "ereignisse": 37,
+     "spur": 31,
+     "extras": 4,
+     "schwebetexte": 5,
+     "hinweise": 0,
+     "domKnoten": 632
+    },
+    {
+     "t": 16,
+     "heap": 4321380,
+     "kreaturen": 5,
+     "ereignisse": 43,
+     "spur": 30,
+     "extras": 4,
+     "schwebetexte": 0,
+     "hinweise": 2,
+     "domKnoten": 629
+    },
+    {
+     "t": 18,
+     "heap": 4340096,
+     "kreaturen": 5,
+     "ereignisse": 44,
+     "spur": 4,
+     "extras": 4,
+     "schwebetexte": 0,
+     "hinweise": 0,
+     "domKnoten": 627
+    },
+    {
+     "t": 20,
+     "heap": 4348224,
+     "kreaturen": 5,
+     "ereignisse": 47,
+     "spur": 0,
+     "extras": 4,
+     "schwebetexte": 2,
+     "hinweise": 1,
+     "domKnoten": 630
+    },
+    {
+     "t": 22,
+     "heap": 4333616,
+     "kreaturen": 5,
+     "ereignisse": 49,
+     "spur": 0,
+     "extras": 4,
+     "schwebetexte": 1,
+     "hinweise": 0,
+     "domKnoten": 628
+    },
+    {
+     "t": 24,
+     "heap": 4351036,
+     "kreaturen": 5,
+     "ereignisse": 52,
+     "spur": 0,
+     "extras": 4,
+     "schwebetexte": 3,
+     "hinweise": 0,
+     "domKnoten": 630
+    },
+    {
+     "t": 26,
+     "heap": 4389836,
+     "kreaturen": 5,
+     "ereignisse": 53,
+     "spur": 0,
+     "extras": 4,
+     "schwebetexte": 1,
+     "hinweise": 1,
+     "domKnoten": 629
+    },
+    {
+     "t": 28,
+     "heap": 4420860,
+     "kreaturen": 5,
+     "ereignisse": 54,
+     "spur": 0,
+     "extras": 4,
+     "schwebetexte": 0,
+     "hinweise": 0,
+     "domKnoten": 627
+    },
+    {
+     "t": 30,
+     "heap": 4424364,
+     "kreaturen": 5,
+     "ereignisse": 57,
+     "spur": 0,
+     "extras": 4,
+     "schwebetexte": 1,
+     "hinweise": 0,
+     "domKnoten": 628
+    },
+    {
+     "t": 32,
+     "heap": 4424496,
+     "kreaturen": 5,
+     "ereignisse": 59,
+     "spur": 0,
+     "extras": 4,
+     "schwebetexte": 1,
+     "hinweise": 0,
+     "domKnoten": 628
+    },
+    {
+     "t": 34,
+     "heap": 4425192,
+     "kreaturen": 5,
+     "ereignisse": 62,
+     "spur": 0,
+     "extras": 4,
+     "schwebetexte": 3,
+     "hinweise": 0,
+     "domKnoten": 630
+    },
+    {
+     "t": 36,
+     "heap": 4428592,
+     "kreaturen": 5,
+     "ereignisse": 63,
+     "spur": 0,
+     "extras": 4,
+     "schwebetexte": 0,
+     "hinweise": 2,
+     "domKnoten": 629
+    },
+    {
+     "t": 38,
+     "heap": 4429304,
+     "kreaturen": 5,
+     "ereignisse": 64,
+     "spur": 7,
+     "extras": 4,
+     "schwebetexte": 0,
+     "hinweise": 0,
+     "domKnoten": 627
+    },
+    {
+     "t": 40,
+     "heap": 4439600,
+     "kreaturen": 5,
+     "ereignisse": 67,
+     "spur": 0,
+     "extras": 4,
+     "schwebetexte": 2,
+     "hinweise": 1,
+     "domKnoten": 630
+    },
+    {
+     "t": 42,
+     "heap": 4426952,
+     "kreaturen": 5,
+     "ereignisse": 69,
+     "spur": 0,
+     "extras": 4,
+     "schwebetexte": 1,
+     "hinweise": 0,
+     "domKnoten": 628
+    },
+    {
+     "t": 44,
+     "heap": 4427700,
+     "kreaturen": 5,
+     "ereignisse": 72,
+     "spur": 0,
+     "extras": 4,
+     "schwebetexte": 3,
+     "hinweise": 0,
+     "domKnoten": 630
+    },
+    {
+     "t": 46,
+     "heap": 4427468,
+     "kreaturen": 5,
+     "ereignisse": 73,
+     "spur": 0,
+     "extras": 4,
+     "schwebetexte": 1,
+     "hinweise": 1,
+     "domKnoten": 629
+    },
+    {
+     "t": 48,
+     "heap": 4427036,
+     "kreaturen": 5,
+     "ereignisse": 74,
+     "spur": 0,
+     "extras": 4,
+     "schwebetexte": 0,
+     "hinweise": 0,
+     "domKnoten": 627
+    },
+    {
+     "t": 50,
+     "heap": 4427512,
+     "kreaturen": 5,
+     "ereignisse": 77,
+     "spur": 0,
+     "extras": 4,
+     "schwebetexte": 1,
+     "hinweise": 0,
+     "domKnoten": 628
+    },
+    {
+     "t": 52,
+     "heap": 4427644,
+     "kreaturen": 5,
+     "ereignisse": 79,
+     "spur": 0,
+     "extras": 4,
+     "schwebetexte": 1,
+     "hinweise": 0,
+     "domKnoten": 628
+    },
+    {
+     "t": 54,
+     "heap": 4454188,
+     "kreaturen": 5,
+     "ereignisse": 82,
+     "spur": 0,
+     "extras": 4,
+     "schwebetexte": 3,
+     "hinweise": 0,
+     "domKnoten": 630
+    },
+    {
+     "t": 56,
+     "heap": 4482356,
+     "kreaturen": 5,
+     "ereignisse": 83,
+     "spur": 0,
+     "extras": 4,
+     "schwebetexte": 0,
+     "hinweise": 2,
+     "domKnoten": 629
+    },
+    {
+     "t": 58,
+     "heap": 4486900,
+     "kreaturen": 5,
+     "ereignisse": 84,
+     "spur": 6,
+     "extras": 4,
+     "schwebetexte": 0,
+     "hinweise": 0,
+     "domKnoten": 627
+    },
+    {
+     "t": 60,
+     "heap": 4478116,
+     "kreaturen": 5,
+     "ereignisse": 87,
+     "spur": 0,
+     "extras": 4,
+     "schwebetexte": 2,
+     "hinweise": 1,
+     "domKnoten": 630
+    }
+   ],
+   "startHeap": 4117830,
+   "endHeap": 4478116,
+   "mittelErsteHaelfte": 4309258,
+   "mittelZweiteHaelfte": 4439839,
+   "anstiegProMinuteBytes": 360286,
+   "anstiegProMinuteKb": 351.8
+  }
+ },
+ "auffaelligkeiten": [
+  {
+   "art": "skalierung",
+   "text": "Rechenlast (p10) 1 -> 15 Kreaturen: 3.3 ms -> 3.2 ms (Faktor 0.97)"
+  },
+  {
+   "art": "hud-anteil",
+   "text": "fressen_erfolg: 56 % der \"Physik\"-Zeit ist in Wahrheit das HUD (4 von 7.1 ms, p10). game.js ruft UI.aktualisieren in jedem Teilschritt, also 240-mal je Sekunde statt einmal je Bild."
+  },
+  {
+   "art": "hud-anteil",
+   "text": "fressen_fehlschlag: 58 % der \"Physik\"-Zeit ist in Wahrheit das HUD (6.4 von 11 ms, p10). game.js ruft UI.aktualisieren in jedem Teilschritt, also 240-mal je Sekunde statt einmal je Bild."
+  },
+  {
+   "art": "speicher",
+   "text": "Heap nach 60 s: +352 kB (351.8 kB/min hochgerechnet). Zaehler am Ende: {\"t\":60,\"heap\":4478116,\"kreaturen\":5,\"ereignisse\":87,\"spur\":0,\"extras\":4,\"schwebetexte\":2,\"hinweise\":1,\"domKnoten\":630}"
+  }
+ ],
+ "verschwenderisch": [
+  {
+   "stelle": "client/game.js:390",
+   "code": "if (window.UI && UI.aktualisieren) UI.aktualisieren(G, dt);",
+   "befund": "Der Aufruf steht in schritt(dt), also in JEDEM Teilschritt von 1/240 s. Bei 60 Bildern/s wird das gesamte HUD viermal je Bild neu gerechnet: Rahmen, Hotbar mit Abklingzeiten, alle Schwebetexte (DOM-Stilschreibvorgaenge, client/ui.js:317ff) und die Minimap, die bei jedem Aufruf komplett neu auf ein Canvas-2D gezeichnet wird (client/ui.js:477). Drei von vier Durchgaengen sind Wegwerfarbeit — kein Bild dazwischen wird angezeigt.",
+   "messung": "siehe \"davonHud\" je Szene: p10 0,2–0,3 ms je Bild fuer alle vier Aufrufe. Einmal statt viermal spart rund drei Viertel davon, also etwa 0,15–0,22 ms je Bild = 6–9 % der gemessenen Rechenlast.",
+   "hinweis": "BRAUCHT_KERNAENDERUNG: client/game.js — das HUD gehoert einmal je Bild aufgerufen (aus main.js bzw. vor dem Zeichnen), nicht je Physik-Teilschritt."
+  },
+  {
+   "stelle": "client/renderer.js:628",
+   "code": "for (const e of R.extras.slice().sort((a, b) => (a.order || 0) - (b.order || 0)))",
+   "befund": "Kopie plus Sortierung der Zeichner-Liste bei JEDEM Bild, obwohl sich die Liste nur aendert, wenn eine Lane sich einmalig anmeldet (derzeit drei Eintraege). Zeitlich unter der Messgrenze, aber eine vermeidbare Zuteilung je Bild in der heissen Schleife.",
+   "messung": "nicht einzeln messbar (< 0,01 ms bei drei Eintraegen).",
+   "hinweis": "BRAUCHT_KERNAENDERUNG: client/renderer.js — einmal beim Anmelden sortieren statt bei jedem Bild."
+  }
+ ],
+ "langlaufKontrolle": {
+  "text": "Zusaetzlicher Lauf mit --sekunden 180 (nicht Teil dieser Datei): Heap 3910 kB bei 0 s, 4087 kB bei 60 s, 4103 kB bei 96 s, 4150 kB bei 180 s — nach der ersten Minute flach, zwischendurch auch wieder fallend. Alle Zaehler (Kreaturen, Spur, Zeichner, Schwebetexte, DOM-Knoten) bleiben ueber 180 s konstant; nur G.ereignisse waechst mit rund 1/s gegen seine feste Obergrenze von 400 (game.js:melden). Kein Leck erkennbar.",
+  "warnung": "Ein frueherer Lauf zeigte scheinbar 364 kB/min Wachstum. Ursache war der Messkopf selbst (ein Array je Bild). Seitdem laufen die Zeiten des Dauerlaufs in vorbelegte Float64Array-Puffer."
+ },
+ "eichschleife": {
+  "titel": "Rechenschleife mit konstantem Aufwand — misst nur die Stoerung durch die Maschine",
+  "n": 150,
+  "min": 0.6,
+  "p10": 0.7,
+  "mittel": 1.9153,
+  "median": 0.9,
+  "p95": 5.6,
+  "max": 16,
+  "streuungP95zuP10": 8
+ }
+}

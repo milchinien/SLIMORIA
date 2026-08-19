@@ -1,0 +1,23 @@
+{
+ "key": "anrollen",
+ "lane": "MOTION",
+ "titel": "Anrollen",
+ "szenario": "anrollen",
+ "gdd": "GDD 01 §13 (Stillstand -> Anrollen -> Beschleunigung -> Maximum; niemals sofort auf Tempo) und §12 (hinterer Teil bleibt kurz zurueck)",
+ "gewonnen": true,
+ "urteil": "In Runde 2 blind gewonnen. Der Wortlaut des Urteils ging verloren, weil der Protokoll-Agent an einem Verbindungsfehler starb — das Ergebnis selbst steht im Workflow-Rueckgabewert und ist belegt.",
+ "luecke": "",
+ "beideSchwach": false,
+ "blindOrdner": "gauntlet/blind/anrollen/1f79b2ab",
+ "unserBild": "gauntlet/shots/anrollen/pruefung/frame_005.png",
+ "referenzBild": "ref/blob-jelly/cuphead-goopy-lunge-mass-trailing-behind.png",
+ "runde": 2,
+ "historie": [
+  {
+   "runde": 1,
+   "gewonnen": false,
+   "urteil": "B ist das einzige Bild, in dem ueberhaupt eine Bewegungsachse existiert. Die Masse ist entlang einer Diagonalen von hinten-oben-links (Ruecken-Scheitel bei ca. x=650/y=100) nach vorn-unten-rechts (unterster Vorderpunkt bei ca. x=790/y=490) verteilt: der Schwerpunkt liegt vorn im dicken, runden Kopfballon, waehrend der Koerper nach hinten auf eine schmale Einschnuerung (Halsstelle bei ca. x=420, nur noch etwa ein Fuenftel des Vorderdurchmessers) zusammenlaeuft und dahinter in einen langen, tief durchhaengenden Fortsatz uebergeht, der bis x=120 zurueckreicht — Front voraus, Hinterteil zieht sich noch lang. Die Augen sind ueber die Vorderkontur hinausgeschoben, die Vorderkante des Koerpers ist die tiefste Stelle: der Koerper kippt nach vorn ueber seine eigene Auflage, statt flach zu gleiten. A dagegen hat gar keine Achse: die Silhouette ist bis auf wenige Pixel spiegelsymmetrisch (linke Kante x=370, rechte Kante x=870, Scheitel exakt mittig bei x=620), die Grundlinie liegt ueber die gesamte Breite auf gleicher Hoehe (y=520 bis 540) und laeuft ohne Verzug oder Nachschleppen aus. Es gibt keine Neigung, keine Front-Hinten-Differenz, keine Stauchung vorn und keine Streckung hinten — ein ruhender Glockenkoerper aus Frontalperspektive, in dem die geforderte Vor/Zurueck-Information optisch gar nicht codiert werden kann. B verfehlt das Kriterium teilweise: Bauch und Boden beruehren sich nirgends, der Schatten liegt als getrennte Flaeche darunter, und die Staubwolke ist bereits vor dem Koerper — das liest sich als Sprung/Flug in bereits laufender Bewegung, nicht als Anrollen aus dem Stand; ausserdem ist das Nachhaengen als duenner elastischer Anhang gezeichnet, nicht als traege Materialmasse, die sich schwer nachzieht.",
+   "luecke": "A muss aus der Frontalen in eine Dreiviertel- oder Seitenansicht gedreht und dabei nach vorn gekippt werden, sodass der Scheitel vor der Bodenauflage steht und die hintere Basiskante als gestreckter, tiefliegender Schleppzipfel zurueckbleibt — statt der spiegelsymmetrischen Glocke mit gerader Grundlinie."
+  }
+ ]
+}

@@ -1,0 +1,494 @@
+{
+ "erfolg": {
+  "start": {
+   "x": 0,
+   "z": 0
+  },
+  "gegner": {
+   "x": 3.2,
+   "z": 0
+  },
+  "ende": {
+   "x": 2.4324792520499523,
+   "z": 0.022570121909037556
+  },
+  "anlauf": 3.2,
+  "zumGegner": 0.768,
+  "zumStart": 2.433,
+  "phase": "frei",
+  "bahn": [
+   {
+    "t": 0,
+    "x": 0,
+    "z": 0,
+    "phase": "fressen",
+    "unter": "anlauf"
+   },
+   {
+    "t": 100,
+    "x": 0.009,
+    "z": 0.001,
+    "phase": "fressen",
+    "unter": "anlauf"
+   },
+   {
+    "t": 200,
+    "x": -0.04,
+    "z": 0.001,
+    "phase": "fressen",
+    "unter": "anlauf"
+   },
+   {
+    "t": 300,
+    "x": 0.033,
+    "z": -0.009,
+    "phase": "fressen",
+    "unter": "umschlingen"
+   },
+   {
+    "t": 400,
+    "x": 1.24,
+    "z": -0.072,
+    "phase": "fressen",
+    "unter": "umschlingen"
+   },
+   {
+    "t": 500,
+    "x": 2.207,
+    "z": -0.131,
+    "phase": "fressen",
+    "unter": "umschlingen"
+   },
+   {
+    "t": 600,
+    "x": 2.411,
+    "z": -0.116,
+    "phase": "fressen",
+    "unter": "umschlingen"
+   },
+   {
+    "t": 700,
+    "x": 2.45,
+    "z": -0.094,
+    "phase": "fressen",
+    "unter": "umschlingen"
+   },
+   {
+    "t": 800,
+    "x": 2.474,
+    "z": -0.07,
+    "phase": "fressen",
+    "unter": "umschlingen"
+   },
+   {
+    "t": 900,
+    "x": 2.483,
+    "z": -0.051,
+    "phase": "fressen",
+    "unter": "absorbieren"
+   },
+   {
+    "t": 1000,
+    "x": 2.486,
+    "z": -0.037,
+    "phase": "fressen",
+    "unter": "absorbieren"
+   },
+   {
+    "t": 1100,
+    "x": 2.5,
+    "z": -0.024,
+    "phase": "fressen",
+    "unter": "absorbieren"
+   },
+   {
+    "t": 1200,
+    "x": 2.532,
+    "z": -0.01,
+    "phase": "fressen",
+    "unter": "absorbieren"
+   },
+   {
+    "t": 1300,
+    "x": 2.553,
+    "z": -0.002,
+    "phase": "fressen",
+    "unter": "prall"
+   },
+   {
+    "t": 1400,
+    "x": 2.537,
+    "z": 0.006,
+    "phase": "fressen",
+    "unter": "prall"
+   },
+   {
+    "t": 1500,
+    "x": 2.463,
+    "z": 0.017,
+    "phase": "fressen",
+    "unter": "prall"
+   },
+   {
+    "t": 1600,
+    "x": 2.398,
+    "z": 0.015,
+    "phase": "fressen",
+    "unter": "erholen"
+   },
+   {
+    "t": 1700,
+    "x": 2.418,
+    "z": 0.024,
+    "phase": "fressen",
+    "unter": "erholen"
+   },
+   {
+    "t": 1800,
+    "x": 2.439,
+    "z": 0.032,
+    "phase": "fressen",
+    "unter": "erholen"
+   },
+   {
+    "t": 1900,
+    "x": 2.442,
+    "z": 0.032,
+    "phase": "fressen",
+    "unter": "erholen"
+   },
+   {
+    "t": 2000,
+    "x": 2.436,
+    "z": 0.026,
+    "phase": "fressen",
+    "unter": "erholen"
+   },
+   {
+    "t": 2100,
+    "x": 2.43,
+    "z": 0.02,
+    "phase": "fressen",
+    "unter": "erholen"
+   },
+   {
+    "t": 2200,
+    "x": 2.431,
+    "z": 0.021,
+    "phase": "fressen",
+    "unter": "erholen"
+   },
+   {
+    "t": 2300,
+    "x": 2.439,
+    "z": 0.027,
+    "phase": "fressen",
+    "unter": "erholen"
+   },
+   {
+    "t": 2400,
+    "x": 2.443,
+    "z": 0.03,
+    "phase": "fressen",
+    "unter": "erholen"
+   },
+   {
+    "t": 2500,
+    "x": 2.44,
+    "z": 0.028,
+    "phase": "fressen",
+    "unter": "erholen"
+   },
+   {
+    "t": 2600,
+    "x": 2.434,
+    "z": 0.024,
+    "phase": "fressen",
+    "unter": "erholen"
+   },
+   {
+    "t": 2700,
+    "x": 2.432,
+    "z": 0.022,
+    "phase": "fressen",
+    "unter": "erholen"
+   },
+   {
+    "t": 2800,
+    "x": 2.432,
+    "z": 0.022,
+    "phase": "fressen",
+    "unter": "erholen"
+   }
+  ]
+ },
+ "fehl": {
+  "start": {
+   "x": 0,
+   "z": 0
+  },
+  "gegner": {
+   "x": 3.2,
+   "z": 0
+  },
+  "ende": {
+   "x": -0.2024355259016846,
+   "z": 0.027023639508385072
+  },
+  "anlauf": 3.2,
+  "zumGegner": 3.403,
+  "zumStart": 0.204,
+  "phase": "frei",
+  "bahn": [
+   {
+    "t": 0,
+    "x": 0,
+    "z": 0,
+    "phase": "fressen",
+    "unter": "anlauf"
+   },
+   {
+    "t": 100,
+    "x": 0.009,
+    "z": 0.001,
+    "phase": "fressen",
+    "unter": "anlauf"
+   },
+   {
+    "t": 200,
+    "x": -0.04,
+    "z": 0.001,
+    "phase": "fressen",
+    "unter": "anlauf"
+   },
+   {
+    "t": 300,
+    "x": 0.033,
+    "z": -0.009,
+    "phase": "fressen",
+    "unter": "umschlingen"
+   },
+   {
+    "t": 400,
+    "x": 1.219,
+    "z": -0.072,
+    "phase": "fressen",
+    "unter": "umschlingen"
+   },
+   {
+    "t": 500,
+    "x": 2.174,
+    "z": -0.136,
+    "phase": "fressen",
+    "unter": "umschlingen"
+   },
+   {
+    "t": 600,
+    "x": 2.392,
+    "z": -0.124,
+    "phase": "fressen",
+    "unter": "umschlingen"
+   },
+   {
+    "t": 700,
+    "x": 2.431,
+    "z": -0.102,
+    "phase": "fressen",
+    "unter": "umschlingen"
+   },
+   {
+    "t": 800,
+    "x": 2.435,
+    "z": -0.078,
+    "phase": "fressen",
+    "unter": "rueckschnapp"
+   },
+   {
+    "t": 900,
+    "x": 1.857,
+    "z": -0.06,
+    "phase": "fressen",
+    "unter": "rueckschnapp"
+   },
+   {
+    "t": 1000,
+    "x": 1.013,
+    "z": -0.303,
+    "phase": "fressen",
+    "unter": "rueckschnapp"
+   },
+   {
+    "t": 1100,
+    "x": 0.315,
+    "z": -0.278,
+    "phase": "fressen",
+    "unter": "rueckschnapp"
+   },
+   {
+    "t": 1200,
+    "x": -0.093,
+    "z": -0.023,
+    "phase": "fressen",
+    "unter": "erholen"
+   },
+   {
+    "t": 1300,
+    "x": -0.153,
+    "z": 0.021,
+    "phase": "fressen",
+    "unter": "erholen"
+   },
+   {
+    "t": 1400,
+    "x": -0.145,
+    "z": 0.026,
+    "phase": "fressen",
+    "unter": "erholen"
+   },
+   {
+    "t": 1500,
+    "x": -0.123,
+    "z": 0.025,
+    "phase": "fressen",
+    "unter": "erholen"
+   },
+   {
+    "t": 1600,
+    "x": -0.103,
+    "z": 0.026,
+    "phase": "fressen",
+    "unter": "erholen"
+   },
+   {
+    "t": 1700,
+    "x": -0.085,
+    "z": 0.027,
+    "phase": "fressen",
+    "unter": "erholen"
+   },
+   {
+    "t": 1800,
+    "x": -0.069,
+    "z": 0.028,
+    "phase": "fressen",
+    "unter": "erholen"
+   },
+   {
+    "t": 1900,
+    "x": -0.055,
+    "z": 0.028,
+    "phase": "fressen",
+    "unter": "erholen"
+   },
+   {
+    "t": 2000,
+    "x": -0.045,
+    "z": 0.028,
+    "phase": "fressen",
+    "unter": "erholen"
+   },
+   {
+    "t": 2100,
+    "x": -0.037,
+    "z": 0.028,
+    "phase": "fressen",
+    "unter": "erholen"
+   },
+   {
+    "t": 2200,
+    "x": -0.033,
+    "z": 0.028,
+    "phase": "fressen",
+    "unter": "erholen"
+   },
+   {
+    "t": 2300,
+    "x": -0.041,
+    "z": 0.029,
+    "phase": "frei",
+    "unter": ""
+   },
+   {
+    "t": 2400,
+    "x": -0.062,
+    "z": 0.029,
+    "phase": "frei",
+    "unter": ""
+   },
+   {
+    "t": 2500,
+    "x": -0.086,
+    "z": 0.029,
+    "phase": "frei",
+    "unter": ""
+   },
+   {
+    "t": 2600,
+    "x": -0.11,
+    "z": 0.029,
+    "phase": "frei",
+    "unter": ""
+   },
+   {
+    "t": 2700,
+    "x": -0.132,
+    "z": 0.03,
+    "phase": "frei",
+    "unter": ""
+   },
+   {
+    "t": 2800,
+    "x": -0.151,
+    "z": 0.03,
+    "phase": "frei",
+    "unter": ""
+   },
+   {
+    "t": 2900,
+    "x": -0.166,
+    "z": 0.03,
+    "phase": "frei",
+    "unter": ""
+   },
+   {
+    "t": 3000,
+    "x": -0.178,
+    "z": 0.03,
+    "phase": "frei",
+    "unter": ""
+   },
+   {
+    "t": 3100,
+    "x": -0.188,
+    "z": 0.03,
+    "phase": "frei",
+    "unter": ""
+   },
+   {
+    "t": 3200,
+    "x": -0.193,
+    "z": 0.029,
+    "phase": "frei",
+    "unter": ""
+   },
+   {
+    "t": 3300,
+    "x": -0.197,
+    "z": 0.028,
+    "phase": "frei",
+    "unter": ""
+   },
+   {
+    "t": 3400,
+    "x": -0.201,
+    "z": 0.027,
+    "phase": "frei",
+    "unter": ""
+   }
+  ]
+ },
+ "bestanden": {
+  "paragraph29": true,
+  "paragraph30": true
+ }
+}

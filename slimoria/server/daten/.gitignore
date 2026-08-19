@@ -1,0 +1,3 @@
+# Charakterstaende sind Spieldaten, kein Quelltext (GDD 11 §9).
+*.json
+!.gitignore

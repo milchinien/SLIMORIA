@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SLIMORIA — Prototyp</title>
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="ui.css">
+<link rel="stylesheet" href="charakter.css">
+</head>
+<body>
+
+<canvas id="view"></canvas>
+
+<!-- HUD wird von ui.js gebaut (GDD 10 §150) -->
+<div id="hud"></div>
+
+<div id="panel">
+  <div class="panel-head">
+    <strong>Spielgefühl</strong>
+    <button id="btn-panel" title="Panel ein-/ausblenden">✕</button>
+  </div>
+
+  <div class="presets">
+    <button data-preset="standard">Standard</button>
+    <button data-preset="traege">Träge Masse</button>
+    <button data-preset="flutschig">Flutschig</button>
+    <button data-preset="gallerte">Gallerte</button>
+  </div>
+
+  <div id="sliders"></div>
+
+  <div class="actions">
+    <button id="btn-reset">Reset</button>
+    <button id="btn-debug">Punkte</button>
+    <button id="btn-faction">Eldoran</button>
+    <button id="btn-spawn">Kreatur</button>
+  </div>
+
+  <div class="hilfe">
+    <b>Linksklick</b> Boden = gehen, Kreatur = anvisieren ·
+    <b>Rechtsklick</b> auf Kreatur = angreifen ·
+    <b>E</b> fressen · <b>F</b> interagieren · <b>1–4</b> Fähigkeiten ·
+    <b>Rechts ziehen</b> Kamera · <b>Rad</b> Zoom · <b>Leer</b> hüpfen ·
+    <b>X</b> Massepunkte · <b>H</b> Panel
+  </div>
+</div>
+
+<button id="panel-open" onclick="document.body.classList.remove('panel-hidden')">⚙</button>
+
+<script src="rng.js"></script>
+<script src="core.js"></script>
+<script src="/shared/regeln.js"></script>
+<script src="tuning.js"></script>
+<script src="world.js"></script>
+<script src="softbody.js"></script>
+<script src="deform.js"></script>
+<script src="slime.js"></script>
+<script src="renderer.js"></script>
+<!-- Phase Grafik: zweiter Renderpfad, aktiv nur mit ?renderer=2 -->
+<script src="grafik/manifest.js"></script>
+<script src="grafik/laden.js"></script>
+<script src="ui.js"></script>
+<script src="eat.js"></script>
+<script src="combat.js"></script>
+<script src="death.js"></script>
+<script src="game.js"></script>
+<script src="net.js"></script>
+<script src="charakter.js"></script>
+<script src="capture.js"></script>
+<script src="main.js"></script>
+</body>
+</html>

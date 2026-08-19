@@ -1,0 +1,16 @@
+{
+ "key": "cooldowns",
+ "lane": "UI",
+ "titel": "Cooldowns",
+ "szenario": "cooldowns",
+ "gdd": "GDD 10 §15 (Icon abdunkeln, verbleibende Zeit anzeigen, Wiederverfuegbarkeit deutlich machen) und §16 (fehlende Ressource visuell verstaendlich)",
+ "gewonnen": true,
+ "urteil": "A trennt vier Zustaende, B trennt einen — und den unsauber.\n\nRADIALER WISCH: In A traegt jede belegte Kachel ausser Slot 1 einen Kreissektor mit harter Radialkante vom Kachelzentrum aus: Slot 2 ist bis auf einen schmalen Rest fast vollflaechig verdunkelt, Slot 3 zeigt einen klar abgesetzten Keil im oberen Drittel, Slot 5 zeigt einen sauberen ~90°-Ausschnitt, also rund ein Viertel Restlauf. Der Fortschritt ist damit ohne Zahl ablesbar. In B existiert keine einzige Radialkante. Slot 3, die einzige Kachel mit Zahl, ist flaechig gleichmaessig abgedunkelt — kein Anfangswinkel, kein Endwinkel, kein Verhaeltnis. Man erfaehrt \"gesperrt\", nicht \"wie weit\".\n\nRESTZEITZAHL: A setzt die Sekunden zentriert, in Weiss, mit Hoehe von etwa 40 % der Kachel (5, 9, 18) direkt auf die dunkelste Zone — maximaler Lokalkontrast, Blickziel immer an derselben Stelle. B hat genau eine Restzeitzahl (\"6\" in Slot 3), und in Slot 9 steht ein \"5\" in identischer Schriftart und -farbe unten rechts, das offensichtlich kein Countdown ist. Gleicher Stil fuer zwei semantisch verschiedene Zahlen bei nur zwei Zahlen im ganzen Bild ist ein Fehlleseangebot, kein Lesesystem. Ausserdem wandert die Zahlposition (Mitte vs. unten rechts).\n\nABDUNKLUNGSGRAD: Hier versagt B strukturell. Die Icon-Grafik selbst ist in Slot 2, 3 und 5 fast schwarz; die Verdunklungs-Overlay-Sprache benutzt exakt dasselbe Mittel — geringere Helligkeit. Slot 5 (Fluegel) ist matt und ausgegraut, ohne Wisch, ohne Zahl: nicht unterscheidbar von \"dunkles Artwork\". A macht es nicht sauber, aber besser: Slot 1 ist merklich heller und traegt zusaetzlich einen hellen Rahmen, die Bereitschaft ist also nicht allein ueber Helligkeit codiert.\n\n\"KUEHLT AB\" GEGEN \"KEINE RESSOURCE\": A fuehrt dafuer einen eigenen Kanal — die Eckzahl unten rechts, blau bei 12 und 15, orange bei 20. Zwei Zustaende, zwei Farben, feste Position. B hat dafuer nichts: die gruene Umrandung in Slot 4 markiert irgendeinen Sonderzustand, aber \"nicht wirkbar mangels Ressource\" ist in B von \"abklingend\" und von \"einfach dunkles Icon\" nicht zu trennen.\n\nA ist ebenfalls angreifbar: Slot 5 verdunkelt gar nicht, sondern zeigt einen hell-magentafarbenen Keil, der als Icon-Kunst statt als Overlay liest; und die zwei Zahlen pro Kachel (5/12, 9/20, 18/15) haben zu aehnliches Gewicht, sodass beim Ueberfliegen unklar bleibt, welche die Sekunden sind. Das sind Kalibrierungsfehler an einem funktionierenden System. B fehlt das System.",
+ "luecke": "",
+ "beideSchwach": false,
+ "blindOrdner": "gauntlet/blind/cooldowns/227230b8",
+ "unserBild": "D:/Projects/Claude/Desktop/Games/SLIMORIA/slimoria/gauntlet/shots/cooldowns/pruefung/frame_002.png",
+ "referenzBild": "D:/Projects/Claude/Desktop/Games/SLIMORIA/slimoria/ref/wow-hud/gameplay-tww-dungeon-damage-numbers-castbar.png",
+ "runde": 1,
+ "historie": []
+}

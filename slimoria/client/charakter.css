@@ -1,0 +1,285 @@
+/* ---------------------------------------------------------------------------
+ * Charaktererstellung. BESITZER: Lane CHARAKTER.
+ *
+ * Gebaut für 1600x900. Die Spalte nimmt das linke Drittel, der Rest bleibt
+ * frei: dort steht der echte Schleim. Genau deshalb ist der Hintergrund ein
+ * Verlauf und keine Fläche — eine Vollfläche würde die Vorschau erschlagen,
+ * und die Vorschau ist der Grund für dieses Fenster.
+ *
+ * GDD 10 §133: die UI soll zum Stil passen, ohne dekorativ zu werden.
+ * Funktion vor Ornament — es gibt genau einen Akzent, und der ist die
+ * Fraktionsfarbe.
+ * ------------------------------------------------------------------------- */
+
+#charakter {
+  --akzent: #3aa0f5;
+  --akzent-hell: #9fe4ff;
+  --grund: #e6ecf6;
+  --schwach: #93a1b6;
+
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: flex;
+  font-family: var(--schrift, "Segoe UI", system-ui, sans-serif);
+  color: var(--grund);
+  background:
+    linear-gradient(90deg,
+      rgba(5, 8, 13, .97) 0px,
+      rgba(5, 8, 13, .96) 460px,
+      rgba(5, 8, 13, .55) 620px,
+      rgba(5, 8, 13, .12) 900px,
+      rgba(5, 8, 13, .16) 100%);
+  transition: opacity 180ms ease;
+}
+#charakter.zu { display: none; }
+
+/* Während der Erstellung gehören Bild und Aufmerksamkeit dem Schleim.
+ * HUD und Tuning-Panel würden hier nur mitreden. */
+body.erstellung #hud,
+body.erstellung #panel,
+body.erstellung #panel-open { display: none !important; }
+
+/* Belt und Hosenträger: im Aufnahmemodus darf hier nie etwas erscheinen,
+ * sonst verdeckt die Erstellung jede Aufnahme. */
+body.aufnahme #charakter { display: none !important; }
+
+.ch-spalte {
+  width: 470px;
+  height: 100%;
+  padding: 26px 34px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  border-right: 1px solid rgba(150, 170, 200, .14);
+  overflow-y: auto;
+}
+.ch-spalte::-webkit-scrollbar { width: 6px; }
+.ch-spalte::-webkit-scrollbar-thumb { background: rgba(150, 170, 200, .22); border-radius: 3px; }
+
+/* --- Kopf ----------------------------------------------------------------- */
+
+.ch-marke {
+  font-size: 11px;
+  letter-spacing: .42em;
+  color: var(--akzent);
+  margin-bottom: 8px;
+  transition: color 160ms ease;
+}
+.ch-kopf h1 {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 600;
+  letter-spacing: .01em;
+}
+.ch-unter {
+  margin: 6px 0 0;
+  font-size: 12px;
+  color: var(--schwach);
+}
+
+/* --- Blöcke --------------------------------------------------------------- */
+
+.ch-titel {
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--schwach);
+  margin-bottom: 8px;
+}
+.ch-notiz {
+  margin-top: 7px;
+  font-size: 11px;
+  line-height: 1.45;
+  color: var(--schwach);
+}
+.ch-notiz b { color: #c6d3e6; font-weight: 600; }
+
+/* --- Name ----------------------------------------------------------------- */
+
+#ch-name {
+  width: 100%;
+  padding: 9px 12px;
+  font: inherit;
+  font-size: 16px;
+  color: var(--grund);
+  background: rgba(255, 255, 255, .045);
+  border: 1px solid rgba(150, 170, 200, .22);
+  border-radius: 5px;
+  outline: none;
+  transition: border-color 140ms ease, background 140ms ease;
+}
+#ch-name:focus { border-color: var(--akzent); background: rgba(255, 255, 255, .07); }
+#ch-name::placeholder { color: rgba(147, 161, 182, .55); }
+#ch-name.falsch { border-color: #d8574c; }
+
+.ch-fehler {
+  min-height: 13px;
+  margin-top: 4px;
+  font-size: 11px;
+  color: #e2857c;
+}
+
+/* --- Fraktionskarten (GDD 10 §128) ---------------------------------------- */
+
+.ch-karten { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+
+.ch-karte {
+  --akzent: #3aa0f5;
+  display: grid;
+  gap: 3px;
+  padding: 11px 12px 10px;
+  text-align: left;
+  font: inherit;
+  color: var(--schwach);
+  background: rgba(255, 255, 255, .035);
+  border: 1px solid rgba(150, 170, 200, .16);
+  border-radius: 7px;
+  cursor: pointer;
+  transition: border-color 140ms ease, background 140ms ease;
+}
+.ch-karte:hover { background: rgba(255, 255, 255, .06); }
+.ch-karte.gewaehlt {
+  border-color: var(--akzent);
+  background: color-mix(in srgb, var(--akzent) 14%, transparent);
+}
+
+/* Der Farbfleck ist der Punkt der Karte: die Farbe ist die Fraktion
+ * (GDD 01 §8), nicht eine getrennte Einstellung. */
+.ch-klecks {
+  width: 22px; height: 22px;
+  margin-bottom: 5px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 34% 30%,
+    color-mix(in srgb, var(--akzent) 40%, #fff),
+    var(--akzent) 62%,
+    color-mix(in srgb, var(--akzent) 55%, #000));
+  box-shadow: 0 0 12px color-mix(in srgb, var(--akzent) 55%, transparent);
+}
+.ch-kname { font-size: 15px; font-weight: 600; color: var(--grund); }
+.ch-kfarbe {
+  font-size: 11px; font-weight: 600;
+  color: var(--akzent);
+  margin-bottom: 4px;
+}
+.ch-kzeile {
+  display: grid;
+  grid-template-columns: 62px 1fr;
+  gap: 4px;
+  font-size: 10px;
+  line-height: 1.4;
+}
+.ch-kzeile b {
+  font-weight: 500;
+  color: rgba(147, 161, 182, .62);
+}
+
+/* --- Gesichtswähler (GDD 01 §57) ------------------------------------------ */
+
+.ch-reihe {
+  display: grid;
+  grid-template-columns: 62px 1fr;
+  align-items: center;
+  column-gap: 12px;
+  padding: 5px 0;
+  border-top: 1px solid rgba(150, 170, 200, .1);
+}
+.ch-reihe:first-child { border-top: none; }
+.ch-rname { font-size: 13px; color: #c6d3e6; }
+
+.ch-waehler {
+  display: grid;
+  grid-template-columns: 30px 1fr 30px;
+  align-items: center;
+  background: rgba(255, 255, 255, .035);
+  border: 1px solid rgba(150, 170, 200, .16);
+  border-radius: 5px;
+}
+.ch-pfeil {
+  padding: 4px 0;
+  font: inherit;
+  font-size: 17px;
+  line-height: 1;
+  color: var(--schwach);
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: color 120ms ease;
+}
+.ch-pfeil:hover { color: var(--akzent-hell); }
+
+.ch-wert {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  padding: 4px 0;
+}
+.ch-vname { font-size: 13.5px; font-weight: 600; color: var(--grund); }
+.ch-punkte { display: flex; gap: 4px; }
+.ch-punkte i {
+  width: 4px; height: 4px;
+  border-radius: 50%;
+  background: rgba(150, 170, 200, .3);
+}
+.ch-punkte i.an { background: var(--akzent); }
+
+.ch-rtext {
+  grid-column: 2;
+  margin-top: 3px;
+  font-size: 10.5px;
+  color: rgba(147, 161, 182, .8);
+}
+
+/* --- Fuß: Zusammenfassung und Abschluss (GDD 10 §130) --------------------- */
+
+.ch-fuss {
+  margin-top: auto;
+  padding-top: 13px;
+  border-top: 1px solid rgba(150, 170, 200, .14);
+}
+.ch-zusammen {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-bottom: 10px;
+  font-size: 11.5px;
+  color: var(--schwach);
+}
+.ch-zusammen b { font-size: 16px; font-weight: 600; color: var(--grund); }
+
+.ch-knoepfe { display: grid; grid-template-columns: 110px 1fr; gap: 9px; }
+
+#charakter button.ch-neben,
+#charakter button.ch-haupt {
+  padding: 10px;
+  font: inherit;
+  font-size: 13px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 140ms ease, border-color 140ms ease, opacity 140ms ease;
+}
+#charakter button.ch-neben {
+  color: var(--grund);
+  background: rgba(255, 255, 255, .05);
+  border: 1px solid rgba(150, 170, 200, .2);
+}
+#charakter button.ch-neben:hover { background: rgba(255, 255, 255, .1); }
+
+#charakter button.ch-haupt {
+  font-weight: 600;
+  color: #08131f;
+  background: var(--akzent);
+  border: 1px solid var(--akzent);
+}
+#charakter button.ch-haupt:hover {
+  background: color-mix(in srgb, var(--akzent) 82%, #fff);
+}
+#charakter button.ch-haupt:disabled {
+  opacity: .35;
+  cursor: not-allowed;
+  background: rgba(255, 255, 255, .12);
+  border-color: rgba(150, 170, 200, .2);
+  color: var(--schwach);
+}

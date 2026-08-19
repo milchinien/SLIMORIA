@@ -1,0 +1,16 @@
+{
+ "key": "zielanzeige",
+ "lane": "UI",
+ "titel": "Zielanzeige",
+ "szenario": "zielanzeige",
+ "gdd": "GDD 10 §21 (mindestens Name, Level, HP; Beispiel \"Wolf — Level 8\" mit HP-Balken) und GDD 02 §3 (der Spieler muss jederzeit erkennen: welchen Gegner greife ich gerade an?)",
+ "gewonnen": true,
+ "urteil": "A verfehlt das Kriterium an der wichtigsten Stelle: Der Name ist gar nicht lesbar, sondern abgeschnitten (\"Devious Sunrun...\"). Der Name belegt in A nur etwa die Haelfte der Panelbreite, weil rechts das Portrait mit dickem roten Ring bis in die Textzeile hineinragt und links das Level sitzt - der Text hat also keine eigene Zeile, sondern teilt sie sich mit zwei Nachbarn. Zweitens hat A keinerlei Zahlenwert fuer Restleben: nur eine Balkenlaenge (Fuellkante bei ca. 88 % der Nutzbreite), keine Prozent- oder Absolutangabe, also nur schaetzbar statt ablesbar. Drittens ist das Level 43 orange auf gesaettigtem Rot gesetzt - gleiche Farbfamilie, sehr geringer Helligkeitsabstand, das schlechteste Kontrastpaar im ganzen Bild; es verschwindet fast, waehrend der rote Header-Streifen selbst die staerkste Flaeche der Anzeige ist und damit Chrome ueber Information stellt. Viertens frisst ein zweiter, komplett leerer Balken (Dunkelgrau auf Dunkelgrau, ca. ein Viertel der Panelhoehe) Platz, der keinerlei Information traegt und stattdessen dem Namen fehlt. B loest genau diese vier Punkte: Level in einem eigenen abgesetzten Kaestchen, Name fett weiss und mit deutlichem Groessensprung als klare Nr. 1 der Hierarchie, Prozentwert rechts, Absolutwerte 113/134 mittig im Balken.\n\nB ist trotzdem nicht sauber. Der Balken ist bei 84 % Fuellung rot eingefaerbt - die Farbe kodiert damit nichts, sondern signalisiert faelschlich kritischen Zustand; der Farbkanal ist verschenkt. Prozent (84 %) und Absolutwert (113/134) stehen doppelt, in zwei getrennten Zonen mit unterschiedlicher Groesse und Helligkeit - das kostet einen zusaetzlichen Blicksprung fuer dieselbe Information, waehrend die 84 % zugleich das schwaechste Textelement der Anzeige sind (mittelgrau auf Dunkel, kleiner als der Name). Die Unterzeile mit \"FRESSEN\" (grau) und \"aussichtslos\" (orange, fett) setzt zwei konkurrierende, unbeschriftete Labels nebeneinander, wobei das orange-fette Wort optisch fast mit dem Namen konkurriert. Auch der Portraitkreis ist dunkel auf dunkel und traegt bei Bruchteilsblick nichts bei. B gewinnt also nicht, weil es gut ist, sondern weil in B alle drei geforderten Werte in unter einer Sekunde tatsaechlich ablesbar sind und in A einer davon (Name) unlesbar und einer (Restleben) nur schaetzbar ist.",
+ "luecke": "",
+ "beideSchwach": false,
+ "blindOrdner": "gauntlet/blind/zielanzeige/657bf91b",
+ "unserBild": "gauntlet/shots/zielanzeige/pruefung/frame_007.png",
+ "referenzBild": "ref/wow-hud/gameplay-remix-damage-heal-numbers-target.jpg",
+ "runde": 1,
+ "historie": []
+}

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="de"><head><meta charset="utf-8"><title>Persistenter Charakter — Level und XP ueberleben den Serverneustart</title>
+<style>
+  html, body { margin: 0; background: #12141a; color: #e8ecf4;
+    font: 13px/1.4 "Segoe UI", system-ui, sans-serif; }
+  header { padding: 18px 20px 10px; border-bottom: 1px solid #262b36; }
+  h1 { margin: 0 0 4px; font-size: 20px; font-weight: 650; letter-spacing: .2px; }
+  .unter { color: #9fabc2; font-size: 13px; max-width: 1500px; }
+  .kopfzeile { margin-top: 8px; color: #6f7a8d; font-size: 12px;
+    font-variant-numeric: tabular-nums; }
+  .kopfzeile b { color: #aab4c8; font-weight: 600; }
+  .raster { display: grid; gap: 12px; padding: 14px 20px 6px; align-items: start; }
+  figure { margin: 0; background: #0c0e13; border: 1px solid #262b36; border-radius: 6px;
+    overflow: hidden; }
+  .gruppe { display: flex; justify-content: space-between; align-items: baseline; gap: 10px;
+    padding: 6px 10px; background: #1a1e27; border-bottom: 1px solid #262b36; }
+  .gruppe .wer { font-size: 14px; font-weight: 700; letter-spacing: .3px; }
+  .gruppe .wann { font-size: 12px; color: #9fabc2; }
+  .wer.c1 { color: #7fb4ff; }
+  .wer.c2 { color: #ff9a8f; }
+  .wer.c0 { color: #d7dde8; }
+  .rahmen { position: relative; line-height: 0; }
+  .rahmen img { display: block; width: 100%; height: auto; }
+  .marke { position: absolute; transform: translate(-50%, -50%); pointer-events: none; }
+  .marke .ring { width: 46px; height: 46px; margin: -23px 0 0 -23px; position: absolute;
+    border-radius: 50%; border: 2px solid currentColor; opacity: .95; }
+  .marke .zettel { position: absolute; transform: translate(-50%, -100%);
+    top: -28px; white-space: nowrap; padding: 3px 7px; border-radius: 4px;
+    background: rgba(8,10,14,.88); border: 1px solid currentColor;
+    font-size: 12px; font-weight: 650; line-height: 1.25; }
+  .marke .zettel small { display: block; font-weight: 400; font-size: 10.5px;
+    color: #b9c3d4; letter-spacing: .1px; }
+  .marke .stiel { position: absolute; left: -1px; top: -28px; width: 2px; height: 28px;
+    background: currentColor; opacity: .8; }
+  /* Kreaturen bekommen ihren Zettel nach unten. Sie stehen fast immer dicht
+   * neben einem Schleim, und zwei Zettel uebereinander liest niemand. */
+  .marke.unten .zettel { top: 28px; transform: translate(-50%, 0); }
+  .marke.unten .stiel { top: 0; }
+  .marke.blau { color: #6fa8ff; }
+  .marke.rot { color: #ff7d6d; }
+  .marke.kreatur { color: #ffd166; }
+  .lupen { display: flex; flex-direction: column; gap: 8px; margin: 8px 10px 2px; }
+  .lupe .titel { font-size: 11.5px; color: #8b96aa; margin-bottom: 4px;
+    text-transform: uppercase; letter-spacing: .6px; }
+  .lupe .glas { border: 1px solid #3a4152; border-radius: 4px; background-repeat: no-repeat;
+    background-color: #05070a; max-width: 100%; }
+  figcaption { padding: 7px 10px 9px; font-size: 12px; color: #aab4c8;
+    border-top: 1px solid #21262f; font-variant-numeric: tabular-nums; }
+  figcaption b { color: #eef2f8; font-weight: 650; }
+  figcaption .zeile { display: block; }
+  figcaption .gut { color: #7fd4a8; }
+  figcaption .warn { color: #ffb066; }
+  pre { margin: 0; padding: 10px 12px; font: 12px/1.5 Consolas, monospace;
+    color: #cfd8e6; white-space: pre-wrap; word-break: break-word; }
+  footer { padding: 10px 20px 20px; color: #7c8697; font-size: 12px; max-width: 1500px; }
+  footer .titel { color: #aab4c8; font-weight: 650; }
+</style></head><body>
+<header>
+  <h1>Persistenter Charakter — Level und XP ueberleben den Serverneustart</h1>
+  <div class="unter">NetzDauer erschlaegt mit dem Auto-Angriff einen Wolf auf Level 5 und steigt dabei auf. Danach wird der Serverprozess hart beendet und neu gestartet. In der Mitte steht der entscheidende Gegenbeweis: derselbe, frisch geladene Client OHNE Verbindung zeigt Level 1 und 0 XP — die Zahlen rechts kommen also nicht aus dem Browser, sondern vom Server.</div>
+  <div class="kopfzeile"><b>Aufgenommen</b> 2026-08-19 05:08:32 &nbsp;·&nbsp; <b>Aufloesung</b> 1600 × 900 &nbsp;·&nbsp; <b>Serverprozess</b> 21792 beendet → 14460 neu gestartet, Port 54603 &nbsp;·&nbsp; <b>Datei</b> server/daten/NetzDauer.json</div>
+</header>
+<div class="raster" style="grid-template-columns:repeat(3, 1fr)">
+<figure><div class="gruppe"><span class="wer c1">1 — vor dem Neustart</span><span class="wann">verbunden mit Prozess 21792</span></div><div class="rahmen"><img src="../roh/persistenz-1-vorher.png" alt=""><div class="marke blau" style="left:50.006%;top:39.022%"><i class="ring"></i><i class="stiel"></i><span class="zettel">NetzDauer · Lv 2<small>eigener Schleim</small></span></div></div><div class="lupen"><div class="lupe"><div class="titel">HUD links unten: Level und Name</div><div class="glas" style="width:594px;height:172px;background-image:url(../roh/persistenz-1-vorher.png);background-size:3520px 1980px;background-position:-26px -1605px"></div></div><div class="lupe"><div class="titel">HUD unten: XP-Leiste</div><div class="glas" style="width:620px;height:45px;background-image:url(../roh/persistenz-1-vorher.png);background-size:3405px 1915px;background-position:-1392px -1881px"></div></div></div><figcaption><span class="zeile">HUD: Level 2 · 55 / 212 XP</span><span class="zeile">Zustand im Client: Level 2 · 55/212 XP</span><span class="zeile gut">Verbindung: steht</span><span class="zeile gut">Level und XP stammen aus einer erschlagenen Kreatur, nicht aus dem Client.</span></figcaption></figure>
+<figure><div class="gruppe"><span class="wer c0">2 — Gegenprobe</span><span class="wann">Seite neu geladen, keine Verbindung</span></div><div class="rahmen"><img src="../roh/persistenz-2-frisch.png" alt=""><div class="marke blau" style="left:50.000%;top:40.011%"><i class="ring"></i><i class="stiel"></i><span class="zettel">NetzDauer · Lv 1<small>eigener Schleim</small></span></div></div><div class="lupen"><div class="lupe"><div class="titel">HUD links unten: Level und Name</div><div class="glas" style="width:594px;height:172px;background-image:url(../roh/persistenz-2-frisch.png);background-size:3520px 1980px;background-position:-26px -1605px"></div></div><div class="lupe"><div class="titel">HUD unten: XP-Leiste</div><div class="glas" style="width:620px;height:46px;background-image:url(../roh/persistenz-2-frisch.png);background-size:3537px 1989px;background-position:-1458px -1954px"></div></div></div><figcaption><span class="zeile">HUD: Level 1 · 0 / 85 XP</span><span class="zeile">Zustand im Client: Level 1 · 0/85 XP</span><span class="zeile warn">Verbindung: keine</span><span class="zeile warn">Der Client allein weiss nichts: Level 1, 0 XP.</span></figcaption></figure>
+<figure><div class="gruppe"><span class="wer c2">3 — nach dem Neustart</span><span class="wann">verbunden mit Prozess 14460</span></div><div class="rahmen"><img src="../roh/persistenz-3-nachher.png" alt=""><div class="marke blau" style="left:50.000%;top:38.767%"><i class="ring"></i><i class="stiel"></i><span class="zettel">NetzDauer · Lv 2<small>eigener Schleim</small></span></div></div><div class="lupen"><div class="lupe"><div class="titel">HUD links unten: Level und Name</div><div class="glas" style="width:594px;height:172px;background-image:url(../roh/persistenz-3-nachher.png);background-size:3520px 1980px;background-position:-26px -1605px"></div></div><div class="lupe"><div class="titel">HUD unten: XP-Leiste</div><div class="glas" style="width:620px;height:45px;background-image:url(../roh/persistenz-3-nachher.png);background-size:3405px 1915px;background-position:-1392px -1881px"></div></div></div><figcaption><span class="zeile">HUD: Level 2 · 55 / 212 XP</span><span class="zeile">Zustand im Client: Level 2 · 55/212 XP</span><span class="zeile gut">Verbindung: steht</span><span class="zeile gut">Derselbe Stand wie in Spalte 1 — vom neuen Serverprozess geliefert.</span></figcaption></figure>
+<figure><div class="gruppe"><span class="wer c0">Was auf der Platte steht</span><span class="wann">server/daten/NetzDauer.json</span></div><pre>{
+  &quot;name&quot;: &quot;NetzDauer&quot;,
+  &quot;faction&quot;: &quot;eldoran&quot;,
+  &quot;level&quot;: 2,
+  &quot;xp&quot;: 55,
+  &quot;hp&quot;: 102,
+  &quot;gold&quot;: 19,
+  &quot;bestiarium&quot;: {
+    &quot;wolf&quot;: {
+      &quot;besiegt&quot;: 1,
+      &quot;gefressen&quot;: 0
+    }
+  },
+  &quot;wuerfe&quot;: 0,
+  &quot;x&quot;: -0.972,
+  &quot;z&quot;: 0.068
+}</pre></figure>
+</div>
+<footer><span class="titel">Was das belegt:</span> Vor dem Neustart Level 2 mit 55 XP, nach dem Neustart Level 2 mit 55 XP — dazwischen ein anderer Serverprozess (21792 → 14460) und ein Client, der beim Neuladen nur Level 1 und 0 XP mitbrachte.</footer>
+<script>
+(function () {
+  const bilder = [...document.images];
+  let offen = bilder.length;
+  if (!offen) { window.__fertig = true; return; }
+  for (const b of bilder) {
+    if (b.complete) { if (--offen === 0) window.__fertig = true; continue; }
+    b.onload = b.onerror = () => { if (--offen === 0) window.__fertig = true; };
+  }
+})();
+</script>
+</body></html>

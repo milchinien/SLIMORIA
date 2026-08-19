@@ -1,0 +1,23 @@
+{
+ "key": "trefferzahlen",
+ "lane": "UI",
+ "titel": "Trefferzahlen",
+ "szenario": "trefferzahlen",
+ "gdd": "GDD 10 §73–78 (Treffer, Schaden, Heilung, Ressourcenverbrauch unmittelbar verstaendlich; Schadenszahlen ueber dem Ziel; Heilung von Schaden unterscheidbar; Effekte duerfen die Sicht auf den Schleim nicht ueberladen — §98)",
+ "gewonnen": true,
+ "urteil": "In Runde 2 blind gewonnen. Der Wortlaut des Urteils ging verloren, weil der Protokoll-Agent an einem Verbindungsfehler starb — das Ergebnis selbst steht im Workflow-Rueckgabewert und ist belegt.",
+ "luecke": "",
+ "beideSchwach": false,
+ "blindOrdner": "gauntlet/blind/trefferzahlen/63b7ab61",
+ "unserBild": "gauntlet/shots/trefferzahlen/pruefung/frame_008.png",
+ "referenzBild": "ref/wow-hud/gameplay-remix-damage-heal-numbers-target.jpg",
+ "runde": 2,
+ "historie": [
+  {
+   "runde": 1,
+   "gewonnen": true,
+   "urteil": "A ist schneller lesbar, aber beide verfehlen das Kriterium. In A stehen genau vier Zahlen auf einem Untergrund, dessen Helligkeit ueber die ganze Bodenflaeche kaum schwankt (gleichmaessiges Grau mit schwachen Rasterlinien) — die Ziffernkanten liegen sauber frei, Gruen (+35) und Rot (-28) trennen sich auf den ersten Blick, und die Suchzeit ist praktisch null, weil im gesamten oberen Bildviertel kein konkurrierender Text steht. In B haben die Ziffern zwar aehnliche Hoehe (~15 px) und eine schwarze Kontur, liegen aber im Zentrum eines Feldes aus rund vierzig weiteren Textelementen (Chat-Spam links unten, Quest-Liste rechts, Namensplaketten, Schadensmeter oben links) — die Zahl muss erst gefunden werden. Dazu kommt der Kontrastbruch: das gruene +49 sitzt direkt auf gruenem Laub und auf dem gruenen Zauber-Glow der beiden Ziegen, Hue-Differenz nahe null; das rote -785 sitzt direkt auf dem rot-gruenen Namensplaketten-Balken, also Rot auf Rot. Beide Zahlen schweben zudem in der Luecke zwischen drei fast identischen Ziegen und einem Daemon — die Zuordnung \"an wem\" ist nicht entscheidbar. A verfehlt das Kriterium ebenfalls: die Zahlenkolonne klebt auf dem leeren Felsen links, rund 200 px vom Wolf entfernt, dessen Lebensbalken darunter haengt, also stimmt die Zuordnung auch hier nicht; -10 (Orange) und -28 (Lachsrot) unterscheiden sich nur um eine schmale Hue-Spanne und das +35 ueberlappt die Unterlaengen des -28; und die blanke weisse 7 ueber dem Wolf traegt weder Vorzeichen noch Farbcode — ob Schaden oder Heilung ist daran nicht ablesbar.",
+   "luecke": ""
+  }
+ ]
+}

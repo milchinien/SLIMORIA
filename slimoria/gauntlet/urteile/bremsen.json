@@ -1,0 +1,23 @@
+{
+ "key": "bremsen",
+ "lane": "MOTION",
+ "titel": "Bremsen und Nachschwingen",
+ "szenario": "bremsen",
+ "gdd": "GDD 01 §13 (Maximum -> Abbremsen -> leichtes Nachschwingen -> Stillstand; der Koerper darf kurz ueber die Zielbewegung hinausschwingen)",
+ "gewonnen": false,
+ "urteil": "In Runde 2 nicht beurteilt: die Aufnahme meldete Seitenfehler (grafik/laden.js forderte zwoelf nicht vorhandene Dateien an). Der Pruefer hat zu Recht abgebrochen, statt auf einem moeglicherweise kaputten Build zu urteilen. Fehler behoben, Runde 3 laeuft.",
+ "luecke": "A muesste seine Silhouette scheren statt sie zu spiegeln: Scheitel und obere Haelfte um etwa 15 bis 20 Prozent der Koerperbreite ueber die Aufstandsflaeche hinaus nach vorn versetzen, sodass die Vorderkante ueberhaengt und die Hinterkante flach nachgezogen wird.",
+ "beideSchwach": false,
+ "blindOrdner": "gauntlet/blind/bremsen/3a8748bf",
+ "unserBild": "gauntlet/shots/bremsen/pruefung/frame_003.png",
+ "referenzBild": "ref/squash-stretch/bouncing-ball-with-and-without-squash-stretch.png",
+ "runde": 2,
+ "historie": [
+  {
+   "runde": 1,
+   "gewonnen": false,
+   "urteil": "Beide verfehlen das Kriterium, B weniger deutlich. A zeigt eine spiegelsymmetrische Kuppel: linke und rechte Silhouettenkante sind bis auf wenige Pixel deckungsgleich, der Scheitel liegt bei rund 620 px genau ueber der Mitte der Aufstandsflaeche (Basis ca. 510-735 px), der Sockelwulst laeuft nach links und rechts gleich weit aus. Aus dem Bild ist keine Bewegungsrichtung ablesbar, also auch kein Ueberhang ueber den Haltepunkt: kein Voreilen der Masse, keine gedehnte Schleppkante hinten, keine gestauchte Front. Das Verhaeltnis Breite zu Hoehe (ca. 225:150, 1,5:1) ist die Ruheform einer haengenden Fluessigkeitskuppel, nicht die eines nachschwingenden Koerpers. Das Gesicht mit horizontal ausgerichteten Augen und waagerechtem Mund verankert die Form zusaetzlich starr; nichts daran laeuft dem Schwerpunkt hinterher. Das ist ein stehender Koerper, kein gebremster. B koppelt die Verformung wenigstens an die Bewegung: die Achsen der Ellipsen kippen entlang des V-Pfades mit, die unterste Form am Boden ist mit etwa 195:130 (1,5:1) quer gestaucht, die Formen im ansteigenden rechten Ast stehen mit etwa 165:150 (1,1:1) deutlich runder. Ein Aspektwechsel von rund 35 Prozent, der mit der Bahnposition korreliert, ist ablesbare Traegheit. Aber auch B erfuellt das Kriterium nicht: es ist eine Flugbahn, kein Halt. Es gibt keinen Haltepunkt, ueber den etwas hinauslaeuft, keine abklingende Amplitude, keine Phasenverschiebung zwischen Huelle und Kern, und die Stauchung am tiefsten Punkt entsteht durch Aufprall, nicht durch Bremsen. Die Achsen liegen zudem entlang der Bahn statt ihr nachzuhinken, also Dehnung ohne Nachlauf.",
+   "luecke": "A muesste seine Silhouette scheren statt sie zu spiegeln: Scheitel und obere Haelfte um etwa 15 bis 20 Prozent der Koerperbreite ueber die Aufstandsflaeche hinaus nach vorn versetzen, sodass die Vorderkante ueberhaengt und die Hinterkante flach nachgezogen wird."
+  }
+ ]
+}

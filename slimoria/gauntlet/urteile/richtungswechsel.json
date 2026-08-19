@@ -1,0 +1,23 @@
+{
+ "key": "richtungswechsel",
+ "lane": "MOTION",
+ "titel": "Richtungswechsel",
+ "szenario": "richtungswechsel",
+ "gdd": "GDD 01 §15 (abbremsen -> verformen -> kurz nachschwingen -> Richtung aendern -> in die neue Richtung beschleunigen; muss sichtbar Masse besitzen)",
+ "gewonnen": false,
+ "urteil": "Ebenfalls nicht beurteilt, derselbe Ladefehler. Die Messwerte aus dem Abbruchlauf zeigten die §15-Kurve korrekt (Tempo 7,02 auf 0,37, squash-Spitze 1,53, seitliche Ausbeulung 2,055, Wiederbeschleunigung auf 7,28) — beurteilt wird aber die Form, nicht die Bewegung.",
+ "luecke": "A muesste seine gerade Tropfenachse brechen — das hintere Ende weiter in die alte Richtung stehen lassen und die Vorderpartie seitlich davon wegschwenken, sodass eine Komma-/Nierenform entsteht mit gewoelbter Aussenflanke und eingezogener, gespannter Innenflanke statt der aktuell rotationssymmetrischen Spindel.",
+ "beideSchwach": false,
+ "blindOrdner": "gauntlet/blind/richtungswechsel/a39ffb04",
+ "unserBild": "gauntlet/shots/richtungswechsel/pruefung/frame_006.png",
+ "referenzBild": "ref/blob-jelly/cuphead-goopy-lunge-mass-trailing-behind.png",
+ "runde": 2,
+ "historie": [
+  {
+   "runde": 1,
+   "gewonnen": false,
+   "urteil": "B zeigt als einziges Bild zwei Koerperteile in verschiedenen Bewegungsphasen gleichzeitig. Der duenne Fortsatz (Durchmesser ca. 35 px) laeuft in einem Bogen von (430,270) nach links unten bis (130,545) — ueber 400 px Laenge, die noch komplett in die alte Richtung zeigen —, waehrend die Hauptmasse (ca. 330 px breit, x 480–880) rechts zusammengeschoben ist und die Augenpartie die Koerperkontur nach rechts sogar ueberholt (Augenkugeln ragen ueber x=880 hinaus, ausserhalb der Rumpfsilhouette). Zwischen beiden liegt eine harte Einschnuerung bei x 420–470 mit Durchmessersprung etwa 1:9 — genau die Scherzone, an der Nachlauf und Vortrieb aneinander reissen. Die Silhouette ist zudem quer zur Achse schief: die obere linke Flanke steigt diagonal von (430,250) auf den Scheitel (640,95), waehrend die untere linke Flanke von (400,300) bis (510,430) als gespannte, fast gerade Kante laeuft — eine Seite gedehnt, die andere gestaucht, plus die Stauchfalten im unteren rechten Lappen. A dagegen ist ein einziger Tropfen mit einer einzigen Achse: die obere Kontur (300,300)→(985,270) und die untere Kontur spiegeln sich naeherungsweise an derselben Linie, Spitze und Vorderwulst sind kollinear. Nichts haengt seitlich nach; die einzige Asymmetrie ist der dunkle Schattenlappen x 450–800, und der ist Schattierung im Volumen, nicht Silhouette. Damit liest A als reine Streckung in eine Richtung (Anlauf/Squash-Stretch), nicht als Richtungswechsel: es fehlt jede Querablage der Masse.",
+   "luecke": "A muesste seine gerade Tropfenachse brechen — das hintere Ende weiter in die alte Richtung stehen lassen und die Vorderpartie seitlich davon wegschwenken, sodass eine Komma-/Nierenform entsteht mit gewoelbter Aussenflanke und eingezogener, gespannter Innenflanke statt der aktuell rotationssymmetrischen Spindel."
+  }
+ ]
+}

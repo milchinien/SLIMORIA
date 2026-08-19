@@ -1,0 +1,41 @@
+# --- Referenzmaterial: NICHT versionieren -----------------------------------
+# ref/ enthaelt heruntergeladene Bildschirmaufnahmen aus Genshin Impact,
+# World of Warcraft, Slime Rancher und anderen veroeffentlichten Spielen.
+# Das ist fremdes, geschuetztes Material. Es dient hier ausschliesslich als
+# internes Vergleichsmaterial fuer die Blindurteile und gehoert nicht ins Repo.
+# Wer das Projekt neu aufsetzt, beschafft es sich selbst — die Dossiers
+# (ref/*/DOSSIER.md) halten fest, WAS gemessen wurde, und die sind das
+# eigentlich Wertvolle.
+ref/
+
+# --- Aufnahmen --------------------------------------------------------------
+# Rund 17000 Einzelbilder aus den Aufnahmelaeufen. Jederzeit reproduzierbar:
+#   node tools/capture.mjs --alle
+# Deterministisch, also ergibt derselbe Stand dieselben Bilder.
+gauntlet/shots/
+gauntlet/blind/
+gauntlet/schluessel/
+gauntlet/abnahme/*.png
+gauntlet/netz/*.png
+
+# --- Laufzeitdaten ----------------------------------------------------------
+server/daten/          # gespeicherte Charaktere, entstehen beim Spielen
+
+# Was ausdruecklich MIT ins Repo geht:
+#   gauntlet/urteile/*.json   die Urteile der blinden Richter — der Verlauf
+#   gauntlet/*.json           Abnahme, Zweispielernachweis, Arbeitsliste
+#   gauntlet/*.md             Berichte
+#   gauntlet/live.html        die Fortschrittsseite
+#   ref/*/DOSSIER.md          die am Material gemessenen Zahlen
+!ref/*/DOSSIER.md
+!ref/*/UNTERSCHIEDE.md
+
+# --- Wegwerfskripte der Agenten ---------------------------------------------
+# Beim Bauen entstehen laufend kleine Einmalproben (_..._tmp.mjs). Sie sind
+# Notizzettel, kein Werkzeug — was sich bewaehrt, wandert nach tools/ mit
+# richtigem Namen.
+_*_tmp.mjs
+_tmp_*/
+**/_*_tmp.mjs
+Streuung
+gb-probe.png

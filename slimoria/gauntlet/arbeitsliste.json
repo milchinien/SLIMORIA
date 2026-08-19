@@ -1,0 +1,532 @@
+{
+ "erzeugt": "2026-08-18T23:46:57.867Z",
+ "umfang": "GDD 12 §4 (Slime Movement Prototype) + §5 (Slime Combat Prototype) + GDD 11 §121",
+ "ausserhalb": "Quests, Klassen, Talente, Welt, Handel, Inventar, Fraktionspolitik, Charakterplaetze, LOD, degressive Fresserträge, Fortschrittsverlust",
+ "quellen": [
+  "bewegung",
+  "fressen",
+  "wachstum-tod",
+  "kampf",
+  "ui",
+  "technik",
+  "spielbericht",
+  "dossier",
+  "bericht-charakter"
+ ],
+ "zusammenfassung": {
+  "gesamt": 44,
+  "blockierend": 8,
+  "wichtig": 19,
+  "klein": 17
+ },
+ "harteVerbote": "Kein aktiver Verstoss gefunden. Geprueft und gehalten: keine humanoide Laufanimation, keine Wandkletterei, kein Schwimmen, nie voellig flach (tiefster squash 0,587), Groesse ausschliesslich vom Level (Radius ueber vier Fressvorgaenge konstant), kein automatisches Fressen.",
+ "eintraege": [
+  {
+   "rang": 1,
+   "was": "Der spielbare Client startet clientautoritativ. Die Netzschicht ist fertig und korrekt (net.js 682 Z., Vorhersage + weiche Korrektur, Fresswurf beim Server), haengt sich aber nur an, wenn die URL \"?server=\" traegt (net.js:671). Ohne den Parameter wuerfelt game.js:270 den Fressversuch selbst. Wer den Prototyp oeffnet, spielt die verbotene Variante.",
+   "gdd": "GDD 11 §35/§120 · SPEC-BRIEF §7 · ARCHITEKTUR §7 · Liste B \"serverautoritatives Gameplay\"",
+   "datei": "client/net.js (GESPERRT — Lane NETZ) · BRAUCHT_KERNAENDERUNG: client/game.js",
+   "schwere": "blockierend",
+   "messung": "Client ohne URL-Parameter starten, Fressversuch ausloesen: der Wurf muss vom Server kommen. Nachweis wie in tools/zweispieler.mjs — Chance im Client manipulieren aendert das Ergebnis nicht. Offline-Rueckfall muss sichtbar als solcher gekennzeichnet sein.",
+   "quellen": [
+    "technik",
+    "fressen"
+   ]
+  },
+  {
+   "rang": 2,
+   "was": "Kein Aufnahmeszenario belegt die drei Netzpunkte der Liste B: zwei gleichzeitig verbundene Spieler, Serverautoritaet, persistenter Charakter. Alle 18 Szenarien in capture.js sind Einzelspieler. Der Nachweis existiert nur als Werkzeugausgabe (tools/zweispieler.mjs, gauntlet/zweispieler.json), nicht als Kontaktbogen. Der Renderer zeichnet ausserdem nur einen Koerper.",
+   "gdd": "GDD 11 §121 · Liste B Punkte 15–17",
+   "datei": "BRAUCHT_KERNAENDERUNG: client/capture.js · client/net.js (zweiter Schleim)",
+   "schwere": "blockierend",
+   "messung": "Ein Kontaktbogen, auf dem zwei verschieden gefaerbte Schleime gleichzeitig sichtbar sind, einer davon ferngesteuert; ein Bild vor und nach Serverneustart mit demselben Level/XP-Stand.",
+   "quellen": [
+    "technik"
+   ]
+  },
+  {
+   "rang": 3,
+   "was": "Wachstum ist nirgends belegt. In capture.js gibt es kein Szenario fuer Wachstum oder Level-Up-Vergleich; Punkt 19 faellt nur nebenbei in \"trefferzahlen\" an (L1→L3, +9,6 % Radius, ohne Vergleichsbild). Der Spielbericht wertet Punkt 20 als nicht erfuellt.",
+   "gdd": "GDD 01 §46 · Liste A Punkt 20",
+   "datei": "BRAUCHT_KERNAENDERUNG: client/capture.js",
+   "schwere": "blockierend",
+   "messung": "Ein Kontaktbogen mit demselben Schleim bei L1 / L10 / L30 / L80 aus identischer Kamera und Distanz. Gemessene Radien 1,000 / 1,283 / 1,656 / 2,350 muessen im Bild als Groessenunterschied lesbar sein.",
+   "quellen": [
+    "wachstum-tod",
+    "spielbericht"
+   ]
+  },
+  {
+   "rang": 4,
+   "was": "Erfolg und Fehlschlag sind am Koerper nicht zu unterscheiden. Das HUD trennt sie laut (\"GEFRESSEN\" gegen \"WIDERSTANDEN\"), der Koerper nicht: ab rund 1,2 s ist beides ein wabbelnder Klumpen. Der Erfolgsgipfel liegt bei squash 1,06 — sechs Prozent praller. Von den acht in §32 aufgezaehlten Merkmalen fehlen die koerperlichen.",
+   "gdd": "GDD 01 §32 · §29 Punkt 6 · Liste A Punkte 16 und 17",
+   "datei": "client/eat.js (Lane EAT)",
+   "schwere": "blockierend",
+   "messung": "Zwei Kontaktboegen ohne HUD nebeneinander: ein blinder Betrachter muss den Ausgang allein an der Koerperform benennen koennen. Messbar: Erfolgsgipfel squash ≥ 1,20 mit anschliessendem Einschwingen; Fehlschlag mit klar anderer Signatur.",
+   "quellen": [
+    "fressen",
+    "spielbericht"
+   ]
+  },
+  {
+   "rang": 5,
+   "was": "Beim Umschlingen ist der Gegner zu keinem Zeitpunkt sichtbar innerhalb der Masse. Der Losschnell-Impuls ist voll ausgebildet, waehrend die haltenden Kraefte mit dem Faktor f bei null anfangen — der Koerper schiesst durch den Gegner hindurch und steht waehrend 60 % der Phase mehr als zwei Meter dahinter (Abstand faellt nur zwischen 550 und 650 ms unter 1,0 m). Der rotierende Netto-Impuls traegt den Koerper zusaetzlich seitlich vorbei (Drift z 0,00 → 0,78). Damit liest sich §26 als das ausdruecklich verbotene \"Gegner verschwindet, Zahlen steigen\".",
+   "gdd": "GDD 01 §26/§28 · Liste A Punkt 14",
+   "datei": "client/eat.js (Lane EAT)",
+   "schwere": "blockierend",
+   "messung": "Abstand Schwerpunkt↔Gegner bleibt ueber mindestens 0,25 s unter 0,5·Radius, und im Kontaktbogen ist der Gegner in mindestens drei aufeinanderfolgenden Bildern vom Gel ueberdeckt statt daneben stehend. Seitliche Drift waehrend \"umschlingen\" < 0,3 Einheiten.",
+   "quellen": [
+    "fressen"
+   ]
+  },
+  {
+   "rang": 6,
+   "was": "Waehrend des gesamten Auto-Angriffs steckt der Gegner im Schleimkoerper. Ueber 14 s Kampf gemessen liegt die Luecke durchgehend zwischen −0,19 und −0,82 Einheiten, nie positiv; der Rueckschwung holt nur rund 0,22 zurueck, der naechste Schlag zieht wieder hinein. Es gibt keine Koerperkollision zwischen Schleim und Kreatur (game.js:157 prueft istFrei nur gegen Weltobjekte). Damit ist nicht ablesbar, wer getroffen wird — und das Bild \"Gegner in der Masse\" ist laut §28 dem Fressen vorbehalten.",
+   "gdd": "GDD 02 §7/§8/§63 · GDD 01 §28 · Liste A Punkte 11 und 14",
+   "datei": "client/combat.js (Lane COMBAT) · BRAUCHT_KERNAENDERUNG: client/game.js (Kollision Koerper↔Kreatur)",
+   "schwere": "blockierend",
+   "messung": "Luecke = Abstand − metrics().achsen.vorne − k.groesse bleibt ueber den ganzen Kampf ≥ 0. Im Kontaktbogen ist der Gegner in jedem Bild vollstaendig ausserhalb der Silhouette.",
+   "quellen": [
+    "kampf"
+   ]
+  },
+  {
+   "rang": 7,
+   "was": "Drei der vier Verformungsszenen filmen den Schleim frontal auf seiner eigenen Bewegungsachse: anrollen yaw 0.0 bei moveTo(26,0), vollgas und bremsen yaw 1.57 bei moveTo(0,60). Die Streckung liegt exakt in Blickrichtung und ist unsichtbar — messwerte.json weist streckung 1,51–1,57 aus, waehrend ueber alle zehn Bilder nichts davon zu sehen ist. In der Standard-Folgekamera bleibt squash im vollgas-Lauf bei 0,74–0,84: Hoechsttempo und Stillstand sehen gleich aus. Zusaetzlich endet vollgas ab 2,6 s im Mauerspalt, vier von zehn Bildern zeigen einen stehenden Schleim.",
+   "gdd": "GDD 01 §13/§14 · Liste A Punkte 5 und 8",
+   "datei": "BRAUCHT_KERNAENDERUNG: client/capture.js (Kamera-yaw quer zur Fahrt, hindernisfreie Bahn)",
+   "schwere": "blockierend",
+   "messung": "Auf dem Kontaktbogen muss die Silhouette bei Hoechsttempo sichtbar laenger als breit sein — quer gefilmt, so wie es die Szene richtungswechsel heute schon zeigt. Kein Bild der Szene darf einen stehenden Schleim zeigen.",
+   "quellen": [
+    "bewegung",
+    "spielbericht"
+   ]
+  },
+  {
+   "rang": 8,
+   "was": "Der Friedhof ist kein Ort, sondern ein Punkt in world.js und ein flacher Bodenring. Im Respawn-Bild steht der Schleim auf einem leuchtenden Kreis in leerer Ebene; die einzige Kennzeichnung ist die HUD-Meldung, die in der Tod-Aufnahme wegen hud:false gar nicht erscheint. Mechanisch stimmt der Punkt, als Ort ist er nicht erkennbar.",
+   "gdd": "GDD 01 §51 · Liste A Punkt 22",
+   "datei": "BRAUCHT_KERNAENDERUNG: client/world.js · alternativ R.extras-Zeichner aus Lane UI/DEATH",
+   "schwere": "blockierend",
+   "messung": "Ein Betrachter benennt den Respawn-Ort auf frame_017 ohne HUD-Text als Friedhof. Mindestens ein weltseitiges Bauteil ausser dem Ring.",
+   "quellen": [
+    "wachstum-tod",
+    "spielbericht"
+   ]
+  },
+  {
+   "rang": 9,
+   "was": "Die Fresschance verfehlt den im GDD genannten Stuetzwert um Faktor 5,5: Spieler 3 gegen Gegner 1 ergibt bei vollem Gegner-HP 7,2 % statt 40 %; die 40 % werden erst bei 0 HP erreicht, also an einem Punkt, den es im Spiel nicht gibt. Zugleich springt die Kurve bei einem einzigen Levelschritt von 14,9 % (L8) auf 100 % (L9). Im Spielbericht: fuenf Versuche in der bestmoeglichen Ausgangslage, fuenf Fehlschlaege, halbes Leben weg — die Signaturmechanik ist auf den gespielten Stufen ein teurer Muenzwurf.",
+   "gdd": "GDD 01 §22/§24/§25/§33 · SPEC-BRIEF §7 · Liste A Punkte 13, 15, 16",
+   "datei": "BRAUCHT_KERNAENDERUNG: shared/regeln.js (fresschance, Z. 66–79)",
+   "schwere": "wichtig",
+   "messung": "Regeln.fresschance(3, 1, 1.0) liegt bei rund 0,40. §23 bleibt exakt (diff ≥ 6 → 0 %), §24 bleibt streng monoton im HP-Anteil, und der Uebergang zur §25-Abkuerzung ist ueber mindestens zwei Level interpoliert statt als Sprung.",
+   "quellen": [
+    "fressen",
+    "kampf",
+    "spielbericht"
+   ]
+  },
+  {
+   "rang": 10,
+   "was": "api.reset() setzt den Zustand nicht vollstaendig zurueck: G.bestiarium und G.input bleiben stehen (zuruecksetzen fasst Zeit, Phase, Kreaturen, Spieler, Slime, Kamera und autoAngriff an, aber nicht diese beiden). Weil tools/capture.mjs bei --alle alle Szenen in derselben Seite abspielt, meldet der Quest-Tracker ab Szenario 7 fremde Zahlen — belegt in Szenen, in denen ueberhaupt nicht gefressen wurde (\"Kreaturen fressen 2/3\"). Ein gesetzter Eingabe-Achswert loescht ausserdem in jeder Folgeszene sofort das Klickziel.",
+   "gdd": "ARCHITEKTUR §2/§3 · GDD 02 §63 — Beleglage aller Aufnahmen",
+   "datei": "BRAUCHT_KERNAENDERUNG: client/game.js (zuruecksetzen)",
+   "schwere": "wichtig",
+   "messung": "Nach api.reset() sind G.bestiarium leer und G.input.axis auf (0,0). Zwei Laeufe von tools/capture.mjs --alle in unterschiedlicher Reihenfolge liefern bildgleiche Ergebnisse.",
+   "quellen": [
+    "fressen",
+    "kampf",
+    "bewegung"
+   ]
+  },
+  {
+   "rang": 11,
+   "was": "api.metrics() erfuellt den Vertrag nicht. bboxRel fehlt ganz, obwohl ARCHITEKTUR §4 es als Pflicht fuehrt — damit fehlt das einzige groessennormierte Huellenmass, und bei radius 1,00 bis 2,35 sind die absoluten bbox-Werte unvergleichbar. Das Bezugsvolumen ist die Kugelformel (4/3·pi·r³·squat) statt der tatsaechlichen Ruheform, daher ein systematischer Versatz von rund +10 %; waehrend des Todes wandert squat und volumen springt auf 2,01, ohne dass Masse entsteht. Weltposition des Schleims und Zielposition fehlen, weshalb genau die Anforderungen \"landet am Ort des Gegners\" und \"kehrt zurueck\" aus messwerte.json nicht pruefbar sind.",
+   "gdd": "ARCHITEKTUR §4 · GDD 11 §33 · GDD 01 §5",
+   "datei": "BRAUCHT_KERNAENDERUNG: client/game.js (metrics, Z. 440–477)",
+   "schwere": "wichtig",
+   "messung": "metrics() liefert bboxRel {w,h,d} und pos/zielPos {x,z}; volumen liegt im unverformten Stand bei 1,00 ± 0,03 und bleibt waehrend Tod und Fressen interpretierbar (Bezug aus signedTetraRest ueber b.rest bei slump=0, speedRatio=0).",
+   "quellen": [
+    "bewegung",
+    "wachstum-tod",
+    "technik"
+   ]
+  },
+  {
+   "rang": 12,
+   "was": "Die Fress-Zustandsmaschine ist zerrissen: eat.js meldet den Abschluss mitten in der Animation, game.js schaltet daraufhin auf \"frei\", und game.js taktet die Fress-Lane nur solange die Phase \"fressen\" ist. Die Lane holt sich die Regie inzwischen selbst zurueck (eat.js:373 und :544 setzen G.phase wieder auf \"fressen\") — der Ablauf laeuft damit durch, aber eine Lane schreibt in den Zustand einer gesperrten Datei zurueck, um einen Vertragsbruch zu ueberdecken. Jede kuenftige Aenderung an der Reihenfolge bricht das erneut.",
+   "gdd": "ARCHITEKTUR §1/§3 · GDD 01 §29/§30",
+   "datei": "BRAUCHT_KERNAENDERUNG: client/game.js (fressenAbgeschlossen darf die Phase nicht beenden; schritt() taktet die Lane bis zu ihrem eigenen Ende)",
+   "schwere": "wichtig",
+   "messung": "Nach der Umstellung darf eat.js kein G.phase mehr schreiben. metrics().unterphase durchlaeuft anlauf → umschlingen → absorbieren/rueckschnapp → prall → erholen und ist danach leer; Schleim endet bei Erfolg innerhalb 0,8 Einheiten vom Gegnerort, bei Fehlschlag innerhalb 1,5 Einheiten der Ausgangsposition.",
+   "quellen": [
+    "fressen",
+    "technik"
+   ]
+  },
+  {
+   "rang": 13,
+   "was": "Der Spieler verliert im engen Spalt die Kontrolle. Die einzige dafuer gebaute Passage (Luecke 1,8 m bei rund 2,4 m Koerperbreite) haelt den Schleim fest statt ihn durchzulassen: Schwerpunkt bleibt bei z=14,24–14,28 stehen, Tempo unter 0,13 m/s, Ziel noch 10 m entfernt. Mit dem Level wird es schlimmer — L30 und L80 kommen gar nicht mehr an die Mauer heran (Koerperbreite 4,34 bzw. 6,05). Die Querreibung wirkt beidseitig, es gibt keinen Mechanismus, der den Schub im Kontakt haelt.",
+   "gdd": "GDD 01 §17 · §47 · §67 / SPEC-BRIEF Leitregel 2",
+   "datei": "client/softbody.js, client/tuning.js (Lane MOTION) · BRAUCHT_KERNAENDERUNG: client/world.js (Passagenbreite gegen den Maximalradius)",
+   "schwere": "wichtig",
+   "messung": "moveTo(0,24) fuehrt bei L1, L30 und L80 in unter 14 s durch die Passage; das Tempo faellt im Spalt nie unter 1,0 m/s, und der Koerper quetscht sich sichtbar (breite quer < 0,8·Ruhebreite).",
+   "quellen": [
+    "bewegung",
+    "wachstum-tod"
+   ]
+  },
+  {
+   "rang": 14,
+   "was": "Es gibt keine Wegberechnung. slime.js nimmt die Luftlinie zum Klickziel, Hindernisse wirken erst nachtraeglich als Punktkollision. Bei moveTo(20,5) gegen den Fels (12,3) r=2,4 faehrt der Schleim frontal hinein und steht von t=2,0 s bis t=4,5 s bei x≈9,09 mit 0,16–0,31 m/s praktisch still; das Ziel wird nach 8,0 s erreicht statt nach rund 3 s. In der Arena stehen sechs Felsen und drei Mauern.",
+   "gdd": "GDD 01 §11 · GDD 11 §18/§20 · Liste A Punkte 4 und 10",
+   "datei": "client/slime.js (Lane MOTION)",
+   "schwere": "wichtig",
+   "messung": "Klick hinter jeden der sechs Felsen: der Schleim umgeht ihn und erreicht das Ziel, ohne laenger als 0,5 s unter 0,5 m/s zu fallen.",
+   "quellen": [
+    "bewegung",
+    "technik"
+   ]
+  },
+  {
+   "rang": 15,
+   "was": "Die Ruheform ist rund doppelt so breit wie hoch. Gemessen im Stand: Breite/Hoehe 1,81–2,04, waehrend die ruhenden Schleime im Referenzbild von Slime Rancher 2 bei 1,2–1,35 liegen und der Kommentar in softbody.js selbst 1,2–1,6 als Ziel nennt. Die Ruheform allein ergibt schon 1,61; Schwerkraft und Adhaesion druecken sie darueber.",
+   "gdd": "GDD 01 §5 · SPEC-BRIEF §8 (Latte Slime Rancher 2)",
+   "datei": "client/tuning.js (squat 0.82, sag 0.32), client/softbody.js (Lane MOTION)",
+   "schwere": "wichtig",
+   "messung": "metrics().bbox.w / bbox.h im Stand ueber 4 s zwischen 1,20 und 1,45, ohne dass das Wabbeln einschlaeft (squash schwankt weiterhin um mindestens ±0,08).",
+   "quellen": [
+    "bewegung"
+   ]
+  },
+  {
+   "rang": 16,
+   "was": "Im Aufprall verschwindet Masse, statt sich zu verbreitern: volumen faellt auf 0,671, also 33 % unter den Ruhewert, den ARCHITEKTUR §4 mit \"muss ~1 bleiben\" festschreibt. Die Hoehe faellt um 45 %, die Breite waechst nur um 13 %. Das Referenzdossier misst an vier unabhaengigen Quellen Hoehe 70 % bei Breite 117–126 % (Kopplung B = 1 + (1−H)·0,62) — der Bestand bleibt deutlich darunter. Der Innendruck kommt gegen den Bodenstoss nicht rechtzeitig an.",
+   "gdd": "GDD 01 §20/§66 · ARCHITEKTUR §4 · ref/abfolgen/DOSSIER.md",
+   "datei": "client/softbody.js, client/tuning.js (Lane MOTION)",
+   "schwere": "wichtig",
+   "messung": "Im Aufprallbild volumen ≥ 0,90; bei squash 0,70 liegt breite zwischen 1,15 und 1,26 des Ruhewerts. Stauchung ueber rund zwei Bilder, Rueckfederung ueber eines (Dossier §3).",
+   "quellen": [
+    "bewegung",
+    "dossier"
+   ]
+  },
+  {
+   "rang": 17,
+   "was": "Das Nachschwingen beim Bremsen fehlt. Auf freier Bahn faellt das Tempo rein exponentiell von 6,91 auf 0,23 m/s, streckung geht monoton 1,249 → 1,021 und unterschreitet 1,0 nie, der Schwerpunkt kehrt nie um. Die einzige Gegenbewegung ist das einsetzende Ruhewabbeln, nicht die Bremsreaktion. Im eigenen bremsen-Kontaktbogen sehen alle 14 Bilder gleich aus. §13 verlangt ausdruecklich ein Hinausschwingen ueber die Zielbewegung.",
+   "gdd": "GDD 01 §13 · Liste A Punkt 5",
+   "datei": "client/slime.js (Lane MOTION)",
+   "schwere": "wichtig",
+   "messung": "Nach stop() unterschreitet streckung mindestens einmal 0,97 (Stauchung entgegen der alten Fahrtrichtung) und kehrt ueber 1,0 zurueck; der Schwerpunkt laeuft mindestens 0,15 Einheiten zurueck. Im Kontaktbogen sind mindestens drei klar verschiedene Silhouetten zu sehen.",
+   "quellen": [
+    "bewegung",
+    "spielbericht"
+   ]
+  },
+  {
+   "rang": 18,
+   "was": "Ein Tropfen mit nachgezogenem Heck ist konstruktiv nicht moeglich: die Ruheform ist in der Vorwaertskomponente symmetrisch gewichtet. Was bleibt, ist eine schwache und instabile dynamische Asymmetrie — beim Anrollen fuehrt die Front (1,746 vorne / 1,440 hinten), bei konstantem Tempo kippt das Verhaeltnis staendig. Ebenso fehlt die vierte Tempostufe aus §14: die Streckung ist streng linear und bei speedRatio 1 gedeckelt, die Abflachung wirkt gleichmaessig auf den ganzen Koerper statt bevorzugt auf die Front.",
+   "gdd": "GDD 01 §12/§14 · Liste A Punkt 8 · ref/abfolgen/DOSSIER.md",
+   "datei": "client/softbody.js (Lane MOTION)",
+   "schwere": "wichtig",
+   "messung": "Bei konstantem Hoechsttempo ueber 2 s gilt durchgehend achsen.vorne > achsen.hinten (kein Kippen), und die Fronthaelfte ist flacher als die Heckhaelfte. Vierte Stufe getrennt messbar: streckung ueber 1,7 bei speedRatio > 0,9.",
+   "quellen": [
+    "bewegung"
+   ]
+  },
+  {
+   "rang": 19,
+   "was": "Hotbar-Slot 1 (Biss) ist ein toter Knopf: der Typ \"auto\" faellt durch alle Zweige von faehigkeitBenutzen und endet in {ok:false, grund:\"passiv\"}. Taste 1 und Mausklick bewirken nichts, ohne jede Rueckmeldung — und der Slot sieht dabei stets voll verfuegbar aus, weil \"kein-ziel\" nur fuer den Typ \"aktiv\" gesetzt wird. Aus demselben Grund leuchtet auch der Fressen-Slot 5 ohne Ziel, ausser Reichweite und bei 0 % Chance unveraendert weiter.",
+   "gdd": "GDD 02 §12 · GDD 10 §13/§14 · SPEC-BRIEF §6",
+   "datei": "BRAUCHT_KERNAENDERUNG: client/game.js (Typ \"auto\") · client/ui.js (Lane UI)",
+   "schwere": "wichtig",
+   "messung": "api.useAbility(0) schaltet den Auto-Angriff bzw. schlaegt zu und liefert {ok:true}. Ohne Ziel bzw. ausser Reichweite tragen Slot 1 und Slot 5 die Klasse \"kein-ziel\".",
+   "quellen": [
+    "kampf",
+    "ui"
+   ]
+  },
+  {
+   "rang": 20,
+   "was": "Scheiternde Aktionen geben ueberhaupt kein Feedback. game.js liefert die Gruende (\"kein ziel\", \"zu weit\", \"abklingzeit\", \"ressource\", \"tot\", \"passiv\") als Rueckgabewert, ui.js verwertet sie nicht: nach E ohne Ziel, Slot 2 ohne Mana und Slot 1 hintereinander steht kein einziges Hinweis- oder Schwebeelement im DOM. Der Spieler drueckt, und nichts geschieht.",
+   "gdd": "GDD 10 §73/§81 · GDD 02 §12",
+   "datei": "client/ui.js (Lane UI)",
+   "schwere": "wichtig",
+   "messung": "Jeder der sechs Gruende erzeugt eine sichtbare, sofort verstaendliche Rueckmeldung. Im Bild nachweisbar fuer \"kein ziel\", \"zu weit\" und \"ressource\".",
+   "quellen": [
+    "ui"
+   ]
+  },
+  {
+   "rang": 21,
+   "was": "Ein Linksklick auf die Benutzeroberflaeche bewegt den Schleim. Nur die Hotbar hat pointer-events:auto, das ganze HUD steht auf none — ein Klick auf Minimap, Quest-Tracker, Gruppe, Spieler- oder Zielrahmen setzt jedes Mal das Bewegungsziel und der Schleim laeuft los. §151 weist den Linksklick ausdruecklich auch der UI zu.",
+   "gdd": "GDD 10 §151 · SPEC-BRIEF §6",
+   "datei": "client/ui.css (Lane UI)",
+   "schwere": "wichtig",
+   "messung": "Klick auf jeden der fuenf HUD-Bloecke laesst G.slime.target unveraendert.",
+   "quellen": [
+    "ui"
+   ]
+  },
+  {
+   "rang": 22,
+   "was": "Nach dem Tod behauptet das HUD, alles sei normal. Ausser dem HP-Balken auf 0 und einem 1,8 s kurzen Hinweis gibt es kein Signal: Manabalken voll, Portrait hell, alle Hotbar-Slots voll beleuchtet, kein Zustandswechsel am body. faehigkeitBenutzen gibt {ok:false,\"tot\"} zurueck, die UI zeigt das nirgends.",
+   "gdd": "GDD 10 §79 · Liste A Punkte 21 und 22",
+   "datei": "client/ui.js, client/ui.css (Lane UI)",
+   "schwere": "wichtig",
+   "messung": "Von G.phase=\"tot\" bis zum Respawn ist das HUD sichtbar im Tot-Zustand (ausgegraut, Hotbar gesperrt, Ressource leer) und kehrt danach vollstaendig zurueck.",
+   "quellen": [
+    "ui"
+   ]
+  },
+  {
+   "rang": 23,
+   "was": "Man wird totgeknabbert, ohne zu erfahren von wem. Im Spielbericht: 27 aufeinanderfolgende Treffer im 2,4-s-Takt, dann Tod, ohne je angegriffen zu haben. Es gibt keinen Aggro-Hinweis, kein Aufblitzen des Spielerrahmens, keine Kampfanzeige und keine Markierung am Angreifer; das einzige Signal ist eine kleine dunkelrote Zahl ueber beigem Boden.",
+   "gdd": "GDD 10 §73 · GDD 02 §63 · SPEC-BRIEF §6",
+   "datei": "client/ui.js (Lane UI) · client/combat.js (Lane COMBAT)",
+   "schwere": "wichtig",
+   "messung": "Beim ersten erlittenen Treffer ist im Bild erkennbar, welche Kreatur angreift (Markierung am Angreifer plus Reaktion am Spielerrahmen). Die Schadenszahl hebt sich vom hellen Boden ab.",
+   "quellen": [
+    "spielbericht"
+   ]
+  },
+  {
+   "rang": 24,
+   "was": "Das Gesicht traegt keine Identitaet und zerfaellt mit dem Level. drawFace liest G.spieler.gesicht nicht — die in charakter.js getroffene Auswahl (Augen/Mund/Nase) kann dort nicht ankommen und wird derzeit ueber einen R.extras-Zeichner nur additiv nachgelegt; kleinere Augen oder ein schmalerer Mund sind so nicht darstellbar. Zugleich skaliert die Einsenktiefe mit dem Radius, die Geldeckung aber nicht: ab L65 versinkt ein Auge, bei L80 sind zweites Auge und Mund unsichtbar. In der natuerlichen Verfolgerposition bleibt ein gesichtsloser Buckel.",
+   "gdd": "GDD 01 §7 · §46 · GDD 10 §57 · Liste A Punkte 1 und 20",
+   "datei": "BRAUCHT_KERNAENDERUNG: client/renderer.js (drawFace liest G.spieler.gesicht; Einsenktiefe/Alpha gegen params.radius normalisieren)",
+   "schwere": "wichtig",
+   "messung": "Bei L1, L30, L65 und L80 sind aus derselben Kamera beide Augen und der Mund lesbar. Vier verschiedene Gesichtsauswahlen sind im Bild voneinander unterscheidbar, auch wenn eine davon kleinere Augen hat.",
+   "quellen": [
+    "wachstum-tod",
+    "bericht-charakter",
+    "spielbericht"
+   ]
+  },
+  {
+   "rang": 25,
+   "was": "Der Auto-Angriff laesst sich nicht anhalten und startet ungefragt. kreaturBesiegt setzt G.autoAngriff nicht zurueck, deshalb loest nach dem Tod eines Gegners schon ein reiner Linksklick auf die naechste Kreatur Anmarsch und Angriff aus — §3 gesteht dem Linksklick nur die Auswahl zu. Im Spielbericht toetet der Auto-Angriff das Ziel, bevor die Fresschance brauchbar wird, und es gibt keine sichtbare Moeglichkeit, ihn zu stoppen (der Bodenklick tut es, sagt aber niemand).",
+   "gdd": "GDD 02 §3/§5 · GDD 01 §33 · Liste A Punkte 12 und 13",
+   "datei": "BRAUCHT_KERNAENDERUNG: client/game.js (kreaturBesiegt) · client/ui.js (Anzeige/Abbruch)",
+   "schwere": "wichtig",
+   "messung": "Nach einem Sieg ist G.autoAngriff false; ein Linksklick auf die naechste Kreatur waehlt nur aus. Der laufende Auto-Angriff ist im HUD sichtbar und dort abbrechbar.",
+   "quellen": [
+    "kampf",
+    "spielbericht"
+   ]
+  },
+  {
+   "rang": 26,
+   "was": "Der Koerperstoss trifft, ohne zu beruehren: aktive Faehigkeiten reichen bis Reichweite + Radius + Gegnergroesse + 3, gemessen 5,86 Einheiten gegen 4,22 beim Auto-Angriff. Die Animation ist nur ein Impuls am Blob — der Beschreibungstext \"Die Masse schnellt nach vorn und rammt das Ziel\" beschreibt etwas, das im Bild nicht stattfindet. Saeurespritzer hat ausser einem einmaligen Stauchen gar keine sichtbare Wirkung, und das gesetzte stossFx wird von keiner Datei gelesen.",
+   "gdd": "GDD 02 §6/§64 · Liste B \"einfache Faehigkeit\"",
+   "datei": "client/combat.js (Lane COMBAT) · BRAUCHT_KERNAENDERUNG: client/game.js (Reichweite)",
+   "schwere": "wichtig",
+   "messung": "Beim Koerperstoss ueberbrueckt die Masse sichtbar die Distanz zum Ziel, oder die Reichweite wird auf Beruehrungsnaehe gekuerzt. Saeurespritzer hat eine eigene sichtbare Handschrift.",
+   "quellen": [
+    "kampf"
+   ]
+  },
+  {
+   "rang": 27,
+   "was": "Die Treffer-Tropfen verdecken genau die Stelle, die sie zeigen sollen: zehn Tropfen je Treffer klumpen zu einer blickdichten blauen Kappe auf dem Kopf des Gegners und lesen sich als \"der Wolf ist jetzt blau\". Zusaetzlich ist der Einschlagring ein Bodendekal derselben Bauart und fast derselben Groesse wie der gelbe Zielring und liegt deckungsgleich darueber — zwei gleich aussehende Ringe fuer zwei verschiedene Bedeutungen.",
+   "gdd": "GDD 02 §64 · GDD 10 §98 (Lesbarkeit schlaegt Effektdichte)",
+   "datei": "client/combat.js (Lane COMBAT)",
+   "schwere": "wichtig",
+   "messung": "Der Gegner bleibt im Trefferbild in seiner eigenen Farbe erkennbar; Zielring und Einschlagmarke sind auf einen Blick auseinanderzuhalten.",
+   "quellen": [
+    "kampf"
+   ]
+  },
+  {
+   "rang": 28,
+   "was": "Die Kampfhaltung ist nicht messbar. combat.js richtet den Koerper jeden Schritt auf, im Ergebnis unterscheidet sich der mittlere squash im Kampf (0,797 / 0,805) um ein bis zwei Prozent vom Leerlauf (0,787). Die behauptete Haltung ist im Bild nicht von der Ruhehaltung zu unterscheiden.",
+   "gdd": "GDD 02 §7 · GDD 01 §66",
+   "datei": "client/combat.js (Lane COMBAT)",
+   "schwere": "klein",
+   "messung": "Mittlerer squash im Kampf liegt mindestens 0,08 ueber dem Leerlaufwert, und der Unterschied ist im Standbild erkennbar.",
+   "quellen": [
+    "kampf"
+   ]
+  },
+  {
+   "rang": 29,
+   "was": "Ein laufender Biss wird beim Wechsel in die Fressphase nicht abgebrochen: die Modulvariable bleibt bestehen, der Mund friert auf dem letzten Wert ein, und nach Rueckkehr in \"frei\" beisst der Schleim in die Luft an der letzten Position eines Gegners, den es womoeglich nicht mehr gibt. Combat.zuruecksetzen wird nur beim Reset gerufen, nicht beim Phasenwechsel.",
+   "gdd": "GDD 02 §5/§9",
+   "datei": "client/combat.js (Lane COMBAT)",
+   "schwere": "klein",
+   "messung": "Fressversuch mitten im Biss: nach Rueckkehr in \"frei\" laeuft kein Biss auf ein entferntes Ziel weiter, s.mouth steht auf 0.",
+   "quellen": [
+    "kampf"
+   ]
+  },
+  {
+   "rang": 30,
+   "was": "Die Todespfuetze verschwindet in demselben Bild, in dem der Spieler am Friedhof erscheint — im selben Schritt, in dem respawn() gerufen wird, werden Pfuetze und Spritzer geloescht. §50 Punkt 4 verlangt, dass sie zurueckbleibt; der eigene Kommentar in death.js nennt sie \"der bleibende Beweis\".",
+   "gdd": "GDD 01 §50 Punkt 4 · Liste A Punkt 21",
+   "datei": "client/death.js (Lane DEATH)",
+   "schwere": "klein",
+   "messung": "Nach dem Respawn ist am Sterbeort mindestens fuenf Sekunden lang ein dunkler Fleck sichtbar, der danach ausblendet statt zu verschwinden.",
+   "quellen": [
+    "wachstum-tod"
+   ]
+  },
+  {
+   "rang": 31,
+   "was": "Zwei Brueche in einer sonst durchgehend kraftbasiert ist: die Farbe entsteht, indem death.js das globale FACTIONS-Objekt des gesperrten renderer.js in-place ueberschreibt — jeder Pfad, der die Sequenz abbricht, ohne zurueckzusetzen, laesst die Fraktionsfarbe dauerhaft verdunkelt. Und die Blickrichtung wird als Sinuskurve direkt gesetzt, also ein Keyframe-Wert, obwohl der Kommentar daneben behauptet, das Schwimmen der Augen entstehe aus dem Schwappen.",
+   "gdd": "GDD 01 §66 · ARCHITEKTUR §1/§5",
+   "datei": "client/death.js (Lane DEATH)",
+   "schwere": "klein",
+   "messung": "Kein Schreibzugriff aus death.js auf fremde Moduldaten (eigener Uniform-Wert oder R.extras). Die Augenbewegung folgt der Masse, nicht einer Zeitfunktion.",
+   "quellen": [
+    "wachstum-tod"
+   ]
+  },
+  {
+   "rang": 32,
+   "was": "Der Radius springt beim Level-Up in einem einzigen Schritt, und die Reichweiten fuer Kreaturnaehe, Fressen und Faehigkeiten springen im selben Bild mit. Bei einem Mehrfachaufstieg ist das ein sichtbarer Ruck statt des in §3.5 gemeinten schleichenden Wachsens.",
+   "gdd": "GDD 01 §67 · §46 · Liste A Punkt 19",
+   "datei": "BRAUCHT_KERNAENDERUNG: client/game.js (Rampe fuer PARAMS.radius) · client/tuning.js",
+   "schwere": "klein",
+   "messung": "Nach grantXp mit Mehrfachaufstieg waechst der Radius ueber mindestens 0,6 s stetig; kein Bild zeigt einen Sprung von mehr als 3 %.",
+   "quellen": [
+    "wachstum-tod"
+   ]
+  },
+  {
+   "rang": 33,
+   "was": "Schadenszahl und Weltschild des Ziels wissen nichts voneinander und landen uebereinander — die gelbe Zahl sitzt mitten auf dem roten HP-Balken des Schilds. Zusaetzlich bekommt ein Schwebetext seine Position erst beim naechsten Aktualisieren; wird er auf der Endzeit einer Aufnahme ausgeloest, steht er in der linken oberen Bildecke.",
+   "gdd": "GDD 10 §74 · GDD 02 §63",
+   "datei": "client/ui.js (Lane UI)",
+   "schwere": "klein",
+   "messung": "Schadenszahl und Zielschild ueberlappen in keinem Bild. Ein direkt vor render() ausgeloester Treffer erscheint bereits im ersten Bild an der richtigen Weltstelle.",
+   "quellen": [
+    "ui",
+    "kampf"
+   ]
+  },
+  {
+   "rang": 34,
+   "was": "Das Zielportrait rendert die Tier-Silhouette nahezu schwarz auf dunklem Grund; ueber acht Bilder ist die Wolfsform nur zu erahnen. Die Aufhellung um Faktor 1,5 reicht bei dunklen Arten nicht, das Portrait traegt damit keine Information.",
+   "gdd": "GDD 10 §21",
+   "datei": "client/ui.js, client/ui.css (Lane UI)",
+   "schwere": "klein",
+   "messung": "Die Silhouette hebt sich im Portrait deutlich vom Hintergrund ab, auch bei der dunkelsten Kreaturenfarbe.",
+   "quellen": [
+    "ui"
+   ]
+  },
+  {
+   "rang": 35,
+   "was": "Der Zielrahmen sitzt unten rechts — in der Ecke, die §107 fuer Quests und Aktionen vorsieht, und diagonal maximal weit vom Spielerrahmen unten links. Das Ziel zaehlt nach §104 zu \"sehr wichtig\"; der Blicksprung geht ueber die volle Bildbreite. In einer frueheren Fassung stand es oben mittig.",
+   "gdd": "GDD 10 §104/§107/§150",
+   "datei": "client/ui.js, client/ui.css (Lane UI)",
+   "schwere": "klein",
+   "messung": "Spieler- und Zielrahmen liegen im selben Blickfeld, oder die Abweichung von der Quadrantenlogik ist im Kopf der Datei begruendet.",
+   "quellen": [
+    "ui"
+   ]
+  },
+  {
+   "rang": 36,
+   "was": "Ressourcenaenderung hat kein eigenes Feedback: die Kosten werden still abgezogen, es entsteht kein Schwebetext, nur der Balken springt. Bei 12–20 Mana von 60 ist das leicht zu uebersehen. §75 nennt Schaden, Heilung und Ressourcenaenderung als die drei Kategorien, die der Spieler unterscheiden koennen muss.",
+   "gdd": "GDD 10 §75",
+   "datei": "client/ui.js (Lane UI) · client/game.js (Ereignis)",
+   "schwere": "klein",
+   "messung": "Jeder Faehigkeitseinsatz erzeugt ein eigenes, von Schaden und Heilung unterscheidbares Ressourcensignal.",
+   "quellen": [
+    "ui"
+   ]
+  },
+  {
+   "rang": 37,
+   "was": "Es gibt kein Spielmenue: ESC schaltet nur das Entwickler-Tuning-Panel um, genau wie H. §151 fuehrt ESC als Menue beziehungsweise \"oberstes Fenster schliessen\".",
+   "gdd": "GDD 10 §151 · SPEC-BRIEF §6",
+   "datei": "BRAUCHT_KERNAENDERUNG: client/main.js · client/ui.js (Lane UI liefert das Menue)",
+   "schwere": "klein",
+   "messung": "ESC oeffnet ein Menue beziehungsweise schliesst das oberste offene Fenster (Charaktererstellung, Tuning-Panel) in dieser Reihenfolge.",
+   "quellen": [
+    "ui"
+   ]
+  },
+  {
+   "rang": 38,
+   "was": "Die Standard-Kameradistanz von 12 laesst den Schleim rund 10 % der Bildbreite einnehmen; eine Verformung von wenigen Prozent sind dann drei bis fuenf Bildpunkte. Bei der Zoomgrenze 45 ist er ein Punkt. Es gibt keine Regel, die bei Kampf oder Fressen wieder heranholt.",
+   "gdd": "GDD 10 §69/§70",
+   "datei": "BRAUCHT_KERNAENDERUNG: client/game.js (Kameragrenzen/Heranholen)",
+   "schwere": "klein",
+   "messung": "Waehrend Kampf und Fressversuch nimmt der Schleim mindestens 15 % der Bildhoehe ein; die Verformung ist im Standbild ohne Messwerte erkennbar.",
+   "quellen": [
+    "ui",
+    "spielbericht"
+   ]
+  },
+  {
+   "rang": 39,
+   "was": "Zwei fest verdrahtete Zeitschritte in der Kampf-Lane: Deform.stauchen wird mit 1/60 aufgerufen, obwohl die Simulation mit 1/240 laeuft. Deterministisch bleibt es, aber die Staerke haengt an einer 60-Hz-Annahme und ARCHITEKTUR §2 verlangt Zeit ausschliesslich ueber den durchgereichten dt-Parameter.",
+   "gdd": "ARCHITEKTUR §2 · GDD 02 §64",
+   "datei": "client/combat.js (Lane COMBAT, Z. 407 und 410)",
+   "schwere": "klein",
+   "messung": "Kein Zahlenliteral als Zeitschritt mehr in client/*.js ausser in der Schrittsteuerung selbst.",
+   "quellen": [
+    "kampf"
+   ]
+  },
+  {
+   "rang": 40,
+   "was": "Der Server prueft den gemeldeten Bewegungsweg nur gegen Wegbudget und Weltgrenze. Die vorhandene Funktion istFrei wird ausschliesslich fuer Kreaturen benutzt, nie fuer den Spieler — ein Client kann sich durch Felsen und Mauern melden, solange er dabei langsam genug ist.",
+   "gdd": "GDD 11 §21 · §7 (Manipulationsschutz)",
+   "datei": "server/welt.mjs (GESPERRT — Lane NETZ)",
+   "schwere": "klein",
+   "messung": "Eine gemeldete Position innerhalb eines Hindernisses wird abgelehnt oder auf den Rand geschoben.",
+   "quellen": [
+    "technik"
+   ]
+  },
+  {
+   "rang": 41,
+   "was": "Der Server meldet nur das fertige Fressergebnis; einen Zustand \"Fressversuch gestartet\" gibt es nicht, und bei Erfolg verschwindet die Kreatur im selben Takt aus der Zustandsliste. Ein angeschlossener Client bekaeme das Ziel weggenommen, bevor er Anlauf, Umschlingen und Absorption ueberhaupt zeichnen kann — die Animation laeuft rund 2,4 s.",
+   "gdd": "GDD 11 §33/§38/§39",
+   "datei": "server/welt.mjs, client/net.js (GESPERRT — Lane NETZ)",
+   "schwere": "klein",
+   "messung": "Im Zweispielerlauf zeichnet der beobachtende Client die vollstaendige Fressanimation, ohne dass das Ziel vorzeitig verschwindet.",
+   "quellen": [
+    "technik"
+   ]
+  },
+  {
+   "rang": 42,
+   "was": "Es gibt keine passive Regeneration und keinen Hinweis auf die einzige Heilung: \"Straffen\" heilt 30 % auf 18 s Abklingzeit, wird aber nirgends erklaert. Nach dem Respawn mit 50 % HP bleibt der Spieler auf 50 % HP.",
+   "gdd": "GDD 02 §2 (reagieren) · GDD 10 §75",
+   "datei": "client/ui.js (Lane UI) · BRAUCHT_KERNAENDERUNG: client/game.js (Regeneration ausser Kampf)",
+   "schwere": "klein",
+   "messung": "Ausserhalb des Kampfes steigen HP sichtbar wieder an, oder die Heilfaehigkeit ist im HUD als solche erkennbar.",
+   "quellen": [
+    "spielbericht"
+   ]
+  },
+  {
+   "rang": 43,
+   "was": "Das Volumen schwankt waehrend der von eat.js getriebenen Phasen deutlich staerker als im Stand: 1,215 im ersten Anlaufschritt gegen 0,939 bei 900 ms, eine Spanne von rund 28 %. Verursacher ist die Kombination aus einem starken Stauchen und zwei Impulsen im selben Schritt. Das macht die Squash-Werte der Fress-Szenen schwer vergleichbar.",
+   "gdd": "GDD 01 §5 · ARCHITEKTUR §4",
+   "datei": "client/eat.js (Lane EAT)",
+   "schwere": "klein",
+   "messung": "volumen bleibt ueber die gesamte Fressfolge zwischen 0,90 und 1,10 (nach der Korrektur des Bezugswerts, siehe metrics-Eintrag).",
+   "quellen": [
+    "fressen",
+    "technik"
+   ]
+  },
+  {
+   "rang": 44,
+   "was": "Der Zielrahmen zeigt die Fresschance auf das Prozent genau. §22 laesst das zu (\"muss nicht zwingend\"), nimmt dem Spieler aber die Einschaetzung, die dort ausdruecklich bei ihm bleiben soll; die Farbstufung ist zudem grob — alles zwischen 1 % und 60 % liegt in derselben Klasse.",
+   "gdd": "GDD 10 §22",
+   "datei": "client/ui.js (Lane UI)",
+   "schwere": "klein",
+   "messung": "Entweder feinere Stufung oder eine qualitative Skala; die Entscheidung ist im Kopf der Datei begruendet.",
+   "quellen": [
+    "ui"
+   ]
+  }
+ ]
+}
