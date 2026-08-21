@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>SLIMORIA – 2D-Sprites in 3D</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <canvas id="game" tabindex="0" aria-label="3D-Spielwelt mit animierten 2D-Figuren"></canvas>
+  <div id="loading">SPRITES WERDEN GELADEN …</div>
+  <header>
+    <div class="brand"><span>SLIMORIA</span><small>BILLBOARD-PROTOTYP</small></div>
+    <div class="badge">2D FIGUREN · 3D WELT</div>
+  </header>
+  <section id="target" class="panel hidden">
+    <div><strong id="targetName">Wolf</strong><span id="targetState">BEREIT</span></div>
+    <div class="bar"><i id="targetHp"></i></div>
+    <small id="targetHint"></small>
+  </section>
+  <section id="player" class="panel">
+    <div><strong>Azur-Schleim</strong><span id="playerState">BEREIT</span></div>
+    <div class="bar hp"><i id="playerHp"></i></div>
+    <div class="bar energy"><i id="playerEnergy"></i></div>
+  </section>
+  <aside id="help" class="panel">
+    <button id="toggleHelp" title="Hilfe ein-/ausblenden">×</button>
+    <h2>Prototyp testen</h2>
+    <p><kbd>WASD</kbd> laufen · <kbd>Klick</kbd> Ziel / Boden · <kbd>Rechts ziehen</kbd> Kamera · <kbd>Rad</kbd> Zoom</p>
+    <p><kbd>1</kbd> Ziel-Lock + Angriff (2,0 Abstand) · <kbd>E</kbd> Fressen bei ≤ 35 % HP · <kbd>R</kbd> Neustart</p>
+    <div class="legend"><span><b class="dot blue"></b>Spieler</span><span><b class="dot red"></b>Gegner</span></div>
+  </aside>
+  <div id="toast"></div>
+  <div id="coords">POSITION 0.0 / 0.0</div>
+  <div id="crosshair">◆</div>
+  <script type="module" src="game3d.js"></script>
+</body>
+</html>

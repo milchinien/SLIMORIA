@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SLIMORIA — Prototyp: Schleimoptik</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<canvas id="view"></canvas>
+
+<div id="hud">
+  <div class="title">SLIMORIA <span>Prototyp — Schleimoptik</span></div>
+  <div class="stats">
+    <span id="hud-preset">Valoria</span>
+    <span><b id="hud-fps">60</b> fps</span>
+    <span><b id="hud-ms">0</b> ms</span>
+  </div>
+  <ul class="keys">
+    <li><kbd>W</kbd><kbd>S</kbd> vor/zurück · <kbd>A</kbd><kbd>D</kbd> drehen · <kbd>Q</kbd><kbd>E</kbd> seitwärts</li>
+    <li><kbd>Rechts ziehen</kbd> drehen · <kbd>Links ziehen</kbd> umschauen</li>
+    <li><kbd>Beide Tasten</kbd> vorwärts · <kbd>Rad</kbd> Zoom</li>
+    <li><kbd>Leer</kbd> Hüpfen · <kbd>B</kbd> läuft von selbst</li>
+    <li><kbd>Klick</kbd> auf den Schleim: anstupsen</li>
+    <li><kbd>F</kbd> Kamera hinten halten · <kbd>C</kbd> Autodrehung</li>
+    <li><kbd>1</kbd>–<kbd>6</kbd> Farbwelten · <kbd>G</kbd> Augen</li>
+    <li><kbd>X</kbd> Dicke · <kbd>P</kbd> Pause · <kbd>R</kbd> zurücksetzen</li>
+    <li><kbd>F2</kbd> Bildschirmfoto · <kbd>H</kbd> Panel</li>
+  </ul>
+</div>
+
+<div id="panel">
+  <div class="panel-head">
+    <strong>Material</strong>
+    <button id="btn-panel" title="Panel ein-/ausblenden">✕</button>
+  </div>
+
+  <div class="presets">
+    <button data-preset="valoria">Valoria</button>
+    <button data-preset="drakhar">Drakhar</button>
+    <button data-preset="smaragd">Smaragd</button>
+    <button data-preset="amethyst">Amethyst</button>
+    <button data-preset="honig">Honig</button>
+    <button data-preset="milchglas">Milchglas</button>
+  </div>
+
+  <div id="sliders"></div>
+
+  <button id="btn-lauf" class="breit">Bewegen</button>
+
+  <div class="actions">
+    <button id="btn-augen">Augen</button>
+    <button id="btn-folgen">Folgen</button>
+    <button id="btn-auto">Drehen</button>
+    <button id="btn-schuss">Foto</button>
+  </div>
+</div>
+
+<button id="panel-open" onclick="document.body.classList.remove('panel-hidden')">⚙</button>
+
+<script src="core.js"></script>
+<script src="shader.js"></script>
+<script src="main.js"></script>
+</body>
+</html>

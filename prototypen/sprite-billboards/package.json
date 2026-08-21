@@ -1,0 +1,11 @@
+{
+  "name": "slimoria-sprite-billboard-prototype",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node serve.mjs"
+  },
+  "dependencies": {
+    "three": "^0.179.1"
+  }
+}

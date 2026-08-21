@@ -1,0 +1,339 @@
+{
+  "frameCount": 12,
+  "padding": 24,
+  "slime": {
+    "idle-back": {
+      "src": "assets/animations/slime/idle-back.png",
+      "cols": 12,
+      "cellWidth": 166,
+      "cellHeight": 172,
+      "padding": 24
+    },
+    "move-back": {
+      "src": "assets/animations/slime/move-back.png",
+      "cols": 12,
+      "cellWidth": 195,
+      "cellHeight": 201,
+      "padding": 24
+    },
+    "idle-back-right": {
+      "src": "assets/animations/slime/idle-back-right.png",
+      "cols": 12,
+      "cellWidth": 166,
+      "cellHeight": 172,
+      "padding": 24
+    },
+    "move-back-right": {
+      "src": "assets/animations/slime/move-back-right.png",
+      "cols": 12,
+      "cellWidth": 195,
+      "cellHeight": 201,
+      "padding": 24
+    },
+    "idle-right": {
+      "src": "assets/animations/slime/idle-right.png",
+      "cols": 12,
+      "cellWidth": 172,
+      "cellHeight": 175,
+      "padding": 24
+    },
+    "move-right": {
+      "src": "assets/animations/slime/move-right.png",
+      "cols": 12,
+      "cellWidth": 208,
+      "cellHeight": 200,
+      "padding": 24
+    },
+    "idle-front-right": {
+      "src": "assets/animations/slime/idle-front-right.png",
+      "cols": 12,
+      "cellWidth": 172,
+      "cellHeight": 175,
+      "padding": 24
+    },
+    "move-front-right": {
+      "src": "assets/animations/slime/move-front-right.png",
+      "cols": 12,
+      "cellWidth": 208,
+      "cellHeight": 200,
+      "padding": 24
+    },
+    "idle-front": {
+      "src": "assets/animations/slime/idle-front.png",
+      "cols": 12,
+      "cellWidth": 175,
+      "cellHeight": 183,
+      "padding": 24
+    },
+    "move-front": {
+      "src": "assets/animations/slime/move-front.png",
+      "cols": 12,
+      "cellWidth": 202,
+      "cellHeight": 208,
+      "padding": 24
+    },
+    "idle-front-left": {
+      "src": "assets/animations/slime/idle-front-left.png",
+      "cols": 12,
+      "cellWidth": 175,
+      "cellHeight": 183,
+      "padding": 24
+    },
+    "move-front-left": {
+      "src": "assets/animations/slime/move-front-left.png",
+      "cols": 12,
+      "cellWidth": 202,
+      "cellHeight": 208,
+      "padding": 24
+    },
+    "idle-left": {
+      "src": "assets/animations/slime/idle-left.png",
+      "cols": 12,
+      "cellWidth": 174,
+      "cellHeight": 181,
+      "padding": 24
+    },
+    "move-left": {
+      "src": "assets/animations/slime/move-left.png",
+      "cols": 12,
+      "cellWidth": 201,
+      "cellHeight": 195,
+      "padding": 24
+    },
+    "idle-back-left": {
+      "src": "assets/animations/slime/idle-back-left.png",
+      "cols": 12,
+      "cellWidth": 174,
+      "cellHeight": 181,
+      "padding": 24
+    },
+    "move-back-left": {
+      "src": "assets/animations/slime/move-back-left.png",
+      "cols": 12,
+      "cellWidth": 201,
+      "cellHeight": 195,
+      "padding": 24
+    },
+    "attack-back": {
+      "src": "assets/animations/slime/attack-back.png",
+      "cols": 12,
+      "cellWidth": 229,
+      "cellHeight": 185,
+      "padding": 24
+    },
+    "attack-back-right": {
+      "src": "assets/animations/slime/attack-back-right.png",
+      "cols": 12,
+      "cellWidth": 229,
+      "cellHeight": 185,
+      "padding": 24
+    },
+    "attack-right": {
+      "src": "assets/animations/slime/attack-right.png",
+      "cols": 12,
+      "cellWidth": 229,
+      "cellHeight": 172,
+      "padding": 24
+    },
+    "attack-front-right": {
+      "src": "assets/animations/slime/attack-front-right.png",
+      "cols": 12,
+      "cellWidth": 229,
+      "cellHeight": 172,
+      "padding": 24
+    },
+    "attack-front": {
+      "src": "assets/animations/slime/attack-front.png",
+      "cols": 12,
+      "cellWidth": 229,
+      "cellHeight": 186,
+      "padding": 24
+    },
+    "attack-front-left": {
+      "src": "assets/animations/slime/attack-front-left.png",
+      "cols": 12,
+      "cellWidth": 229,
+      "cellHeight": 186,
+      "padding": 24
+    },
+    "attack-left": {
+      "src": "assets/animations/slime/attack-left.png",
+      "cols": 12,
+      "cellWidth": 229,
+      "cellHeight": 186,
+      "padding": 24
+    },
+    "attack-back-left": {
+      "src": "assets/animations/slime/attack-back-left.png",
+      "cols": 12,
+      "cellWidth": 229,
+      "cellHeight": 186,
+      "padding": 24
+    },
+    "hit": {
+      "src": "assets/animations/slime/hit.png",
+      "cols": 12,
+      "cellWidth": 184,
+      "cellHeight": 199,
+      "padding": 24
+    },
+    "eat": {
+      "src": "assets/animations/slime/eat.png",
+      "cols": 12,
+      "cellWidth": 210,
+      "cellHeight": 200,
+      "padding": 24
+    },
+    "death": {
+      "src": "assets/animations/slime/death.png",
+      "cols": 12,
+      "cellWidth": 242,
+      "cellHeight": 166,
+      "padding": 24
+    }
+  },
+  "wolf": {
+    "idle-right": {
+      "src": "assets/animations/wolf/idle-right.png",
+      "cols": 12,
+      "cellWidth": 238,
+      "cellHeight": 189,
+      "padding": 24
+    },
+    "idle-left": {
+      "src": "assets/animations/wolf/idle-left.png",
+      "cols": 12,
+      "cellWidth": 238,
+      "cellHeight": 189,
+      "padding": 24
+    },
+    "move-right": {
+      "src": "assets/animations/wolf/move-right.png",
+      "cols": 12,
+      "cellWidth": 262,
+      "cellHeight": 177,
+      "padding": 24
+    },
+    "move-left": {
+      "src": "assets/animations/wolf/move-left.png",
+      "cols": 12,
+      "cellWidth": 262,
+      "cellHeight": 177,
+      "padding": 24
+    },
+    "attack-right": {
+      "src": "assets/animations/wolf/attack-right.png",
+      "cols": 12,
+      "cellWidth": 281,
+      "cellHeight": 225,
+      "padding": 24
+    },
+    "attack-left": {
+      "src": "assets/animations/wolf/attack-left.png",
+      "cols": 12,
+      "cellWidth": 281,
+      "cellHeight": 225,
+      "padding": 24
+    },
+    "hit-right": {
+      "src": "assets/animations/wolf/hit-right.png",
+      "cols": 12,
+      "cellWidth": 257,
+      "cellHeight": 213,
+      "padding": 24
+    },
+    "hit-left": {
+      "src": "assets/animations/wolf/hit-left.png",
+      "cols": 12,
+      "cellWidth": 257,
+      "cellHeight": 213,
+      "padding": 24
+    },
+    "death-right": {
+      "src": "assets/animations/wolf/death-right.png",
+      "cols": 12,
+      "cellWidth": 281,
+      "cellHeight": 200,
+      "padding": 24
+    },
+    "death-left": {
+      "src": "assets/animations/wolf/death-left.png",
+      "cols": 12,
+      "cellWidth": 281,
+      "cellHeight": 200,
+      "padding": 24
+    }
+  },
+  "boar": {
+    "idle-right": {
+      "src": "assets/animations/boar/idle-right.png",
+      "cols": 12,
+      "cellWidth": 275,
+      "cellHeight": 203,
+      "padding": 24
+    },
+    "idle-left": {
+      "src": "assets/animations/boar/idle-left.png",
+      "cols": 12,
+      "cellWidth": 275,
+      "cellHeight": 203,
+      "padding": 24
+    },
+    "move-right": {
+      "src": "assets/animations/boar/move-right.png",
+      "cols": 12,
+      "cellWidth": 304,
+      "cellHeight": 197,
+      "padding": 24
+    },
+    "move-left": {
+      "src": "assets/animations/boar/move-left.png",
+      "cols": 12,
+      "cellWidth": 304,
+      "cellHeight": 197,
+      "padding": 24
+    },
+    "attack-right": {
+      "src": "assets/animations/boar/attack-right.png",
+      "cols": 12,
+      "cellWidth": 290,
+      "cellHeight": 237,
+      "padding": 24
+    },
+    "attack-left": {
+      "src": "assets/animations/boar/attack-left.png",
+      "cols": 12,
+      "cellWidth": 290,
+      "cellHeight": 237,
+      "padding": 24
+    },
+    "hit-right": {
+      "src": "assets/animations/boar/hit-right.png",
+      "cols": 12,
+      "cellWidth": 288,
+      "cellHeight": 241,
+      "padding": 24
+    },
+    "hit-left": {
+      "src": "assets/animations/boar/hit-left.png",
+      "cols": 12,
+      "cellWidth": 288,
+      "cellHeight": 241,
+      "padding": 24
+    },
+    "death-right": {
+      "src": "assets/animations/boar/death-right.png",
+      "cols": 12,
+      "cellWidth": 295,
+      "cellHeight": 183,
+      "padding": 24
+    },
+    "death-left": {
+      "src": "assets/animations/boar/death-left.png",
+      "cols": 12,
+      "cellWidth": 295,
+      "cellHeight": 183,
+      "padding": 24
+    }
+  }
+}
